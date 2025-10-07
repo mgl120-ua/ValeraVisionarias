@@ -12,7 +12,7 @@ export async function POST(req: Request) {
     }
 
     const response = await resend.emails.send({
-      from: "Valera Visionarias <no-reply@valeravisionarias.com>",
+      from: "Valera Visionarias <inmobiliaria@valeravisionarias.com>",
       to: "valeravisionarias@gmail.com",
       subject: `Nueva consulta — ${service}`,
       html: `

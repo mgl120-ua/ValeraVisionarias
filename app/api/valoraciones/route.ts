@@ -40,8 +40,8 @@ export async function POST(req: Request) {
     `
 
     await resend.emails.send({
-      from: "Valera Visionarias <no-reply@valeravisionarias.com>",
-      to: "martagrimaldoslopez@gmail.com",
+      from: "Valera Visionarias <inmobiliaria@valeravisionarias.com>",
+      to: "valeravisionarias@gmail.com",
       subject: `Nueva valoración: ${form.tipo} en ${form.zona}`,
       html,
     })

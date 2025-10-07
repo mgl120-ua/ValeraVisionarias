@@ -61,11 +61,10 @@ export default function MobileNav() {
         <nav className="flex-1 overflow-y-auto py-6 px-6 bg-white">
           <ul className="space-y-1">
             {[
-              { href: "#servicios", label: "Servicios" },
-              { href: "#propiedades", label: "Propiedades" },
-              { href: "#testimonios", label: "Testimonios" },
-              { href: "#san-vicente", label: "San Vicente" },
-              { href: "/blog", label: "Blog" },
+              { href: "/#servicios", label: "Servicios" },
+              { href: "/propiedades", label: "Propiedades" },
+              { href: "/#testimonios", label: "Testimonios" },
+              { href: "/#san-vicente", label: "San Vicente" },
               { href: "/nosotros", label: "Nosotros" },
             ].map((item) => (
               <li key={item.href}>
