@@ -10,6 +10,7 @@ import {
   MapPin, Bed, Bath, Ruler, Share2, Heart, CalendarDays, Award, Home, Shield
 } from "lucide-react";
 import type { Metadata } from "next"
+import VisitForm from "@/components/VisitForm"
 
 
 // Opcional: ISR
@@ -283,14 +284,10 @@ export default async function PropertyDetailPage({ params }: { params: { id: str
 
           {/* Mini “cómo concertar visita” */}
           <Card className="border-stone-200">
-            <CardContent className="p-6 space-y-3">
+            <CardContent className="p-6 space-y-4">
               <h3 className="text-lg font-medium">¿Te interesa?</h3>
-              <p className="text-sm text-stone-600">Cuéntanos cuándo quieres visitarla. Te respondemos en menos de 24h.</p>
-              <Button className="w-full bg-black text-white h-11" asChild>
-                <a href={`/colabora?ref=${encodeURIComponent(prop.id)}&title=${encodeURIComponent(prop.title)}`}>
-                  Pedir visita
-                </a>
-              </Button>
+              <p className="text-sm text-stone-600">Selecciona una fecha y solicita tu visita.</p>
+              <VisitForm propiedad={prop.title} propiedadUrl={`https://valeravisionarias.com/propiedad/${prop.id}`} />
             </CardContent>
           </Card>
         </aside>

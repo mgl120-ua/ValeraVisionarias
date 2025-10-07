@@ -131,12 +131,18 @@ export default function RentabilidadPage() {
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-10">
-      <header className="mb-8">
-        <h1 className="font-playfair text-3xl sm:text-4xl tracking-tight">Calculadora de Rentabilidad</h1>
-        <p className="text-stone-600 mt-2">
-          Estima rentabilidad bruta y neta, cash-flow y cash-on-cash con gastos reales y opción de hipoteca.
-        </p>
-      </header>
+      <section className="mb-10 text-center">
+      <span className="inline-flex items-center gap-2 rounded-full border px-3 py-1 text-xs uppercase tracking-wider">
+        <Calculator className="h-4 w-4" /> Calculadora de Rentabilidad
+      </span>
+      <h1 className="font-playfair mt-4 text-3xl sm:text-4xl md:text-5xl">
+        Calcula la rentabilidad de tu inversión
+      </h1>
+      <p className="text-muted-foreground mt-3 text-base md:text-lg max-w-2xl mx-auto">
+        Conoce tu rentabilidad bruta, neta y cash-flow estimado con opción de hipoteca y gastos reales.
+      </p>
+    </section>
+
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Formulario */}

@@ -32,6 +32,7 @@ import SanVicenteSection from "@/components/san-vicente-section"
 import FAQSection from "@/components/faq-section"
 import InteriorismoCarousel from "@/components/InteriorismoCarousel"
 import ServiciosScroll from "@/components/ServiciosScroll"
+import ContactForm from "@/components/ContactForm"
 
 export default function ValeraVisionariasLandingClient({
   featuredSlot,
@@ -299,9 +300,6 @@ export default function ValeraVisionariasLandingClient({
         <AchievementsSection />
         <SanVicenteSection />
 
-        
-
-
         {/* FAQ */}
         <section id="faq">
           <FAQSection />
@@ -380,120 +378,11 @@ export default function ValeraVisionariasLandingClient({
                 </a>
               </div>
 
-              <div>
-                <Card className="border border-stone-200 bg-white">
-                  <CardContent className="p-6 sm:p-8 lg:p-10">
-                    <form className="space-y-5 sm:space-y-6" aria-label="Formulario de contacto">
-                      <div className="grid sm:grid-cols-2 gap-5 sm:gap-6">
-                        <div>
-                          <label htmlFor="nombre" className="block text-xs sm:text-sm text-stone-800 mb-2 font-medium">
-                            Nombre{" "}
-                            <span className="text-red-600" aria-label="campo obligatorio">
-                              *
-                            </span>
-                          </label>
-                          <Input
-                            id="nombre"
-                            name="nombre"
-                            required
-                            aria-required="true"
-                            className="border-stone-300 h-11 sm:h-12 text-sm sm:text-base focus:border-black focus:ring-black"
-                          />
-                        </div>
-                        <div>
-                          <label
-                            htmlFor="apellidos"
-                            className="block text-xs sm:text-sm text-stone-800 mb-2 font-medium"
-                          >
-                            Apellidos{" "}
-                            <span className="text-red-600" aria-label="campo obligatorio">
-                              *
-                            </span>
-                          </label>
-                          <Input
-                            id="apellidos"
-                            name="apellidos"
-                            required
-                            aria-required="true"
-                            className="border-stone-300 h-11 sm:h-12 text-sm sm:text-base focus:border-black focus:ring-black"
-                          />
-                        </div>
-                      </div>
+          {/* Formulario */}
+            <div>
+              <ContactForm />
+            </div>
 
-                      <div>
-                        <label htmlFor="email" className="block text-xs sm:text-sm text-stone-800 mb-2 font-medium">
-                          Email{" "}
-                          <span className="text-red-600" aria-label="campo obligatorio">
-                            *
-                          </span>
-                        </label>
-                        <Input
-                          id="email"
-                          name="email"
-                          type="email"
-                          required
-                          aria-required="true"
-                          inputMode="email"
-                          className="border-stone-300 h-11 sm:h-12 text-sm sm:text-base focus:border-black focus:ring-black"
-                        />
-                      </div>
-
-                      <div>
-                        <label htmlFor="telefono" className="block text-xs sm:text-sm text-stone-800 mb-2 font-medium">
-                          Teléfono{" "}
-                          <span className="text-red-600" aria-label="campo obligatorio">
-                            *
-                          </span>
-                        </label>
-                        <Input
-                          id="telefono"
-                          name="telefono"
-                          type="tel"
-                          required
-                          aria-required="true"
-                          inputMode="tel"
-                          className="border-stone-300 h-11 sm:h-12 text-sm sm:text-base focus:border-black focus:ring-black"
-                        />
-                      </div>
-
-                      <div>
-                        <label htmlFor="servicio" className="block text-xs sm:text-sm text-stone-800 mb-2 font-medium">
-                          Servicio
-                        </label>
-                        <select
-                          id="servicio"
-                          name="servicio"
-                          className="w-full border border-stone-300 h-11 sm:h-12 px-3 sm:px-4 bg-white text-sm sm:text-base rounded-md focus:border-black focus:ring-black"
-                        >
-                          <option>Valoración de propiedad</option>
-                          <option>Comprar piso en San Vicente</option>
-                          <option>Alquiler cerca Universidad Alicante</option>
-                          <option>Asesoramiento de inversión</option>
-                          <option>Consulta general</option>
-                        </select>
-                      </div>
-
-                      <div>
-                        <label htmlFor="mensaje" className="block text-xs sm:text-sm text-stone-800 mb-2 font-medium">
-                          Mensaje
-                        </label>
-                        <Textarea
-                          id="mensaje"
-                          name="mensaje"
-                          className="border-stone-300 min-h-[100px] sm:min-h-[120px] text-sm sm:text-base focus:border-black focus:ring-black"
-                        />
-                      </div>
-
-                      <Button
-                        type="submit"
-                        className="w-full bg-black hover:bg-stone-800 text-white h-11 sm:h-12 text-sm sm:text-base focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2"
-                      >
-                        Enviar Consulta
-                      </Button>
-                    </form>
-                  </CardContent>
-                </Card>
-              </div>
             </div>
           </div>
         </section>

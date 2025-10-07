@@ -193,7 +193,7 @@ export default function NosotrosPage() {
                 Estamos aquí para ayudarte: responde tus dudas, analizar tu propiedad o planear tu próxima inversión.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Link href="/#contacto">
+                <Link href="/contacto">
                   <Button size="lg" className="bg-black hover:bg-stone-800 text-white px-10 h-12 w-full sm:w-auto">
                     Contactar ahora
                   </Button>

@@ -1,145 +1,164 @@
-// components/contact/ContactForm.tsx
 "use client"
-
 import { useState } from "react"
-import { z } from "zod"
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
-import { Button } from "@/components/ui/button"
-
-const schema = z.object({
-  nombre: z.string().min(2, "Introduce tu nombre"),
-  apellidos: z.string().min(2, "Introduce tus apellidos"),
-  email: z.string().email("Email no válido"),
-  telefono: z
-    .string()
-    .min(6, "Teléfono no válido")
-    .regex(/^[0-9+\s-]+$/, "Sólo números y + - espacios"),
-  servicio: z.string().optional(),
-  mensaje: z.string().min(5, "Cuéntanos un poco más"),
-  // Honeypot anti-spam
-  company: z.string().optional(),
-})
+import { motion, AnimatePresence } from "framer-motion"
 
 export default function ContactForm() {
-  const [loading, setLoading] = useState(false)
-  const [ok, setOk] = useState<null | boolean>(null)
-  const [error, setError] = useState<string | null>(null)
+  const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle")
 
-  async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
-    setLoading(true)
-    setOk(null)
-    setError(null)
+    setStatus("sending")
 
-    const fd = new FormData(e.currentTarget)
-    const payload = Object.fromEntries(fd.entries())
-    const parsed = schema.safeParse(payload)
-    if (!parsed.success) {
-      setLoading(false)
-      setOk(false)
-      setError(parsed.error.errors[0].message)
-      return
+    const form = e.currentTarget
+    const formData = new FormData(form)
+
+    const data = {
+      name: formData.get("name") as string,
+      surname: formData.get("surname") as string,
+      email: formData.get("email") as string,
+      phone: formData.get("phone") as string,
+      service: formData.get("service") as string,
+      message: formData.get("message") as string,
     }
 
-    // honeypot: si el bot rellena "company" cancelamos
-    if (parsed.data.company && parsed.data.company.trim().length > 0) {
-      setLoading(false)
-      setOk(true) // fingimos OK para bots
-      return
-    }
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      })
 
-    const res = await fetch("/api/contact", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(parsed.data),
-    })
-
-    setLoading(false)
-    if (res.ok) {
-      setOk(true)
-      e.currentTarget.reset()
-    } else {
-      const msg = await res.text()
-      setOk(false)
-      setError(msg || "No se pudo enviar el mensaje.")
+      if (!res.ok) throw new Error()
+      setStatus("success")
+      form.reset()
+      setTimeout(() => setStatus("idle"), 4000)
+    } catch {
+      setStatus("error")
+      setTimeout(() => setStatus("idle"), 4000)
     }
   }
 
   return (
-    <form onSubmit={onSubmit} className="space-y-5 sm:space-y-6" aria-label="Formulario de contacto">
-      <div className="grid sm:grid-cols-2 gap-5 sm:gap-6">
+    <form onSubmit={handleSubmit} className="space-y-4 max-w-md relative">
+      {/* Nombre y Apellidos */}
+      <div className="grid grid-cols-2 gap-3">
         <div>
-          <label htmlFor="nombre" className="block text-xs sm:text-sm text-stone-800 mb-2 font-medium">
-            Nombre *
-          </label>
-          <Input id="nombre" name="nombre" required className="h-11 sm:h-12" />
+          <label className="block text-sm font-medium mb-1 text-stone-700">Nombre *</label>
+          <input
+            type="text"
+            name="name"
+            required
+            className="w-full border border-stone-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-black bg-white"
+          />
         </div>
         <div>
-          <label htmlFor="apellidos" className="block text-xs sm:text-sm text-stone-800 mb-2 font-medium">
-            Apellidos *
-          </label>
-          <Input id="apellidos" name="apellidos" required className="h-11 sm:h-12" />
+          <label className="block text-sm font-medium mb-1 text-stone-700">Apellidos </label>
+          <input
+            type="text"
+            name="surname"
+            className="w-full border border-stone-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-black bg-white"
+          />
         </div>
       </div>
 
+      {/* Email y Teléfono */}
       <div>
-        <label htmlFor="email" className="block text-xs sm:text-sm text-stone-800 mb-2 font-medium">
-          Email *
-        </label>
-        <Input id="email" name="email" type="email" inputMode="email" required className="h-11 sm:h-12" />
+        <label className="block text-sm font-medium mb-1 text-stone-700">Email *</label>
+        <input
+          type="email"
+          name="email"
+          required
+          className="w-full border border-stone-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-black bg-white"
+        />
+      </div>
+      <div>
+        <label className="block text-sm font-medium mb-1 text-stone-700">Teléfono </label>
+        <input
+          type="tel"
+          name="phone"
+          className="w-full border border-stone-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-black bg-white"
+        />
       </div>
 
+      {/* Desplegable de servicio */}
       <div>
-        <label htmlFor="telefono" className="block text-xs sm:text-sm text-stone-800 mb-2 font-medium">
-          Teléfono *
-        </label>
-        <Input id="telefono" name="telefono" type="tel" inputMode="tel" required className="h-11 sm:h-12" />
-      </div>
-
-      <div>
-        <label htmlFor="servicio" className="block text-xs sm:text-sm text-stone-800 mb-2 font-medium">
-          Servicio
-        </label>
+        <label className="block text-sm font-medium mb-1 text-stone-700">Servicio</label>
         <select
-          id="servicio"
-          name="servicio"
-          className="w-full border border-stone-300 h-11 sm:h-12 px-3 sm:px-4 bg-white text-sm sm:text-base rounded-md focus:border-black focus:ring-black"
-        >
-          <option value="">Selecciona una opción</option>
-          <option>Valoración de propiedad</option>
-          <option>Comprar piso en San Vicente</option>
-          <option>Alquiler cerca Universidad Alicante</option>
-          <option>Asesoramiento de inversión</option>
-          <option>Consulta general</option>
+          name="service"
+          className="w-full border border-stone-300 rounded-lg p-2 bg-white focus:outline-none focus:ring-2 focus:ring-black"
+        >          
+          <option value="Consulta general">Consulta general</option>
+          <option value="Valoración de propiedad">Valoración de propiedad</option>
+          <option value="Comprar piso en San Vicente">Comprar piso en San Vicente</option>
+          <option value="Alquiler cerca Universidad Alicante">Alquiler cerca Universidad Alicante</option>
+          <option value="Asesoramiento de inversión">Asesoramiento de inversión</option>
         </select>
       </div>
 
+      {/* Mensaje */}
       <div>
-        <label htmlFor="mensaje" className="block text-xs sm:text-sm text-stone-800 mb-2 font-medium">
-          Mensaje *
-        </label>
-        <Textarea id="mensaje" name="mensaje" minLength={5} className="min-h-[120px]" required />
+        <label className="block text-sm font-medium mb-1 text-stone-700">Mensaje</label>
+        <textarea
+          name="message"
+          rows={4}
+          className="w-full border border-stone-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-black bg-white"
+        />
       </div>
 
-      {/* Honeypot (oculto a humanos) */}
-      <input type="text" name="company" aria-hidden="true" tabIndex={-1} className="hidden" />
-
-      <Button type="submit" className="w-full bg-black hover:bg-stone-800 text-white h-11 sm:h-12" disabled={loading}>
-        {loading ? "Enviando..." : "Enviar consulta"}
-      </Button>
-
-      {/* Feedback */}
-      {ok === true && (
-        <p className="text-green-700 text-sm" role="status">
-          ¡Gracias! Te responderemos en menos de 24 horas.
-        </p>
-      )}
-      {ok === false && error && (
-        <p className="text-red-700 text-sm" role="alert">
-          {error}
-        </p>
-      )}
+      {/* Botón con animación */}
+      <motion.button
+        type="submit"
+        disabled={status === "sending"}
+        className="relative bg-black text-white px-6 py-2 rounded-lg overflow-hidden transition-all disabled:opacity-80 disabled:cursor-not-allowed"
+        whileHover={{ scale: status === "sending" ? 1 : 1.02 }}
+        whileTap={{ scale: 0.98 }}
+      >
+        <AnimatePresence mode="wait">
+          {status === "sending" ? (
+            <motion.span
+              key="sending"
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.2 }}
+              className="flex items-center gap-2"
+            >
+              <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+              Enviando...
+            </motion.span>
+          ) : status === "success" ? (
+            <motion.span
+              key="success"
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.2 }}
+            >
+              Enviado ✅
+            </motion.span>
+          ) : status === "error" ? (
+            <motion.span
+              key="error"
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.2 }}
+            >
+              Error ❌: Envía correo a valeravisionarias@gmail.com 
+            </motion.span>
+          ) : (
+            <motion.span
+              key="idle"
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.2 }}
+            >
+              Enviar Consulta
+            </motion.span>
+          )}
+        </AnimatePresence>
+      </motion.button>
     </form>
   )
 }

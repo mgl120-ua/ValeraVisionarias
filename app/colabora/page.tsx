@@ -4,9 +4,18 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
-import { DollarSign, Clock, TrendingUp, Phone, Mail, MapPin, CheckCircle, Users } from "lucide-react"
-import MobileNav from "@/components/mobile-nav"
+import {
+  DollarSign,
+  Clock,
+  TrendingUp,
+  Phone,
+  Mail,
+  MapPin,
+  CheckCircle,
+  Users,
+} from "lucide-react"
 import type { Metadata } from "next"
+import CaptadoresForm from "@/components/CaptadoresForm"
 
 export const metadata: Metadata = {
   title: "Colabora con Valera Visionarias | Gana 1.500€ por captación",
@@ -17,7 +26,6 @@ export const metadata: Metadata = {
 export default function ColaboraPage() {
   return (
     <div className="min-h-screen bg-white">
-      {/* Spacer */}
       <div className="h-16 sm:h-20"></div>
 
       {/* Hero Section */}
@@ -72,35 +80,6 @@ export default function ColaboraPage() {
               </Card>
             </div>
 
-            <div className="bg-white border border-stone-200 p-8 sm:p-10 lg:p-12 rounded-lg mb-12 sm:mb-16">
-              <h2 className="font-playfair text-2xl sm:text-3xl font-light text-black mb-6 sm:mb-8">
-                ¿Tienes contactos que quieran vender?
-              </h2>
-              <p className="text-base sm:text-lg text-stone-700 leading-relaxed mb-8">
-                Si conoces a alguien que esté pensando en vender su propiedad en San Vicente del Raspeig o alrededores,
-                ¡esta es tu oportunidad! Te pagamos por cada captación exitosa. Sin inversión inicial, sin riesgos.
-              </p>
-
-              <div className="grid sm:grid-cols-2 gap-6 text-left">
-                <div className="flex items-start space-x-3">
-                  <CheckCircle className="w-5 h-5 text-black mt-1 flex-shrink-0" />
-                  <p className="text-sm sm:text-base text-stone-700">No necesitas experiencia previa en inmobiliaria</p>
-                </div>
-                <div className="flex items-start space-x-3">
-                  <CheckCircle className="w-5 h-5 text-black mt-1 flex-shrink-0" />
-                  <p className="text-sm sm:text-base text-stone-700">Nosotros nos encargamos de todo el proceso</p>
-                </div>
-                <div className="flex items-start space-x-3">
-                  <CheckCircle className="w-5 h-5 text-black mt-1 flex-shrink-0" />
-                  <p className="text-sm sm:text-base text-stone-700">Comisiones transparentes y sin letra pequeña</p>
-                </div>
-                <div className="flex items-start space-x-3">
-                  <CheckCircle className="w-5 h-5 text-black mt-1 flex-shrink-0" />
-                  <p className="text-sm sm:text-base text-stone-700">Pagos rápidos al cierre de cada operación</p>
-                </div>
-              </div>
-            </div>
-
             <a href="#formulario">
               <Button
                 size="lg"
@@ -113,10 +92,11 @@ export default function ColaboraPage() {
         </div>
       </section>
 
-      {/* Contact Form */}
+      {/* Form Section */}
       <section id="formulario" className="py-16 sm:py-20 md:py-24 lg:py-32 bg-white">
         <div className="container mx-auto px-4 sm:px-6 lg:px-12">
           <div className="grid lg:grid-cols-2 gap-12 sm:gap-16 max-w-7xl mx-auto">
+            {/* Lado izquierdo: Info */}
             <div>
               <p className="text-xs tracking-[0.3em] uppercase text-stone-500 mb-3 sm:mb-4">Únete al equipo</p>
               <h2 className="font-playfair text-3xl sm:text-4xl md:text-5xl font-light text-black mb-6 sm:mb-8 leading-tight">
@@ -132,16 +112,11 @@ export default function ColaboraPage() {
                   <Phone className="w-4 h-4 sm:w-5 sm:h-5 text-black mt-1 flex-shrink-0" />
                   <div>
                     <p className="text-xs sm:text-sm text-stone-500 mb-1">Teléfono</p>
-                    <a
-                      href="tel:+34645680339"
-                      className="text-sm sm:text-base text-black font-medium hover:underline"
-                      aria-label="Llamar a Valera Visionarias"
-                    >
+                    <a href="tel:+34645680339" className="text-sm sm:text-base text-black font-medium hover:underline">
                       645 68 03 39
                     </a>
                   </div>
                 </div>
-
                 <div className="flex items-start space-x-4">
                   <Mail className="w-4 h-4 sm:w-5 sm:h-5 text-black mt-1 flex-shrink-0" />
                   <div>
@@ -149,13 +124,11 @@ export default function ColaboraPage() {
                     <a
                       href="mailto:Valeravisionarias@gmail.com"
                       className="text-sm sm:text-base text-black font-medium break-all hover:underline"
-                      aria-label="Enviar email a Valera Visionarias"
                     >
                       Valeravisionarias@gmail.com
                     </a>
                   </div>
                 </div>
-
                 <div className="flex items-start space-x-4">
                   <MapPin className="w-4 h-4 sm:w-5 sm:h-5 text-black mt-1 flex-shrink-0" />
                   <div>
@@ -172,82 +145,12 @@ export default function ColaboraPage() {
               </div>
             </div>
 
-            <div>
-              <Card className="border border-stone-200 bg-white">
-                <CardContent className="p-6 sm:p-8 lg:p-10">
-                  <form className="space-y-5 sm:space-y-6">
-                    <div className="grid sm:grid-cols-2 gap-5 sm:gap-6">
-                      <div>
-                        <label htmlFor="nombre" className="block text-xs sm:text-sm text-stone-700 mb-2">
-                          Nombre
-                        </label>
-                        <Input
-                          id="nombre"
-                          name="nombre"
-                          className="border-stone-300 h-11 sm:h-12 text-sm sm:text-base"
-                          placeholder="Tu nombre"
-                        />
-                      </div>
-                      <div>
-                        <label htmlFor="apellidos" className="block text-xs sm:text-sm text-stone-700 mb-2">
-                          Apellidos
-                        </label>
-                        <Input
-                          id="apellidos"
-                          name="apellidos"
-                          className="border-stone-300 h-11 sm:h-12 text-sm sm:text-base"
-                          placeholder="Tus apellidos"
-                        />
-                      </div>
-                    </div>
-
-                    <div>
-                      <label htmlFor="email" className="block text-xs sm:text-sm text-stone-700 mb-2">
-                        Email
-                      </label>
-                      <Input
-                        id="email"
-                        name="email"
-                        type="email"
-                        className="border-stone-300 h-11 sm:h-12 text-sm sm:text-base"
-                        placeholder="tu@email.com"
-                      />
-                    </div>
-
-                    <div>
-                      <label htmlFor="telefono" className="block text-xs sm:text-sm text-stone-700 mb-2">
-                        Teléfono
-                      </label>
-                      <Input
-                        id="telefono"
-                        name="telefono"
-                        className="border-stone-300 h-11 sm:h-12 text-sm sm:text-base"
-                        placeholder="645 68 03 39"
-                      />
-                    </div>
-
-                    <div>
-                      <label htmlFor="mensaje" className="block text-xs sm:text-sm text-stone-700 mb-2">
-                        ¿Por qué te interesa colaborar con nosotros?
-                      </label>
-                      <Textarea
-                        id="mensaje"
-                        name="mensaje"
-                        className="border-stone-300 min-h-[100px] sm:min-h-[120px] text-sm sm:text-base"
-                        placeholder="Cuéntanos sobre tu experiencia, tus contactos o tu motivación..."
-                      />
-                    </div>
-
-                    <Button
-                      type="submit"
-                      className="w-full bg-black hover:bg-stone-800 text-white h-11 sm:h-12 text-sm sm:text-base"
-                    >
-                      Solicitar información del programa
-                    </Button>
-                  </form>
-                </CardContent>
-              </Card>
-            </div>
+            {/* Lado derecho: Formulario */}
+            <Card className="border border-stone-200 bg-white">
+              <CardContent className="p-6 sm:p-8 lg:p-10">
+                <CaptadoresForm />
+              </CardContent>
+            </Card>
           </div>
         </div>
       </section>

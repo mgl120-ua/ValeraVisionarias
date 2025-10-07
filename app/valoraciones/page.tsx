@@ -22,7 +22,7 @@ export default function ValoracionesPage() {
               Nuestros expertos pueden realizar una tasación profesional presencial de tu propiedad, analizando todos
               los detalles que pueden afectar su valor de mercado.
             </p>
-            <Link href="/#contacto">
+            <Link href="/contacto">
               <Button
                 size="lg"
                 className="w-full sm:w-auto bg-black hover:bg-stone-800 text-white px-8 sm:px-10 h-11 sm:h-12 text-sm sm:text-base mx-4"
