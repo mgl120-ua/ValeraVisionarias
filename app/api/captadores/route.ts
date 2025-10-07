@@ -8,8 +8,8 @@ export async function POST(req: Request) {
     const { nombre, apellidos, email, telefono, mensaje } = await req.json()
 
     await resend.emails.send({
-      from: "Valera Visionarias <no-reply@valeravisionarias.com>",
-      to: "martagrimaldoslopez@gmail.com",
+      from: "Valera Visionarias <inmobiliaria@valeravisionarias.com>",
+      to: "valeravisionarias@gmail.com",
       subject: "Programa de captadores",
       html: `
         <h2>Nueva solicitud de colaboración</h2>

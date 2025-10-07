@@ -13,7 +13,7 @@ export async function POST(req: Request) {
 
     const response = await resend.emails.send({
       from: "Valera Visionarias <no-reply@valeravisionarias.com>",
-      to: "martagrimaldoslopez@gmail.com",
+      to: "valeravisionarias@gmail.com",
       subject: `Nueva consulta — ${service}`,
       html: `
         <h2>Nueva consulta desde la web</h2>

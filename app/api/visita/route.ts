@@ -12,8 +12,8 @@ export async function POST(req: Request) {
     }
 
     await resend.emails.send({
-      from: "Valera Visionarias <no-reply@valeravisionarias.com>",
-      to: "martagrimaldoslopez@gmail.com",
+      from: "Valera Visionarias <inmobiliaria@valeravisionarias.com>",
+      to: "valeravisionarias@gmail.com",
       subject: `Solicitud de visita — ${propiedad}`,
       html: `
         <h2>Nueva solicitud de visita</h2>
