@@ -31,8 +31,8 @@ export default function Footer({ year }: { year: number }) {
             <div className="space-y-3 mb-6">
               <div className="flex items-center gap-3">
                 <Phone className="w-4 h-4 text-stone-400" aria-hidden="true" />
-                <a href="tel:+34645680339" className="text-sm text-stone-300 hover:text-white transition-colors">
-                  645 68 03 39
+                <a href="tel:+34654693232" className="text-sm text-stone-300 hover:text-white transition-colors">
+                  654 69 32 32
                 </a>
               </div>
               <div className="flex items-center gap-3">

@@ -82,8 +82,8 @@ export default function ContactoPage() {
               <ul className="space-y-4 text-sm">
                 <li>
                   <strong>Teléfono:</strong>{" "}
-                  <a className="underline" href="tel:+34645680339">
-                    645 68 03 39
+                  <a className="underline" href="tel:+34654693232">
+                    654 69 32 32
                   </a>
                 </li>
                 <li>
