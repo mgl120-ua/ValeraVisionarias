@@ -24,10 +24,6 @@ export default function Footer({ year }: { year: number }) {
               cerca de la Universidad de Alicante.
             </p>
 
-            <p className="text-xs text-stone-500 mb-4">
-              NIF: B12345678 · Registro Mercantil de Alicante, Tomo 1234, Folio 56, Hoja A-12345
-            </p>
-
             <div className="space-y-3 mb-6">
               <div className="flex items-center gap-3">
                 <Phone className="w-4 h-4 text-stone-400" aria-hidden="true" />
