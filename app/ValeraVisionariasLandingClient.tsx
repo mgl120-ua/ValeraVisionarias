@@ -43,19 +43,32 @@ export default function ValeraVisionariasLandingClient({
 
   return (
     <>
-      {/* Structured Data (SEO) */}
+      {/* 🧠 JSON-LD Unificado: Organization + LocalBusiness + RealEstateAgent */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify({
             "@context": "https://schema.org",
-            "@type": "RealEstateAgent",
+            "@type": ["Organization", "LocalBusiness", "RealEstateAgent"],
+            "@id": "https://www.valeravisionarias.com#organization",
             name: "Valera Visionarias",
-            image: "https://valeravisionarias.com/images/logo-dark.png",
-            "@id": "https://valeravisionarias.com",
-            url: "https://valeravisionarias.com",
-            telephone: "+34645680339",
+            url: "https://www.valeravisionarias.com",
+            logo: "https://www.valeravisionarias.com/images/logo-dark.png",
+            image: [
+              "https://www.valeravisionarias.com/images/logo-dark.png",
+              "https://www.valeravisionarias.com/images/hero-architecture.jpg",
+            ],
+            description:
+              "Inmobiliaria en San Vicente del Raspeig especializada en compraventa y alquiler de viviendas cerca de la Universidad de Alicante. Sin exclusivas forzadas, trato transparente y resultados garantizados.",
+            telephone: "+34 645 68 03 39",
             email: "Valeravisionarias@gmail.com",
+            priceRange: "€€",
+            areaServed: "San Vicente del Raspeig, Alicante",
+            sameAs: [
+              "https://www.instagram.com/valeravisionarias",
+              "https://www.facebook.com/valeravisionarias",
+              "https://www.google.com/maps?cid=XXXXXXXXXXXX" // <-- Añade tu CID de Google Maps si lo tienes
+            ],
             address: {
               "@type": "PostalAddress",
               streetAddress: "Villafranqueza 50, local 1",
@@ -69,114 +82,113 @@ export default function ValeraVisionariasLandingClient({
               latitude: 38.3936,
               longitude: -0.5247,
             },
-            openingHoursSpecification: {
-              "@type": "OpeningHoursSpecification",
-              dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-              opens: "09:00",
-              closes: "19:00",
-            },
-            sameAs: [
-              "https://www.facebook.com/lvaleravisionarias",
-              "https://www.instagram.com/lvaleravisionarias",
+            openingHoursSpecification: [
+              {
+                "@type": "OpeningHoursSpecification",
+                dayOfWeek: [
+                  "Monday",
+                  "Tuesday",
+                  "Wednesday",
+                  "Thursday",
+                  "Friday",
+                ],
+                opens: "09:00",
+                closes: "19:00",
+              },
             ],
-            priceRange: "€€",
-            areaServed: "San Vicente del Raspeig, Alicante",
+            contactPoint: [
+              {
+                "@type": "ContactPoint",
+                telephone: "+34 645 68 03 39",
+                contactType: "customer service",
+                areaServed: "ES",
+                availableLanguage: ["Spanish", "English"],
+              },
+            ],
+            aggregateRating: {
+              "@type": "AggregateRating",
+              ratingValue: "5.0",
+              reviewCount: "3",
+              bestRating: "5",
+              worstRating: "1",
+            },
+            review: [
+              {
+                "@type": "Review",
+                author: { "@type": "Person", name: "Propietario" },
+                reviewBody:
+                  "El trato fue exquisito y el trabajo impoluto. Laura es una gran profesional. Recomiendo trabajar con Valera Visionarias.",
+                reviewRating: { "@type": "Rating", ratingValue: "5" },
+              },
+              {
+                "@type": "Review",
+                author: { "@type": "Person", name: "Compradores" },
+                reviewBody:
+                  "Profesional, atenta y formal. Nos acompañó durante todo el proceso de compra con transparencia total.",
+                reviewRating: { "@type": "Rating", ratingValue: "5" },
+              },
+              {
+                "@type": "Review",
+                author: { "@type": "Person", name: "Vendedora" },
+                reviewBody:
+                  "Vendí mi casa en poco tiempo y por el precio estipulado. Muy recomendable.",
+                reviewRating: { "@type": "Rating", ratingValue: "5" },
+              },
+            ],
           }),
         }}
       />
-      <script
-  type="application/ld+json"
-  dangerouslySetInnerHTML={{
-    __html: JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      mainEntity: [
-        {
-          "@type": "Question",
-          name: "¿Cuánto tiempo tardan en venderse las propiedades?",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text:
-              "El 80% de nuestras ventas se cierran en menos de una semana, muchas en menos de 48 horas. El 20% restante, siempre al precio estipulado, no tarda más de tres meses.",
-          },
-        },
-        {
-          "@type": "Question",
-          name: "¿Qué zonas de San Vicente del Raspeig recomiendan?",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text:
-              "Las zonas más demandadas son las cercanas a la Universidad de Alicante, el centro urbano y áreas residenciales tranquilas como Villafranqueza. Cada zona tiene ventajas según tu perfil: familia, estudiante o inversor.",
-          },
-        },
-        {
-          "@type": "Question",
-          name: "¿Qué rentabilidad puedo esperar del alquiler en San Vicente?",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text:
-              "La rentabilidad media ronda el 5-7% anual, especialmente en propiedades cercanas a la Universidad de Alicante. Alta demanda de alquiler estudiantil todo el año.",
-          },
-        },
-        {
-          "@type": "Question",
-          name: "¿Cuáles son los gastos de compraventa que debo considerar?",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text:
-              "En la compra: ITP (8%), IVA + AJD (10% + 1.5%), notaría, registro y gestoría. En la venta: plusvalía municipal e IRPF si hay ganancia patrimonial.",
-          },
-        },
-      ],
-    }),
-  }}
-/>
-<script
-  type="application/ld+json"
-  dangerouslySetInnerHTML={{
-    __html: JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "Organization",
-      name: "Valera Visionarias",
-      url: "https://valeravisionarias.com",
-      logo: "https://valeravisionarias.com/images/logo-dark.png",
-      sameAs: [
-        "https://www.instagram.com/valeravisionarias",
-        "https://www.facebook.com/valeravisionarias",
-      ],
-      aggregateRating: {
-        "@type": "AggregateRating",
-        ratingValue: "5.0",
-        reviewCount: "3",
-      },
-      review: [
-        {
-          "@type": "Review",
-          author: { "@type": "Person", name: "Propietario" },
-          reviewBody:
-            "El trato fue exquisito, el trabajo impoluto. Laura, a pesar de ser tan joven, es una gran profesional. Claramente aconsejaría trabajar con Valera Visionarias.",
-          reviewRating: { "@type": "Rating", ratingValue: "5" },
-        },
-        {
-          "@type": "Review",
-          author: { "@type": "Person", name: "Compradores" },
-          reviewBody:
-            "Gran profesional, formal y atenta en todos los detalles. Asesoramiento completo del principio al final de la operación de compra.",
-          reviewRating: { "@type": "Rating", ratingValue: "5" },
-        },
-        {
-          "@type": "Review",
-          author: { "@type": "Person", name: "Vendedora" },
-          reviewBody:
-            "He vendido mi casa en poco tiempo y por el precio estipulado. Se encargan de todos los trámites y facilitan mucho la operación.",
-          reviewRating: { "@type": "Rating", ratingValue: "5" },
-        },
-      ],
-    }),
-  }}
-/>
 
-      {/* Site Search (SEO mejorado) */}
+      {/* 🧾 FAQPage Schema */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            mainEntity: [
+              {
+                "@type": "Question",
+                name: "¿Cuánto tiempo tardan en venderse las propiedades?",
+                acceptedAnswer: {
+                  "@type": "Answer",
+                  text:
+                    "El 80% de nuestras ventas se cierran en menos de una semana, muchas en menos de 48 horas. El 20% restante, siempre al precio estipulado, no tarda más de tres meses.",
+                },
+              },
+              {
+                "@type": "Question",
+                name: "¿Qué zonas de San Vicente del Raspeig recomiendan?",
+                acceptedAnswer: {
+                  "@type": "Answer",
+                  text:
+                    "Las zonas más demandadas son las cercanas a la Universidad de Alicante, el centro urbano y áreas residenciales tranquilas como Villafranqueza. Cada zona tiene ventajas según tu perfil: familia, estudiante o inversor.",
+                },
+              },
+              {
+                "@type": "Question",
+                name: "¿Qué rentabilidad puedo esperar del alquiler en San Vicente?",
+                acceptedAnswer: {
+                  "@type": "Answer",
+                  text:
+                    "La rentabilidad media ronda el 5-7% anual, especialmente en propiedades cercanas a la Universidad de Alicante. Alta demanda de alquiler estudiantil todo el año.",
+                },
+              },
+              {
+                "@type": "Question",
+                name: "¿Cuáles son los gastos de compraventa que debo considerar?",
+                acceptedAnswer: {
+                  "@type": "Answer",
+                  text:
+                    "En la compra: ITP (8%), IVA + AJD (10% + 1.5%), notaría, registro y gestoría. En la venta: plusvalía municipal e IRPF si hay ganancia patrimonial.",
+                },
+              },
+            ],
+          }),
+        }}
+      />
+
+      {/* 🔍 WebSite + SearchAction */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -184,10 +196,11 @@ export default function ValeraVisionariasLandingClient({
             "@context": "https://schema.org",
             "@type": "WebSite",
             name: "Valera Visionarias",
-            url: "https://valeravisionarias.com",
+            url: "https://www.valeravisionarias.com",
             potentialAction: {
               "@type": "SearchAction",
-              target: "https://valeravisionarias.com/propiedades?q={search_term_string}",
+              target:
+                "https://www.valeravisionarias.com/propiedades?q={search_term_string}",
               "query-input": "required name=search_term_string",
             },
           }),
