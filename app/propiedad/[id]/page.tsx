@@ -108,38 +108,75 @@ export default async function PropertyDetailPage({ params }: { params: { id: str
   const mapSrc = `https://www.google.com/maps?q=${mapQuery}&output=embed`;
 
   // JSON-LD RealEstateListing (mejora SEO + enriquecimiento)
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "RealEstateListing",
-    name: prop.title,
-    description: prop.description,
-    url: `https://valeravisionarias.com/propiedad/${prop.id}`,
-    datePosted: prop.created_at,
-    address: {
-      "@type": "PostalAddress",
-      streetAddress: prop.address ?? "",
-      addressLocality: prop.city ?? "",
-      postalCode: prop.postal_code ?? "",
-      addressCountry: "ES",
+  // JSON-LD RealEstateListing + Offer + Place + Agent
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "RealEstateListing",
+  name: prop.title,
+  description: prop.description,
+  url: `https://www.valeravisionarias.com/propiedad/${prop.id}`,
+  datePosted: prop.created_at,
+  image: imageUrls.length
+    ? imageUrls.map((u) => `https://www.valeravisionarias.com${u}`)
+    : ["https://www.valeravisionarias.com/images/logo-dark.png"],
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: prop.address ?? "",
+    addressLocality: prop.city ?? "San Vicente del Raspeig",
+    postalCode: prop.postal_code ?? "03690",
+    addressRegion: "Alicante",
+    addressCountry: "ES",
+  },
+  geo: {
+    "@type": "GeoCoordinates",
+    latitude: 38.3936,
+    longitude: -0.5247,
+  },
+  offers: {
+    "@type": "Offer",
+    price: Number(prop.price),
+    priceCurrency: "EUR",
+    availability:
+      prop.status === "activo"
+        ? "https://schema.org/InStock"
+        : "https://schema.org/SoldOut",
+    url: `https://www.valeravisionarias.com/propiedad/${prop.id}`,
+    itemOffered: {
+      "@type": "House",
+      name: prop.title,
+      numberOfRoomsTotal: Number(prop.bedrooms),
+      numberOfBathroomsTotal: Number(prop.bathrooms),
+      floorSize: {
+        "@type": "QuantitativeValue",
+        value: prop.size,
+        unitCode: "MTK",
+      },
+      category: prop.category === "alquiler" ? "for rent" : "for sale",
     },
-    offers: {
-      "@type": "Offer",
-      price: Number(prop.price),
-      priceCurrency: "EUR",
-      availability: prop.status === "activo" ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
-      itemOffered: {
-        "@type": "House",
-        numberOfRoomsTotal: Number(prop.bedrooms),
+    seller: {
+      "@type": "RealEstateAgent",
+      name: "Valera Visionarias",
+      url: "https://www.valeravisionarias.com",
+      telephone: "+34645680339",
+      logo: "https://www.valeravisionarias.com/images/logo-dark.png",
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: "Villafranqueza 50, local 1",
+        addressLocality: "San Vicente del Raspeig",
+        addressRegion: "Alicante",
+        postalCode: "03690",
+        addressCountry: "ES",
       },
     },
-    additionalProperty: [
-      { "@type": "PropertyValue", name: "Metros", value: `${prop.size} m²` },
-      { "@type": "PropertyValue", name: "Dormitorios", value: prop.bedrooms },
-      { "@type": "PropertyValue", name: "Baños", value: prop.bathrooms },
-      { "@type": "PropertyValue", name: "Categoría", value: prop.category },
-    ],
-    image: imageUrls,
-  };
+  },
+  additionalProperty: [
+    { "@type": "PropertyValue", name: "Superficie", value: `${prop.size} m²` },
+    { "@type": "PropertyValue", name: "Dormitorios", value: prop.bedrooms },
+    { "@type": "PropertyValue", name: "Baños", value: prop.bathrooms },
+    { "@type": "PropertyValue", name: "Categoría", value: prop.category },
+  ],
+}
+
 
   return (
     <main className="container mx-auto px-4 py-6">

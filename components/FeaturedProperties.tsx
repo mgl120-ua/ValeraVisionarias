@@ -1,11 +1,11 @@
 // components/FeaturedProperties.tsx
-import Link from "next/link";
-import { createSupabaseServer } from "@/lib/supabase/server";
+import Link from "next/link"
+import { createSupabaseServer } from "@/lib/supabase/server"
 
-export const revalidate = 60; // opcional: ISR
+export const revalidate = 60 // optional: ISR
 
 export default async function FeaturedProperties() {
-  const supabase = createSupabaseServer();
+  const supabase = createSupabaseServer()
 
   const { data, error } = await supabase
     .from("properties")
@@ -30,7 +30,7 @@ export default async function FeaturedProperties() {
     .eq("status", "activo")
     .eq("featured", true)
     .order("created_at", { ascending: false })
-    .limit(6);
+    .limit(6)
 
   if (error) {
     return (
@@ -38,14 +38,15 @@ export default async function FeaturedProperties() {
         <h2 className="text-xl font-semibold mb-4">Destacadas</h2>
         <p className="text-red-600 text-sm">Error: {error.message}</p>
       </section>
-    );
+    )
   }
 
   if (!data || data.length === 0) {
-    return null; // nada destacado
+    return null 
   }
 
   return (
+    
     <section className="container mx-auto px-4 py-8">
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-xl sm:text-2xl font-semibold">Propiedades destacadas</h2>
@@ -56,62 +57,104 @@ export default async function FeaturedProperties() {
 
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {data.map((p: any) => {
-          const imgs: any[] = p.property_images ?? [];
-          const mainImg =
-            imgs.length > 0
-              ? [...imgs].sort((a, b) => (a.position ?? 0) - (b.position ?? 0))[0]?.url
-              : undefined;
+          const imgs: any[] = p.property_images ?? []
+          const sortedImgs = [...imgs].sort((a, b) => (a.position ?? 0) - (b.position ?? 0))
+          const mainImg = sortedImgs[0]?.url
+
+          // ✅ JSON-LD for each property
+          const jsonLd = {
+            "@context": "https://schema.org",
+            "@type": "RealEstateListing",
+            name: p.title,
+            description: p.description,
+            url: `https://www.valeravisionarias.com/propiedad/${p.id}`,
+            image:
+              sortedImgs.length > 0
+                ? sortedImgs.map((img) => `https://www.valeravisionarias.com${img.url}`)
+                : ["https://www.valeravisionarias.com/images/logo-dark.png"],
+            numberOfRooms: p.bedrooms,
+            numberOfBathroomsTotal: p.bathrooms,
+            floorSize: {
+              "@type": "QuantitativeValue",
+              value: p.size,
+              unitCode: "MTK",
+            },
+            address: {
+              "@type": "PostalAddress",
+              addressLocality: p.city || "San Vicente del Raspeig",
+              addressRegion: "Alicante",
+              postalCode: "03690",
+              addressCountry: "ES",
+            },
+            offers: {
+              "@type": "Offer",
+              price: p.price,
+              priceCurrency: "EUR",
+              availability: "https://schema.org/InStock",
+              url: `https://www.valeravisionarias.com/propiedad/${p.id}`,
+            },
+            seller: {
+              "@type": "RealEstateAgent",
+              name: "Valera Visionarias",
+              url: "https://www.valeravisionarias.com",
+              telephone: "+34645680339",
+              logo: "https://www.valeravisionarias.com/images/logo-dark.png",
+            },
+          }
 
           return (
-            <Link
+            <article
               key={p.id}
-              href={`/propiedad/${p.id}`}
-              className="group block rounded-xl border border-stone-200 bg-white overflow-hidden hover:shadow-lg transition-shadow"
+              className="group block rounded-xl border border-stone-200 bg-white overflow-hidden hover:shadow-lg transition-shadow relative"
             >
-              <div className="relative aspect-[16/10] bg-stone-100">
-                {mainImg ? (
-                  <img
-                    src={mainImg}
-                    alt={p.title}
-                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                    loading="lazy"
-                  />
-                ) : (
-                  <div className="w-full h-full grid place-items-center text-stone-400 text-sm">
-                    Sin imagen
+              {/* JSON-LD Structured Data (server-rendered, safe) */}
+              <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+              />
+
+              <Link href={`/propiedad/${p.id}`}>
+                <div className="relative aspect-[16/10] bg-stone-100">
+                  {mainImg ? (
+                    <img
+                      src={mainImg}
+                      alt={`Propiedad en ${p.city || "San Vicente del Raspeig"} – ${p.title}`}
+                      className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                      loading="lazy"
+                    />
+                  ) : (
+                    <div className="w-full h-full grid place-items-center text-stone-400 text-sm">
+                      Sin imagen
+                    </div>
+                  )}
+                </div>
+
+                <div className="p-4">
+                  <div className="flex items-start justify-between gap-3">
+                    <h3 className="text-base sm:text-lg font-medium line-clamp-1">{p.title}</h3>
+                    <span className="text-[10px] uppercase tracking-wide bg-black text-white px-2 py-1 rounded">
+                      Destacada
+                    </span>
                   </div>
-                )}
-              </div>
 
-              <div className="p-4">
-                <div className="flex items-start justify-between gap-3">
-                  <h3 className="text-base sm:text-lg font-medium line-clamp-1">
-                    {p.title}
-                  </h3>
-                  <span className="text-[10px] uppercase tracking-wide bg-black text-white px-2 py-1 rounded">
-                    Destacada
-                  </span>
+                  <p className="mt-2 text-sm text-stone-600 line-clamp-2">{p.description}</p>
+
+                  <div className="mt-3 flex flex-wrap items-center gap-3 text-sm text-stone-700">
+                    <span className="font-semibold">
+                      {Number(p.price).toLocaleString("es-ES")} €
+                    </span>
+                    <span>· {p.size} m²</span>
+                    <span>· {p.bedrooms} hab</span>
+                    <span>· {p.bathrooms} baños</span>
+                  </div>
+
+                  <p className="mt-1 text-xs text-stone-500">{p.city}</p>
                 </div>
-
-                <p className="mt-2 text-sm text-stone-600 line-clamp-2">
-                  {p.description}
-                </p>
-
-                <div className="mt-3 flex flex-wrap items-center gap-3 text-sm text-stone-700">
-                  <span className="font-semibold">
-                    {Number(p.price).toLocaleString("es-ES")} €
-                  </span>
-                  <span>· {p.size} m²</span>
-                  <span>· {p.bedrooms} hab</span>
-                  <span>· {p.bathrooms} baños</span>
-                </div>
-
-                <p className="mt-1 text-xs text-stone-500">{p.city}</p>
-              </div>
-            </Link>
-          );
+              </Link>
+            </article>
+          )
         })}
       </div>
     </section>
-  );
+  )
 }

@@ -46,7 +46,6 @@ export default function ValeraVisionariasLandingClient({
       {/* Structured Data (SEO) */}
       <script
         type="application/ld+json"
-        // Nota: no uses variables complejas aquí; JSON.stringify ya escapa correctamente.
         dangerouslySetInnerHTML={{
           __html: JSON.stringify({
             "@context": "https://schema.org",
@@ -77,14 +76,106 @@ export default function ValeraVisionariasLandingClient({
               closes: "19:00",
             },
             sameAs: [
-              "https://www.facebook.com/valeravisionarias",
-              "https://www.instagram.com/valeravisionarias",
+              "https://www.facebook.com/lvaleravisionarias",
+              "https://www.instagram.com/lvaleravisionarias",
             ],
             priceRange: "€€",
             areaServed: "San Vicente del Raspeig, Alicante",
           }),
         }}
       />
+      <script
+  type="application/ld+json"
+  dangerouslySetInnerHTML={{
+    __html: JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: [
+        {
+          "@type": "Question",
+          name: "¿Cuánto tiempo tardan en venderse las propiedades?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text:
+              "El 80% de nuestras ventas se cierran en menos de una semana, muchas en menos de 48 horas. El 20% restante, siempre al precio estipulado, no tarda más de tres meses.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "¿Qué zonas de San Vicente del Raspeig recomiendan?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text:
+              "Las zonas más demandadas son las cercanas a la Universidad de Alicante, el centro urbano y áreas residenciales tranquilas como Villafranqueza. Cada zona tiene ventajas según tu perfil: familia, estudiante o inversor.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "¿Qué rentabilidad puedo esperar del alquiler en San Vicente?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text:
+              "La rentabilidad media ronda el 5-7% anual, especialmente en propiedades cercanas a la Universidad de Alicante. Alta demanda de alquiler estudiantil todo el año.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "¿Cuáles son los gastos de compraventa que debo considerar?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text:
+              "En la compra: ITP (8%), IVA + AJD (10% + 1.5%), notaría, registro y gestoría. En la venta: plusvalía municipal e IRPF si hay ganancia patrimonial.",
+          },
+        },
+      ],
+    }),
+  }}
+/>
+<script
+  type="application/ld+json"
+  dangerouslySetInnerHTML={{
+    __html: JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      name: "Valera Visionarias",
+      url: "https://valeravisionarias.com",
+      logo: "https://valeravisionarias.com/images/logo-dark.png",
+      sameAs: [
+        "https://www.instagram.com/valeravisionarias",
+        "https://www.facebook.com/valeravisionarias",
+      ],
+      aggregateRating: {
+        "@type": "AggregateRating",
+        ratingValue: "5.0",
+        reviewCount: "3",
+      },
+      review: [
+        {
+          "@type": "Review",
+          author: { "@type": "Person", name: "Propietario" },
+          reviewBody:
+            "El trato fue exquisito, el trabajo impoluto. Laura, a pesar de ser tan joven, es una gran profesional. Claramente aconsejaría trabajar con Valera Visionarias.",
+          reviewRating: { "@type": "Rating", ratingValue: "5" },
+        },
+        {
+          "@type": "Review",
+          author: { "@type": "Person", name: "Compradores" },
+          reviewBody:
+            "Gran profesional, formal y atenta en todos los detalles. Asesoramiento completo del principio al final de la operación de compra.",
+          reviewRating: { "@type": "Rating", ratingValue: "5" },
+        },
+        {
+          "@type": "Review",
+          author: { "@type": "Person", name: "Vendedora" },
+          reviewBody:
+            "He vendido mi casa en poco tiempo y por el precio estipulado. Se encargan de todos los trámites y facilitan mucho la operación.",
+          reviewRating: { "@type": "Rating", ratingValue: "5" },
+        },
+      ],
+    }),
+  }}
+/>
+
       {/* Site Search (SEO mejorado) */}
       <script
         type="application/ld+json"
