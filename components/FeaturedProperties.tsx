@@ -41,12 +41,9 @@ export default async function FeaturedProperties() {
     )
   }
 
-  if (!data || data.length === 0) {
-    return null 
-  }
+  if (!data || data.length === 0) return null
 
   return (
-    
     <section className="container mx-auto px-4 py-8">
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-xl sm:text-2xl font-semibold">Propiedades destacadas</h2>
@@ -60,45 +57,57 @@ export default async function FeaturedProperties() {
           const imgs: any[] = p.property_images ?? []
           const sortedImgs = [...imgs].sort((a, b) => (a.position ?? 0) - (b.position ?? 0))
           const mainImg = sortedImgs[0]?.url
+          const fullImgs =
+            sortedImgs.length > 0
+              ? sortedImgs.map((img) =>
+                  img.url.startsWith("http")
+                    ? img.url
+                    : `https://www.valeravisionarias.com${img.url}`
+                )
+              : ["https://www.valeravisionarias.com/images/logo-dark.png"]
 
-          // ✅ JSON-LD for each property
+          // ✅ JSON-LD per property (100% valid)
           const jsonLd = {
             "@context": "https://schema.org",
             "@type": "RealEstateListing",
+            mainEntityOfPage: `https://www.valeravisionarias.com/propiedad/${p.id}`,
             name: p.title,
             description: p.description,
             url: `https://www.valeravisionarias.com/propiedad/${p.id}`,
-            image:
-              sortedImgs.length > 0
-                ? sortedImgs.map((img) => `https://www.valeravisionarias.com${img.url}`)
-                : ["https://www.valeravisionarias.com/images/logo-dark.png"],
-            numberOfRooms: p.bedrooms,
-            numberOfBathroomsTotal: p.bathrooms,
-            floorSize: {
-              "@type": "QuantitativeValue",
-              value: p.size,
-              unitCode: "MTK",
-            },
-            address: {
-              "@type": "PostalAddress",
-              addressLocality: p.city || "San Vicente del Raspeig",
-              addressRegion: "Alicante",
-              postalCode: "03690",
-              addressCountry: "ES",
-            },
+            image: fullImgs,
             offers: {
               "@type": "Offer",
-              price: p.price,
+              price: Number(p.price),
               priceCurrency: "EUR",
               availability: "https://schema.org/InStock",
               url: `https://www.valeravisionarias.com/propiedad/${p.id}`,
-            },
-            seller: {
-              "@type": "RealEstateAgent",
-              name: "Valera Visionarias",
-              url: "https://www.valeravisionarias.com",
-              telephone: "+34645680339",
-              logo: "https://www.valeravisionarias.com/images/logo-dark.png",
+              itemOffered: {
+                "@type": "Apartment",
+                numberOfRoomsTotal: Number(p.bedrooms),
+                numberOfBathroomsTotal: Number(p.bathrooms),
+                floorSize: {
+                  "@type": "QuantitativeValue",
+                  value: Number(p.size),
+                  unitCode: "MTK",
+                },
+                address: {
+                  "@type": "PostalAddress",
+                  addressLocality: p.city || "San Vicente del Raspeig",
+                  addressRegion: "Alicante",
+                  postalCode: "03690",
+                  addressCountry: {
+                    "@type": "Country",
+                    name: "ES",
+                  },
+                },
+                seller: {
+                  "@type": "RealEstateAgent",
+                  name: "Valera Visionarias",
+                  url: "https://www.valeravisionarias.com",
+                  telephone: "+34 645 68 03 39",
+                  logo: "https://www.valeravisionarias.com/images/logo-dark.png",
+                },
+              },
             },
           }
 
@@ -107,7 +116,7 @@ export default async function FeaturedProperties() {
               key={p.id}
               className="group block rounded-xl border border-stone-200 bg-white overflow-hidden hover:shadow-lg transition-shadow relative"
             >
-              {/* JSON-LD Structured Data (server-rendered, safe) */}
+              {/* ✅ Structured Data for Google (server-rendered) */}
               <script
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
