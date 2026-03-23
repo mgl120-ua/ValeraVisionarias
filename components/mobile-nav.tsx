@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Menu, X, ChevronDown } from "lucide-react"
+import { contactInfo } from "@/lib/contact-info"
 
 export default function MobileNav() {
   const [isOpen, setIsOpen] = useState(false)
@@ -149,16 +150,24 @@ export default function MobileNav() {
         <div className="p-6 border-t border-stone-200 bg-stone-50">
           <p className="text-xs uppercase tracking-wide text-stone-500 mb-2">Contacto directo</p>
           <a
-            href="tel:+34645680339"
+            href={contactInfo.phoneHref}
             className="block text-base font-semibold text-black hover:underline"
           >
-            645 68 03 39
+            {contactInfo.phone}
           </a>
           <a
-            href="mailto:Valeravisionarias@gmail.com"
+            href={contactInfo.emailHref}
             className="block text-sm text-stone-700 hover:underline break-all"
           >
-            Valeravisionarias@gmail.com
+            {contactInfo.email}
+          </a>
+          <a
+            href={contactInfo.whatsappHref}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-2 block text-sm font-medium text-stone-700 hover:underline"
+          >
+            WhatsApp directo
           </a>
         </div>
       </aside>

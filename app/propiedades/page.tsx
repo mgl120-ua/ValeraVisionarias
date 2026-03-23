@@ -1,6 +1,7 @@
 import Script from "next/script"
 import { createSupabaseServer } from "@/lib/supabase/server"
 import PropiedadesClient from "./PropiedadesClient"
+import { contactInfo } from "@/lib/contact-info"
 
 export const revalidate = 60
 
@@ -62,7 +63,7 @@ export default async function PropiedadesPage() {
             "@type": "RealEstateAgent",
             name: "Valera Visionarias",
             url: "https://www.valeravisionarias.com",
-            telephone: "+34 645 68 03 39",
+            telephone: contactInfo.phoneE164,
             logo: "https://www.valeravisionarias.com/images/logo-dark.png",
           },
         },
@@ -82,13 +83,13 @@ export default async function PropiedadesPage() {
       name: "Valera Visionarias",
       url: "https://www.valeravisionarias.com",
       logo: "https://www.valeravisionarias.com/images/logo-dark.png",
-      telephone: "+34 645 68 03 39",
+      telephone: contactInfo.phoneE164,
       address: {
         "@type": "PostalAddress",
-        streetAddress: "Villafranqueza 50, local 1",
+        streetAddress: contactInfo.addressLine1,
         addressLocality: "San Vicente del Raspeig",
         addressRegion: "Alicante",
-        postalCode: "03690",
+        postalCode: contactInfo.postalCode,
         addressCountry: "ES",
       },
     },

@@ -8,8 +8,10 @@ import { Inter, Playfair_Display } from "next/font/google"
 
 import Header from "@/components/site/Header"
 import Footer from "@/components/site/Footer"
+import WhatsAppFloat from "@/components/site/WhatsAppFloat"
 import SkipToContent from "@/components/skip-to-content"
 import CookieBanner from "@/components/cookie-banner"
+import { contactInfo, openingHoursSpecification } from "@/lib/contact-info"
 
 const inter = Inter({
   subsets: ["latin"],
@@ -70,6 +72,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           {children}
         </main>
 
+        <WhatsAppFloat />
+
         {/* Footer global */}
         <Footer year={year} />
 
@@ -82,26 +86,22 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             image: "https://valeravisionarias.com/images/logo-dark.png",
             "@id": "https://valeravisionarias.com",
             url: "https://valeravisionarias.com",
-            telephone: "+34645680339",
-            email: "Valeravisionarias@gmail.com",
+            telephone: contactInfo.phoneE164,
+            email: contactInfo.email,
             address: {
               "@type": "PostalAddress",
-              streetAddress: "Villafranqueza 50, local 1",
+              streetAddress: contactInfo.addressLine1,
               addressLocality: "San Vicente del Raspeig",
               addressRegion: "Alicante",
-              postalCode: "03690",
+              postalCode: contactInfo.postalCode,
               addressCountry: "ES",
             },
             geo: { "@type": "GeoCoordinates", latitude: 38.3936, longitude: -0.5247 },
-            openingHoursSpecification: {
-              "@type": "OpeningHoursSpecification",
-              dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-              opens: "09:00",
-              closes: "19:00",
-            },
+            openingHoursSpecification: openingHoursSpecification,
             sameAs: [
-              "https://www.facebook.com/valeravisionarias",
-              "https://www.instagram.com/valeravisionarias",
+              contactInfo.socialLinks.instagram,
+              contactInfo.socialLinks.tiktok,
+              contactInfo.socialLinks.idealista,
             ],
             priceRange: "€€",
             areaServed: "San Vicente del Raspeig, Alicante",

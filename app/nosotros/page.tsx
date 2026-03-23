@@ -8,13 +8,14 @@ import SkipToContent from "@/components/skip-to-content"
 import type { Metadata } from "next"
 import OfficeGallery from "./OfficeGallery"
 import { officeImages } from "./office-images"
+import { contactInfo } from "@/lib/contact-info"
 
 export const metadata: Metadata = {
   title: "Quiénes Somos | Valera Visionarias - Tu Inmobiliaria en San Vicente",
   description:
     "Conoce al equipo de Valera Visionarias. Profesionales dedicados a encontrar tu hogar ideal en San Vicente del Raspeig con resultados garantizados.",
 }
-const embedSrc = "https://maps.google.com/maps?q=Valera%20Visionarias%2C%20C.%20Villafranqueza%2C%2050%2C%2003690%20San%20Vicente%20del%20Raspeig&z=16&output=embed"
+const embedSrc = `https://maps.google.com/maps?q=${contactInfo.mapsEmbedQuery}&z=16&output=embed`
 
 
 export default function NosotrosPage() {
@@ -149,7 +150,7 @@ export default function NosotrosPage() {
                 Visítanos en nuestra oficina
               </h2>
               <p className="text-base sm:text-lg text-stone-700 leading-relaxed">
-                C. Villafranqueza, 50, 03690 San Vicente del Raspeig, Alicante
+                {contactInfo.fullAddress}
               </p>
             </div>
 
@@ -170,7 +171,7 @@ export default function NosotrosPage() {
             {/* Botón para abrir en Maps */}
             <div className="mt-8 text-center">
               <a
-                href="https://www.google.com/maps/dir/?api=1&destination=Valera+Visionarias,+C.+Villafranqueza,+50,+03690+San+Vicente+del+Raspeig,+Alicante"
+                href={contactInfo.mapsDirectionsHref}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 border border-black text-black px-6 py-3 rounded-full hover:bg-black hover:text-white transition text-sm sm:text-base"

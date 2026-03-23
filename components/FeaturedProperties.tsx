@@ -1,6 +1,7 @@
 // components/FeaturedProperties.tsx
 import Link from "next/link"
 import { createSupabaseServer } from "@/lib/supabase/server"
+import { contactInfo } from "@/lib/contact-info"
 
 export const revalidate = 60 // optional: ISR
 
@@ -104,7 +105,7 @@ export default async function FeaturedProperties() {
                   "@type": "RealEstateAgent",
                   name: "Valera Visionarias",
                   url: "https://www.valeravisionarias.com",
-                  telephone: "+34 645 68 03 39",
+                  telephone: contactInfo.phoneE164,
                   logo: "https://www.valeravisionarias.com/images/logo-dark.png",
                 },
               },

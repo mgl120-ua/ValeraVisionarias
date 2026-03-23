@@ -16,6 +16,7 @@ import {
 } from "lucide-react"
 import type { Metadata } from "next"
 import CaptadoresForm from "@/components/CaptadoresForm"
+import { contactInfo } from "@/lib/contact-info"
 
 export const metadata: Metadata = {
   title: "Colabora con Valera Visionarias | Gana 1.500€ por captación",
@@ -112,8 +113,8 @@ export default function ColaboraPage() {
                   <Phone className="w-4 h-4 sm:w-5 sm:h-5 text-black mt-1 flex-shrink-0" />
                   <div>
                     <p className="text-xs sm:text-sm text-stone-500 mb-1">Teléfono</p>
-                    <a href="tel:+34645680339" className="text-sm sm:text-base text-black font-medium hover:underline">
-                      645 68 03 39
+                    <a href={contactInfo.phoneHref} className="text-sm sm:text-base text-black font-medium hover:underline">
+                      {contactInfo.phone}
                     </a>
                   </div>
                 </div>
@@ -122,10 +123,10 @@ export default function ColaboraPage() {
                   <div>
                     <p className="text-xs sm:text-sm text-stone-500 mb-1">Email</p>
                     <a
-                      href="mailto:Valeravisionarias@gmail.com"
+                      href={contactInfo.emailHref}
                       className="text-sm sm:text-base text-black font-medium break-all hover:underline"
                     >
-                      Valeravisionarias@gmail.com
+                      {contactInfo.email}
                     </a>
                   </div>
                 </div>
@@ -134,12 +135,26 @@ export default function ColaboraPage() {
                   <div>
                     <p className="text-xs sm:text-sm text-stone-500 mb-1">Oficina</p>
                     <p className="text-sm sm:text-base text-black font-medium">
-                      Villafranqueza 50, local 1
+                      {contactInfo.addressLine1}
                       <br />
-                      San Vicente del Raspeig, Alicante
+                      {contactInfo.addressLine2}
                       <br />
-                      03690
+                      {contactInfo.postalCode}
                     </p>
+                  </div>
+                </div>
+                <div className="flex items-start space-x-4">
+                  <div className="w-4 h-4 sm:w-5 sm:h-5 mt-1 flex-shrink-0" />
+                  <div>
+                    <p className="text-xs sm:text-sm text-stone-500 mb-1">WhatsApp</p>
+                    <a
+                      href={contactInfo.whatsappHref}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-sm sm:text-base text-black font-medium hover:underline"
+                    >
+                      Contacto directo
+                    </a>
                   </div>
                 </div>
               </div>

@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import type { Metadata } from "next"
 import VisitForm from "@/components/VisitForm"
+import { contactInfo } from "@/lib/contact-info"
 
 
 // Opcional: ISR
@@ -157,14 +158,14 @@ const jsonLd = {
       "@type": "RealEstateAgent",
       name: "Valera Visionarias",
       url: "https://www.valeravisionarias.com",
-      telephone: "+34645680339",
+      telephone: contactInfo.phoneE164,
       logo: "https://www.valeravisionarias.com/images/logo-dark.png",
       address: {
         "@type": "PostalAddress",
-        streetAddress: "Villafranqueza 50, local 1",
+        streetAddress: contactInfo.addressLine1,
         addressLocality: "San Vicente del Raspeig",
         addressRegion: "Alicante",
-        postalCode: "03690",
+        postalCode: contactInfo.postalCode,
         addressCountry: "ES",
       },
     },

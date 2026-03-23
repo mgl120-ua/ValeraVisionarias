@@ -33,6 +33,7 @@ import FAQSection from "@/components/faq-section"
 import InteriorismoCarousel from "@/components/InteriorismoCarousel"
 import ServiciosScroll from "@/components/ServiciosScroll"
 import ContactForm from "@/components/ContactForm"
+import { contactInfo, openingHoursSpecification } from "@/lib/contact-info"
 
 export default function ValeraVisionariasLandingClient({
   featuredSlot,
@@ -63,11 +64,11 @@ export default function ValeraVisionariasLandingClient({
       ],
       description:
         "Inmobiliaria en San Vicente del Raspeig especializada en compraventa y alquiler de viviendas cerca de la Universidad de Alicante. Sin exclusivas forzadas, trato transparente y resultados garantizados.",
-      telephone: "+34 645 68 03 39",
+      telephone: contactInfo.phoneE164,
       priceRange: "€€",
       address: {
         "@type": "PostalAddress",
-        streetAddress: "Villafranqueza 50, local 1",
+        streetAddress: contactInfo.addressLine1,
         addressLocality: "San Vicente del Raspeig",
         addressRegion: "Alicante",
         postalCode: "03690",
@@ -78,33 +79,20 @@ export default function ValeraVisionariasLandingClient({
         latitude: 38.3936,
         longitude: -0.5247
       },
-      openingHoursSpecification: [
-        {
-          "@type": "OpeningHoursSpecification",
-          dayOfWeek: [
-            "Monday",
-            "Tuesday",
-            "Wednesday",
-            "Thursday",
-            "Friday"
-          ],
-          opens: "09:00",
-          closes: "19:00"
-        }
-      ],
+      openingHoursSpecification,
       contactPoint: [
         {
           "@type": "ContactPoint",
-          telephone: "+34 645 68 03 39",
+          telephone: contactInfo.phoneE164,
           contactType: "customer service",
           availableLanguage: ["Spanish", "English"],
           areaServed: "ES"
         }
       ],
       sameAs: [
-        "https://www.instagram.com/valeravisionarias",
-        "https://www.facebook.com/valeravisionarias",
-        "https://www.google.com/maps?cid=XXXXXXXXXXXX"
+        contactInfo.socialLinks.instagram,
+        contactInfo.socialLinks.tiktok,
+        contactInfo.socialLinks.idealista
       ],
       aggregateRating: {
         "@type": "AggregateRating",
@@ -362,11 +350,11 @@ export default function ValeraVisionariasLandingClient({
                     <div>
                       <p className="text-xs sm:text-sm text-stone-600 mb-1">Teléfono</p>
                       <a
-                        href="tel:+34645680339"
+                        href={contactInfo.phoneHref}
                         className="text-sm sm:text-base text-black font-medium hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2 rounded px-1"
-                        aria-label="Llamar al 645 68 03 39"
+                        aria-label={`Llamar al ${contactInfo.phone}`}
                       >
-                        645 68 03 39
+                        {contactInfo.phone}
                       </a>
                     </div>
                   </div>
@@ -376,11 +364,11 @@ export default function ValeraVisionariasLandingClient({
                     <div>
                       <p className="text-xs sm:text-sm text-stone-600 mb-1">Email</p>
                       <a
-                        href="mailto:Valeravisionarias@gmail.com"
+                        href={contactInfo.emailHref}
                         className="text-sm sm:text-base text-black font-medium break-all hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2 rounded px-1"
-                        aria-label="Enviar email a Valeravisionarias@gmail.com"
+                        aria-label={`Enviar email a ${contactInfo.email}`}
                       >
-                        Valeravisionarias@gmail.com
+                        {contactInfo.email}
                       </a>
                     </div>
                   </div>
@@ -390,18 +378,45 @@ export default function ValeraVisionariasLandingClient({
                     <div>
                       <p className="text-xs sm:text-sm text-stone-600 mb-1">Oficina</p>
                       <p className="text-sm sm:text-base text-black font-medium">
-                        Villafranqueza 50, local 1
+                        {contactInfo.addressLine1}
                         <br />
-                        San Vicente del Raspeig, Alicante
+                        {contactInfo.addressLine2}
                         <br />
-                        03690
+                        {contactInfo.postalCode}
                       </p>
                     </div>
+                  </div>
+
+                  <div className="flex items-start space-x-4">
+                    <MessageCircle className="w-4 h-4 sm:w-5 sm:h-5 text-black mt-1 flex-shrink-0" aria-hidden="true" />
+                    <div>
+                      <p className="text-xs sm:text-sm text-stone-600 mb-1">WhatsApp y redes</p>
+                      <div className="flex flex-wrap gap-3 text-sm sm:text-base">
+                        <a href={contactInfo.whatsappHref} target="_blank" rel="noopener noreferrer" className="text-black font-medium hover:underline">
+                          WhatsApp directo
+                        </a>
+                        <a href={contactInfo.socialLinks.instagram} target="_blank" rel="noopener noreferrer" className="text-black font-medium hover:underline">
+                          Instagram
+                        </a>
+                        <a href={contactInfo.socialLinks.tiktok} target="_blank" rel="noopener noreferrer" className="text-black font-medium hover:underline">
+                          TikTok
+                        </a>
+                        <a href={contactInfo.socialLinks.idealista} target="_blank" rel="noopener noreferrer" className="text-black font-medium hover:underline">
+                          Idealista
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="rounded-xl border border-stone-200 bg-white p-4 sm:p-5">
+                    <p className="text-sm font-medium text-black mb-1">Horario</p>
+                    <p className="text-sm text-stone-700">{contactInfo.hoursSummary}</p>
+                    <p className="text-sm text-stone-700 mt-1">{contactInfo.appointmentNote}</p>
                   </div>
                 </div>
 
                 <a
-                  href="https://www.google.com/maps/search/?api=1&query=Villafranqueza+50+local+1+San+Vicente+del+Raspeig+Alicante+03690"
+                  href={contactInfo.mapsSearchHref}
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Ver ubicación en Google Maps (se abre en nueva ventana)"
@@ -426,13 +441,6 @@ export default function ValeraVisionariasLandingClient({
         </section>
 
         {/* Botón volver arriba */}
-        <button
-          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-          className="fixed bottom-6 right-6 bg-black text-white p-3 rounded-full shadow-lg hover:bg-stone-800 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2 z-40"
-          aria-label="Volver arriba"
-        >
-          <ArrowRight className="w-5 h-5 rotate-[-90deg]" aria-hidden="true" />
-        </button>
       </div>
     </>
   )
