@@ -42,7 +42,7 @@ export default function AchievementsSection() {
           </div>
 
           <h2 className="mb-6 font-playfair text-3xl font-light leading-tight text-white sm:text-4xl md:text-5xl lg:text-6xl">
-            Resultados que un propietario si valora
+            Resultados reales
           </h2>
 
           <p className="mx-auto mb-10 max-w-2xl text-base leading-relaxed text-white/85 sm:text-lg">

@@ -13,7 +13,7 @@ export default function ContactForm() {
 
   const goToStepTwo = () => {
     if (!isValidSellerContact(contactValue)) {
-      setContactError("Necesitamos un telefono o email valido para enviarte la valoracion.")
+      setContactError("Necesitamos un teléfono o email válido para enviarte la valoración.")
       return
     }
 
@@ -26,7 +26,7 @@ export default function ContactForm() {
     event.preventDefault()
 
     if (!isValidSellerContact(contactValue)) {
-      setContactError("Necesitamos un telefono o email valido para enviarte la valoracion.")
+      setContactError("Necesitamos un teléfono o email válido para enviarte la valoración.")
       setStep(1)
       return
     }
@@ -75,8 +75,8 @@ export default function ContactForm() {
     >
       <div className="flex items-center justify-between gap-4">
         <div>
-          <p className="text-xs uppercase tracking-[0.24em] text-stone-500">Valoracion de vivienda</p>
-          <h3 className="mt-2 text-2xl font-light text-black">Cuentanos lo minimo para empezar</h3>
+          <p className="text-xs uppercase tracking-[0.24em] text-stone-500">Valoración de vivienda</p>
+          <h3 className="mt-2 text-2xl font-light text-black">Cuéntanos lo mínimo para empezar</h3>
         </div>
         <div className="rounded-full bg-stone-100 px-3 py-1 text-xs font-medium text-stone-600">Paso {step} de 2</div>
       </div>
@@ -89,13 +89,13 @@ export default function ContactForm() {
               type="text"
               name="name"
               autoComplete="given-name"
-              placeholder="Como te llamas"
+              placeholder="Cómo te llamas"
               className="w-full rounded-lg border border-stone-300 bg-white p-3 text-base focus:outline-none focus:ring-2 focus:ring-black"
             />
           </div>
 
           <div>
-            <label className="mb-1 block text-sm font-medium text-stone-700">Telefono o email *</label>
+            <label className="mb-1 block text-sm font-medium text-stone-700">Teléfono o email *</label>
             <input
               type="text"
               name="contacto"
@@ -107,7 +107,7 @@ export default function ContactForm() {
                 const value = event.target.value
                 setContactValue(value)
                 if (value.length > 2) {
-                  setContactError(isValidSellerContact(value) ? "" : "Necesitamos un telefono o email valido para enviarte la valoracion.")
+                  setContactError(isValidSellerContact(value) ? "" : "Necesitamos un teléfono o email válido para enviarte la valoración.")
                 } else if (contactError) {
                   setContactError("")
                 }
@@ -121,7 +121,7 @@ export default function ContactForm() {
 
           <div className="rounded-xl border border-stone-200 bg-stone-50 p-4">
             <p className="text-sm text-stone-700">
-              Te enviaremos una primera orientacion sin compromiso y te diremos como podriamos enfocar la venta.
+              Te enviaremos una primera orientación sin compromiso y te diremos cómo podríamos enfocar la venta.
             </p>
             <p className="mt-2 inline-flex items-center gap-1 text-xs text-stone-600">
               <ShieldCheck className="h-3.5 w-3.5" aria-hidden="true" />
@@ -141,12 +141,12 @@ export default function ContactForm() {
         <div className="space-y-4">
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
             <div>
-              <label className="mb-1 block text-sm font-medium text-stone-700">Zona o direccion</label>
+              <label className="mb-1 block text-sm font-medium text-stone-700">Zona o dirección</label>
               <input
                 type="text"
                 name="zona"
                 autoComplete="street-address"
-                placeholder="Ej. Centro, Haygon..."
+                placeholder="Ej. Centro, Haygón..."
                 className="w-full rounded-lg border border-stone-300 bg-white p-3 text-base focus:outline-none focus:ring-2 focus:ring-black"
               />
             </div>
@@ -171,14 +171,14 @@ export default function ContactForm() {
 
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
             <div>
-              <label className="mb-1 block text-sm font-medium text-stone-700">Cuando te gustaria vender</label>
+              <label className="mb-1 block text-sm font-medium text-stone-700">Cuándo te gustaría vender</label>
               <select
                 name="timeline"
                 className="w-full rounded-lg border border-stone-300 bg-white p-3 text-base focus:outline-none focus:ring-2 focus:ring-black"
                 defaultValue=""
               >
-                <option value="">Solo quiero orientacion</option>
-                <option value="0-30 dias">En menos de 30 dias</option>
+                <option value="">Solo quiero orientación</option>
+                <option value="0-30 dias">En menos de 30 días</option>
                 <option value="1-3 meses">En 1-3 meses</option>
                 <option value="3-6 meses">En 3-6 meses</option>
                 <option value="solo valoracion">Estoy comparando opciones</option>
@@ -194,7 +194,7 @@ export default function ContactForm() {
                 <option value="">Opcional</option>
                 <option value="cambio de vivienda">Cambio de vivienda</option>
                 <option value="herencia">Herencia</option>
-                <option value="inversion">Inversion</option>
+                <option value="inversion">Inversión</option>
                 <option value="traslado">Traslado</option>
                 <option value="otro">Otro</option>
               </select>
@@ -270,7 +270,7 @@ export default function ContactForm() {
                     exit={{ opacity: 0, y: -8 }}
                     transition={{ duration: 0.2 }}
                   >
-                    Recibir valoracion
+                    Recibir valoración
                   </motion.span>
                 )}
               </AnimatePresence>
@@ -286,12 +286,12 @@ export default function ContactForm() {
       ) : null}
       {status === "error" ? (
         <div className="rounded-xl border border-red-200 bg-red-50 p-3 text-sm text-red-700">
-          No se pudo enviar. Escribenos a valeravisionarias@gmail.com o usa WhatsApp.
+          No se pudo enviar. Escríbenos a valeravisionarias@gmail.com o usa WhatsApp.
         </div>
       ) : null}
 
       <p className="text-xs text-stone-500">
-        Sin compromiso. Al enviarlo, aceptas que te contactemos para prepararte una valoracion de venta.
+        Sin compromiso. Al enviarlo, aceptas que te contactemos para prepararte una valoración de venta.
       </p>
     </form>
   )

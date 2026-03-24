@@ -42,11 +42,14 @@ export default function SellerMiniForm() {
       ...prev,
       [field]:
         field === "zona" && typeof value === "string" && !value.trim()
-          ? "Indica la zona o direccion."
+          ? "Indica la zona o dirección."
           : field === "tipo" && !value
             ? "Selecciona el tipo de vivienda."
-            : field === "contacto" && typeof value === "string" && value.length > 2 && !isValidSellerContact(value)
-              ? "Introduce un telefono o email valido."
+            : field === "contacto" &&
+                typeof value === "string" &&
+                value.length > 2 &&
+                !isValidSellerContact(value)
+              ? "Introduce un teléfono o email válido."
               : undefined,
     }))
   }
@@ -54,10 +57,10 @@ export default function SellerMiniForm() {
   const validate = () => {
     const nextErrors: SellerMiniFormErrors = {}
 
-    if (!formData.zona.trim()) nextErrors.zona = "Indica la zona o direccion."
+    if (!formData.zona.trim()) nextErrors.zona = "Indica la zona o dirección."
     if (!formData.tipo) nextErrors.tipo = "Selecciona el tipo de vivienda."
     if (!isValidSellerContact(formData.contacto)) {
-      nextErrors.contacto = "Introduce un telefono o email valido."
+      nextErrors.contacto = "Introduce un teléfono o email válido."
     }
 
     setErrors(nextErrors)
@@ -101,14 +104,14 @@ export default function SellerMiniForm() {
             htmlFor="hero-zona"
             className="mb-2 block text-left text-xs font-medium uppercase tracking-[0.2em] text-white/80"
           >
-            Zona o direccion
+            Zona o dirección
           </label>
           <Input
             id="hero-zona"
             autoComplete="street-address"
             value={formData.zona}
             onChange={(event) => handleChange("zona", event.target.value)}
-            placeholder="Ej. Centro, Haygon, calle..."
+            placeholder="Ej. Centro, Haygón, calle..."
             aria-invalid={Boolean(errors.zona)}
             className="h-12 border-white/20 bg-white text-black placeholder:text-stone-500"
           />
@@ -146,7 +149,7 @@ export default function SellerMiniForm() {
             htmlFor="hero-contacto"
             className="mb-2 block text-left text-xs font-medium uppercase tracking-[0.2em] text-white/80"
           >
-            Telefono o email
+            Teléfono o email
           </label>
           <Input
             id="hero-contacto"
@@ -175,7 +178,7 @@ export default function SellerMiniForm() {
             ) : (
               <>
                 <Send className="mr-2 h-4 w-4" aria-hidden="true" />
-                {status === "sending" ? "Enviando..." : "Solicitar valoracion"}
+                {status === "sending" ? "Enviando..." : "Solicitar valoración"}
               </>
             )}
           </Button>
@@ -183,7 +186,7 @@ export default function SellerMiniForm() {
       </form>
 
       <div className="mt-3 flex flex-col gap-2 text-left text-xs text-white/80 sm:flex-row sm:items-center sm:justify-between">
-        <p>Valoracion orientativa gratuita. Revisamos tu caso y te respondemos en menos de 24h.</p>
+        <p>Valoración orientativa gratuita. Revisamos tu caso y te respondemos en menos de 24h.</p>
         <p className="inline-flex items-center gap-1 text-white/90">
           <ShieldCheck className="h-3.5 w-3.5" aria-hidden="true" />
           Datos protegidos. Sin compromiso.

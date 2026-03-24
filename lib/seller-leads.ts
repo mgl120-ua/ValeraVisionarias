@@ -65,9 +65,9 @@ export function isValidSellerContact(value: string) {
 
 export function getSellerWhatsAppMessage(context: "hero" | "sticky" | "contact" = "hero") {
   const messages = {
-    hero: "Hola, quiero vender mi vivienda en San Vicente del Raspeig y me gustaria recibir una valoracion orientativa sin compromiso.",
+    hero: "Hola, quiero vender mi vivienda en San Vicente del Raspeig y me gustaría recibir una valoración orientativa sin compromiso.",
     sticky:
-      "Hola, estoy pensando en vender mi vivienda en San Vicente del Raspeig. Quiero saber cuanto podria pedir y como trabajais la venta.",
+      "Hola, estoy pensando en vender mi vivienda en San Vicente del Raspeig. Quiero saber cuánto podría pedir y cómo trabajáis la venta.",
     contact:
       "Hola, quiero hablar con Valera Visionarias para valorar mi vivienda y revisar la mejor estrategia de venta.",
   }

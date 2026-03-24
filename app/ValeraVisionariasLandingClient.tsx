@@ -48,7 +48,7 @@ export default function ValeraVisionariasLandingClient({
               "https://www.valeravisionarias.com/images/hero-architecture.jpg",
             ],
             description:
-              "Inmobiliaria en San Vicente del Raspeig especializada en ayudar a propietarios a vender su vivienda con valoracion gratuita, estrategia comercial y seguimiento completo.",
+              "Inmobiliaria en San Vicente del Raspeig especializada en ayudar a propietarios a vender su vivienda con valoración gratuita, estrategia comercial y seguimiento completo.",
             telephone: contactInfo.phoneE164,
             priceRange: "EUR",
             address: {
@@ -122,8 +122,8 @@ export default function ValeraVisionariasLandingClient({
                 </span>
               </h1>
 
-              <p className="mx-auto mt-6 max-w-2xl text-base font-light leading-relaxed text-white/90 sm:text-lg md:text-[1.1rem]">
-                Descubre cuanto puede valer tu vivienda, como posicionarla mejor y que estrategia seguir para vender sin
+              <p className="mx-auto mt-6 max-w-2xl text-balance text-base font-light leading-relaxed text-white/90 sm:text-lg md:text-[1.1rem]">
+                Descubre cuánto puede valer tu vivienda, cómo posicionarla mejor y qué estrategia seguir para vender sin
                 malvender ni perder meses.
               </p>
 
@@ -163,7 +163,7 @@ export default function ValeraVisionariasLandingClient({
               </div>
 
               <p className="mt-4 text-sm text-white/80">
-                Te orientamos antes de que tomes ninguna decision: precio, estrategia y siguientes pasos.
+                Te orientamos antes de que tomes ninguna decisión: precio, estrategia y siguientes pasos.
               </p>
 
               <SellerMiniForm />
@@ -181,8 +181,8 @@ export default function ValeraVisionariasLandingClient({
                 Viviendas en Alicante
               </h2>
               <p className="text-base leading-relaxed text-stone-700 sm:text-lg">
-                Seleccion de pisos y casas verificadas. Mantenemos esta seccion para compradores, pero el foco de la
-                pagina esta en captar propietarios que quieren vender.
+                Selección de pisos y casas verificadas. Mantenemos esta sección para compradores, pero el foco de la
+                página está en captar propietarios que quieren vender.
               </p>
             </div>
 
@@ -210,7 +210,7 @@ export default function ValeraVisionariasLandingClient({
           <div className="container mx-auto px-4 sm:px-6 lg:px-12">
             <ServiciosScroll />
 
-            <div className="mx-auto max-w-4xl">
+            <div className="mx-auto mt-12 max-w-4xl">
               <div className="relative overflow-hidden rounded-2xl border border-stone-200 bg-stone-50 transition-all duration-300 hover:shadow-xl">
                 <div
                   className="absolute inset-0 bg-cover bg-center opacity-10"
@@ -223,12 +223,27 @@ export default function ValeraVisionariasLandingClient({
                 <div className="relative flex flex-col items-start justify-between gap-10 p-10 sm:p-14 lg:flex-row lg:items-center">
                   <div className="max-w-xl">
                     <h3 className="mb-4 font-playfair text-2xl font-light text-black sm:text-3xl lg:text-4xl">
-                      Herramientas extra para compradores e inversores
+                      Calculadoras y recursos inmobiliarios
                     </h3>
                     <p className="text-sm leading-relaxed text-stone-600 sm:text-base">
-                      Mantenemos estas calculadoras como apoyo para otras necesidades de la web, aunque el foco principal
-                      de esta landing esta en propietarios que quieren vender.
+                      Recursos útiles para calcular hipoteca, estimar rentabilidad y analizar una inversión inmobiliaria
+                      en Alicante. Un bloque pensado para resolver dudas frecuentes y ayudarte a comparar escenarios con
+                      más contexto.
                     </p>
+                    <div className="mt-5 flex flex-wrap gap-2">
+                      {[
+                        "Calcular hipoteca",
+                        "Estimar rentabilidad",
+                        "Analizar inversión inmobiliaria en Alicante",
+                      ].map((item) => (
+                        <span
+                          key={item}
+                          className="inline-flex rounded-full border border-stone-200 bg-white px-3 py-1 text-xs text-stone-600"
+                        >
+                          {item}
+                        </span>
+                      ))}
+                    </div>
                   </div>
 
                   <div className="flex flex-col gap-4 sm:flex-row sm:gap-6">
@@ -250,7 +265,7 @@ export default function ValeraVisionariasLandingClient({
                       href="/calculadora-inversion"
                       className="inline-flex items-center justify-center rounded-full border border-stone-300 px-6 py-3 text-sm font-medium text-black transition-all hover:bg-black hover:text-white"
                     >
-                      <span>Calculadora inversion</span>
+                      <span>Calculadora inversión</span>
                     </Link>
                   </div>
                 </div>
@@ -277,7 +292,7 @@ export default function ValeraVisionariasLandingClient({
               <div>
                 <p className="mb-3 text-xs uppercase tracking-[0.3em] text-stone-500 sm:mb-4">Contacto para propietarios</p>
                 <h2 className="mb-6 font-playfair text-3xl font-light leading-tight text-black sm:text-4xl md:text-5xl lg:text-6xl sm:mb-8">
-                  Recibe una valoracion y tu plan de venta
+                  Recibe una valoración y tu plan de venta
                 </h2>
                 <p className="mb-10 text-base leading-relaxed text-stone-700 sm:text-lg sm:mb-12">
                   Completa el formulario y revisaremos contigo precio, estrategia comercial y tiempos de venta. Respuesta
@@ -288,7 +303,7 @@ export default function ValeraVisionariasLandingClient({
                   <div className="flex items-start space-x-4">
                     <Phone className="mt-1 h-4 w-4 flex-shrink-0 text-black sm:h-5 sm:w-5" aria-hidden="true" />
                     <div>
-                      <p className="mb-1 text-xs text-stone-600 sm:text-sm">Telefono</p>
+                      <p className="mb-1 text-xs text-stone-600 sm:text-sm">Teléfono</p>
                       <a
                         href={contactInfo.phoneHref}
                         className="rounded px-1 text-sm font-medium text-black hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2 sm:text-base"
@@ -380,14 +395,14 @@ export default function ValeraVisionariasLandingClient({
                   href={contactInfo.mapsSearchHref}
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label="Ver ubicacion en Google Maps (se abre en nueva ventana)"
+                  aria-label="Ver ubicación en Google Maps (se abre en nueva ventana)"
                 >
                   <Button
                     variant="outline"
                     className="h-11 w-full border-2 border-black bg-transparent px-6 text-black hover:bg-black hover:text-white focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2 sm:h-12 sm:w-auto"
                   >
                     <Navigation className="mr-2 h-4 w-4" aria-hidden="true" />
-                    Como llegar
+                    Cómo llegar
                   </Button>
                 </a>
               </div>
