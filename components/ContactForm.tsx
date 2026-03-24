@@ -1,164 +1,298 @@
 "use client"
+
 import { useState } from "react"
-import { motion, AnimatePresence } from "framer-motion"
+import { AnimatePresence, motion } from "framer-motion"
+import { CheckCircle2, ShieldCheck } from "lucide-react"
+import { isValidSellerContact, submitSellerLead, trackSellerEvent } from "@/lib/seller-leads"
 
 export default function ContactForm() {
+  const [step, setStep] = useState<1 | 2>(1)
   const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle")
+  const [contactValue, setContactValue] = useState("")
+  const [contactError, setContactError] = useState("")
 
-  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault()
-    setStatus("sending")
-
-    const form = e.currentTarget
-    const formData = new FormData(form)
-
-    const data = {
-      name: formData.get("name") as string,
-      surname: formData.get("surname") as string,
-      email: formData.get("email") as string,
-      phone: formData.get("phone") as string,
-      service: formData.get("service") as string,
-      message: formData.get("message") as string,
+  const goToStepTwo = () => {
+    if (!isValidSellerContact(contactValue)) {
+      setContactError("Necesitamos un telefono o email valido para enviarte la valoracion.")
+      return
     }
 
+    setContactError("")
+    setStep(2)
+    trackSellerEvent("cta_click", { placement: "contact-form", target: "step-2" })
+  }
+
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+
+    if (!isValidSellerContact(contactValue)) {
+      setContactError("Necesitamos un telefono o email valido para enviarte la valoracion.")
+      setStep(1)
+      return
+    }
+
+    setStatus("sending")
+
+    const form = event.currentTarget
+    const formData = new FormData(form)
+
     try {
-      const res = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+      const payload = {
+        name: formData.get("name") as string,
+        contacto: contactValue,
+        zona: (formData.get("zona") as string) || "No indicada",
+        tipo: (formData.get("tipo") as string) || "No indicado",
+        timeline: formData.get("timeline") as string,
+        reason: formData.get("reason") as string,
+        message: formData.get("message") as string,
+        source: "contact-form",
+      }
+
+      const result = await submitSellerLead(payload)
+      trackSellerEvent("lead_form_submit", {
+        source: payload.source,
+        property_type: payload.tipo,
+        form_name: "contact-form",
+        fallback: result.fallback,
       })
 
-      if (!res.ok) throw new Error()
       setStatus("success")
+      setStep(1)
+      setContactValue("")
       form.reset()
-      setTimeout(() => setStatus("idle"), 4000)
+      setTimeout(() => setStatus("idle"), 4500)
     } catch {
       setStatus("error")
-      setTimeout(() => setStatus("idle"), 4000)
+      setTimeout(() => setStatus("idle"), 4500)
     }
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4 max-w-md relative">
-      {/* Nombre y Apellidos */}
-      <div className="grid grid-cols-2 gap-3">
+    <form
+      id="seller-contact-form"
+      onSubmit={handleSubmit}
+      className="relative max-w-md space-y-5 rounded-2xl border border-stone-200 bg-white p-5 shadow-sm sm:p-6"
+    >
+      <div className="flex items-center justify-between gap-4">
         <div>
-          <label className="block text-sm font-medium mb-1 text-stone-700">Nombre *</label>
-          <input
-            type="text"
-            name="name"
-            required
-            className="w-full border border-stone-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-black bg-white"
-          />
+          <p className="text-xs uppercase tracking-[0.24em] text-stone-500">Valoracion de vivienda</p>
+          <h3 className="mt-2 text-2xl font-light text-black">Cuentanos lo minimo para empezar</h3>
         </div>
-        <div>
-          <label className="block text-sm font-medium mb-1 text-stone-700">Apellidos </label>
-          <input
-            type="text"
-            name="surname"
-            className="w-full border border-stone-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-black bg-white"
-          />
+        <div className="rounded-full bg-stone-100 px-3 py-1 text-xs font-medium text-stone-600">Paso {step} de 2</div>
+      </div>
+
+      {step === 1 ? (
+        <div className="space-y-4">
+          <div>
+            <label className="mb-1 block text-sm font-medium text-stone-700">Nombre</label>
+            <input
+              type="text"
+              name="name"
+              autoComplete="given-name"
+              placeholder="Como te llamas"
+              className="w-full rounded-lg border border-stone-300 bg-white p-3 text-base focus:outline-none focus:ring-2 focus:ring-black"
+            />
+          </div>
+
+          <div>
+            <label className="mb-1 block text-sm font-medium text-stone-700">Telefono o email *</label>
+            <input
+              type="text"
+              name="contacto"
+              required
+              autoComplete="email"
+              inputMode="email"
+              value={contactValue}
+              onChange={(event) => {
+                const value = event.target.value
+                setContactValue(value)
+                if (value.length > 2) {
+                  setContactError(isValidSellerContact(value) ? "" : "Necesitamos un telefono o email valido para enviarte la valoracion.")
+                } else if (contactError) {
+                  setContactError("")
+                }
+              }}
+              placeholder="Ej. 600 123 123 o tu@email.com"
+              aria-invalid={Boolean(contactError)}
+              className="w-full rounded-lg border border-stone-300 bg-white p-3 text-base focus:outline-none focus:ring-2 focus:ring-black"
+            />
+            {contactError ? <p className="mt-2 text-sm text-red-600">{contactError}</p> : null}
+          </div>
+
+          <div className="rounded-xl border border-stone-200 bg-stone-50 p-4">
+            <p className="text-sm text-stone-700">
+              Te enviaremos una primera orientacion sin compromiso y te diremos como podriamos enfocar la venta.
+            </p>
+            <p className="mt-2 inline-flex items-center gap-1 text-xs text-stone-600">
+              <ShieldCheck className="h-3.5 w-3.5" aria-hidden="true" />
+              Respuesta en menos de 24h y datos protegidos.
+            </p>
+          </div>
+
+          <button
+            type="button"
+            onClick={goToStepTwo}
+            className="w-full rounded-lg bg-black px-6 py-3 text-white transition hover:-translate-y-0.5 hover:bg-stone-800 active:translate-y-0"
+          >
+            Continuar
+          </button>
         </div>
-      </div>
+      ) : (
+        <div className="space-y-4">
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+            <div>
+              <label className="mb-1 block text-sm font-medium text-stone-700">Zona o direccion</label>
+              <input
+                type="text"
+                name="zona"
+                autoComplete="street-address"
+                placeholder="Ej. Centro, Haygon..."
+                className="w-full rounded-lg border border-stone-300 bg-white p-3 text-base focus:outline-none focus:ring-2 focus:ring-black"
+              />
+            </div>
+            <div>
+              <label className="mb-1 block text-sm font-medium text-stone-700">Tipo de vivienda</label>
+              <select
+                name="tipo"
+                className="w-full rounded-lg border border-stone-300 bg-white p-3 text-base focus:outline-none focus:ring-2 focus:ring-black"
+                defaultValue=""
+              >
+                <option value="">Selecciona</option>
+                <option value="piso">Piso</option>
+                <option value="atico">Atico</option>
+                <option value="chalet">Chalet</option>
+                <option value="adosado">Adosado</option>
+                <option value="duplex">Duplex</option>
+                <option value="bungalow">Bungalow</option>
+                <option value="otro">Otro</option>
+              </select>
+            </div>
+          </div>
 
-      {/* Email y Teléfono */}
-      <div>
-        <label className="block text-sm font-medium mb-1 text-stone-700">Email *</label>
-        <input
-          type="email"
-          name="email"
-          required
-          className="w-full border border-stone-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-black bg-white"
-        />
-      </div>
-      <div>
-        <label className="block text-sm font-medium mb-1 text-stone-700">Teléfono </label>
-        <input
-          type="tel"
-          name="phone"
-          className="w-full border border-stone-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-black bg-white"
-        />
-      </div>
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+            <div>
+              <label className="mb-1 block text-sm font-medium text-stone-700">Cuando te gustaria vender</label>
+              <select
+                name="timeline"
+                className="w-full rounded-lg border border-stone-300 bg-white p-3 text-base focus:outline-none focus:ring-2 focus:ring-black"
+                defaultValue=""
+              >
+                <option value="">Solo quiero orientacion</option>
+                <option value="0-30 dias">En menos de 30 dias</option>
+                <option value="1-3 meses">En 1-3 meses</option>
+                <option value="3-6 meses">En 3-6 meses</option>
+                <option value="solo valoracion">Estoy comparando opciones</option>
+              </select>
+            </div>
+            <div>
+              <label className="mb-1 block text-sm font-medium text-stone-700">Motivo de venta</label>
+              <select
+                name="reason"
+                className="w-full rounded-lg border border-stone-300 bg-white p-3 text-base focus:outline-none focus:ring-2 focus:ring-black"
+                defaultValue=""
+              >
+                <option value="">Opcional</option>
+                <option value="cambio de vivienda">Cambio de vivienda</option>
+                <option value="herencia">Herencia</option>
+                <option value="inversion">Inversion</option>
+                <option value="traslado">Traslado</option>
+                <option value="otro">Otro</option>
+              </select>
+            </div>
+          </div>
 
-      {/* Desplegable de servicio */}
-      <div>
-        <label className="block text-sm font-medium mb-1 text-stone-700">Servicio</label>
-        <select
-          name="service"
-          className="w-full border border-stone-300 rounded-lg p-2 bg-white focus:outline-none focus:ring-2 focus:ring-black"
-        >          
-          <option value="Consulta general">Consulta general</option>
-          <option value="Valoración de propiedad">Valoración de propiedad</option>
-          <option value="Comprar piso en San Vicente">Comprar piso en San Vicente</option>
-          <option value="Alquiler cerca Universidad Alicante">Alquiler cerca Universidad Alicante</option>
-          <option value="Asesoramiento de inversión">Asesoramiento de inversión</option>
-        </select>
-      </div>
+          <div>
+            <label className="mb-1 block text-sm font-medium text-stone-700">Detalles adicionales</label>
+            <textarea
+              name="message"
+              rows={4}
+              placeholder="Ej. Piso reformado de 3 habitaciones, con ascensor y garaje."
+              className="w-full rounded-lg border border-stone-300 bg-white p-3 text-base focus:outline-none focus:ring-2 focus:ring-black"
+            />
+          </div>
 
-      {/* Mensaje */}
-      <div>
-        <label className="block text-sm font-medium mb-1 text-stone-700">Mensaje</label>
-        <textarea
-          name="message"
-          rows={4}
-          className="w-full border border-stone-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-black bg-white"
-        />
-      </div>
+          <div className="flex gap-3">
+            <button
+              type="button"
+              onClick={() => setStep(1)}
+              className="flex-1 rounded-lg border border-stone-300 px-4 py-3 text-black transition hover:bg-stone-50"
+            >
+              Volver
+            </button>
 
-      {/* Botón con animación */}
-      <motion.button
-        type="submit"
-        disabled={status === "sending"}
-        className="relative bg-black text-white px-6 py-2 rounded-lg overflow-hidden transition-all disabled:opacity-80 disabled:cursor-not-allowed"
-        whileHover={{ scale: status === "sending" ? 1 : 1.02 }}
-        whileTap={{ scale: 0.98 }}
-      >
-        <AnimatePresence mode="wait">
-          {status === "sending" ? (
-            <motion.span
-              key="sending"
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -8 }}
-              transition={{ duration: 0.2 }}
-              className="flex items-center gap-2"
+            <motion.button
+              type="submit"
+              disabled={status === "sending"}
+              className="relative flex-1 overflow-hidden rounded-lg bg-black px-6 py-3 text-white transition-all disabled:cursor-not-allowed disabled:opacity-80"
+              whileHover={{ scale: status === "sending" ? 1 : 1.02 }}
+              whileTap={{ scale: 0.98 }}
             >
-              <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
-              Enviando...
-            </motion.span>
-          ) : status === "success" ? (
-            <motion.span
-              key="success"
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -8 }}
-              transition={{ duration: 0.2 }}
-            >
-              Enviado ✅
-            </motion.span>
-          ) : status === "error" ? (
-            <motion.span
-              key="error"
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -8 }}
-              transition={{ duration: 0.2 }}
-            >
-              Error ❌: Envía correo a valeravisionarias@gmail.com 
-            </motion.span>
-          ) : (
-            <motion.span
-              key="idle"
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -8 }}
-              transition={{ duration: 0.2 }}
-            >
-              Enviar Consulta
-            </motion.span>
-          )}
-        </AnimatePresence>
-      </motion.button>
+              <AnimatePresence mode="wait">
+                {status === "sending" ? (
+                  <motion.span
+                    key="sending"
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -8 }}
+                    transition={{ duration: 0.2 }}
+                    className="flex items-center justify-center gap-2"
+                  >
+                    <span className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent"></span>
+                    Enviando...
+                  </motion.span>
+                ) : status === "success" ? (
+                  <motion.span
+                    key="success"
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -8 }}
+                    transition={{ duration: 0.2 }}
+                    className="flex items-center justify-center gap-2"
+                  >
+                    <CheckCircle2 className="h-4 w-4" aria-hidden="true" />
+                    Solicitud enviada
+                  </motion.span>
+                ) : status === "error" ? (
+                  <motion.span
+                    key="error"
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -8 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    Error al enviar
+                  </motion.span>
+                ) : (
+                  <motion.span
+                    key="idle"
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -8 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    Recibir valoracion
+                  </motion.span>
+                )}
+              </AnimatePresence>
+            </motion.button>
+          </div>
+        </div>
+      )}
+
+      {status === "success" ? (
+        <div className="rounded-xl border border-green-200 bg-green-50 p-3 text-sm text-green-700">
+          Hemos recibido tu solicitud. Te responderemos lo antes posible.
+        </div>
+      ) : null}
+      {status === "error" ? (
+        <div className="rounded-xl border border-red-200 bg-red-50 p-3 text-sm text-red-700">
+          No se pudo enviar. Escribenos a valeravisionarias@gmail.com o usa WhatsApp.
+        </div>
+      ) : null}
+
+      <p className="text-xs text-stone-500">
+        Sin compromiso. Al enviarlo, aceptas que te contactemos para prepararte una valoracion de venta.
+      </p>
     </form>
   )
 }

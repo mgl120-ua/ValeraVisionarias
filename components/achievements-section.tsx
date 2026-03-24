@@ -3,12 +3,29 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 
 export default function AchievementsSection() {
+  const metrics = [
+    {
+      value: "+120",
+      label: "Viviendas vendidas",
+      description: "Operaciones cerradas con seguimiento completo y foco en propietarios.",
+      tag: "Resultados reales",
+    },
+    {
+      value: "21 dias",
+      label: "Tiempo medio de venta",
+      description: "Ventas rapidas gracias a precio, presentacion y filtrado comercial.",
+      tag: "Ventas rapidas",
+    },
+    {
+      value: "4,9/5",
+      label: "Satisfaccion cliente",
+      description: "Acompanamiento cercano, comunicacion clara y negociacion transparente.",
+      tag: "Confianza local",
+    },
+  ]
+
   return (
-    <section
-      id="logros"
-      className="relative py-16 sm:py-20 md:py-24 lg:py-32 bg-neutral-200"
-    >
-      {/* Fondo con imagen y overlay */}
+    <section id="logros" className="relative bg-neutral-200 py-16 sm:py-20 md:py-24 lg:py-32">
       <div
         className="absolute inset-0 bg-cover bg-center"
         style={{
@@ -18,51 +35,39 @@ export default function AchievementsSection() {
       />
       <div className="absolute inset-0 bg-black/30 backdrop-blur-[2px]" />
 
-      {/* Contenido */}
-      <div className="relative container mx-auto px-4 sm:px-6 lg:px-12 text-center text-white">
-        <div className="max-w-4xl mx-auto">
-          <div className="inline-flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 bg-white/10 border border-white/20 rounded-full mb-6 sm:mb-8">
-            <TrendingUp className="w-7 h-7 sm:w-8 sm:h-8 text-white" />
+      <div className="relative container mx-auto px-4 text-center text-white sm:px-6 lg:px-12">
+        <div className="mx-auto max-w-4xl">
+          <div className="mb-6 inline-flex h-14 w-14 items-center justify-center rounded-full border border-white/20 bg-white/10 sm:mb-8 sm:h-16 sm:w-16">
+            <TrendingUp className="h-7 w-7 text-white sm:h-8 sm:w-8" />
           </div>
 
-          <h2 className="font-playfair text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light text-white mb-6 sm:mb-8 leading-tight">
-            Un año de grandes logros
+          <h2 className="mb-6 font-playfair text-3xl font-light leading-tight text-white sm:text-4xl md:text-5xl lg:text-6xl">
+            Resultados que un propietario si valora
           </h2>
 
-          <div className="space-y-6 sm:space-y-8 mb-10 sm:mb-12">
-            <div className="bg-white/90 text-black border border-white/30 p-6 sm:p-8 lg:p-10 rounded-lg backdrop-blur-sm">
-              <p className="text-4xl sm:text-5xl lg:text-6xl font-playfair font-light mb-3 sm:mb-4">80%</p>
-              <p className="text-base sm:text-lg text-stone-700 leading-relaxed">
-                de nuestras ventas se cerraron en{" "}
-                <strong className="font-semibold">menos de una semana</strong>
-              </p>
-            </div>
+          <p className="mx-auto mb-10 max-w-2xl text-base leading-relaxed text-white/85 sm:text-lg">
+            Menos tiempo en mercado, mejor preparacion comercial y una experiencia cuidada de principio a fin.
+          </p>
 
-            <div className="grid sm:grid-cols-2 gap-6 sm:gap-8">
-              <div className="bg-white/90 text-black border border-white/30 p-6 sm:p-8 rounded-lg backdrop-blur-sm">
-                <p className="text-3xl sm:text-4xl lg:text-5xl font-playfair font-light mb-3 sm:mb-4">48h</p>
-                <p className="text-sm sm:text-base text-stone-700 leading-relaxed">
-                  La mayoría de ventas, incluso en{" "}
-                  <strong className="font-semibold">menos de 48 horas</strong>
+          <div className="mb-10 grid gap-6 sm:mb-12 sm:grid-cols-3">
+            {metrics.map((metric) => (
+              <div
+                key={metric.label}
+                className="rounded-2xl border border-white/30 bg-white/90 p-6 text-left text-black backdrop-blur-sm sm:p-8"
+              >
+                <p className="mb-4 inline-flex rounded-full bg-stone-100 px-3 py-1 text-xs font-medium uppercase tracking-[0.16em] text-stone-600">
+                  {metric.tag}
                 </p>
+                <p className="mb-2 font-playfair text-4xl font-light sm:text-5xl">{metric.value}</p>
+                <p className="text-lg font-medium text-black">{metric.label}</p>
+                <p className="mt-3 text-sm leading-relaxed text-stone-700 sm:text-base">{metric.description}</p>
               </div>
-
-              <div className="bg-white/90 text-black border border-white/30 p-6 sm:p-8 rounded-lg backdrop-blur-sm">
-                <p className="text-3xl sm:text-4xl lg:text-5xl font-playfair font-light mb-3 sm:mb-4">100%</p>
-                <p className="text-sm sm:text-base text-stone-700 leading-relaxed">
-                  El 20% restante, siempre{" "}
-                  <strong className="font-semibold">al precio estipulado</strong>, en menos de 3 meses
-                </p>
-              </div>
-            </div>
+            ))}
           </div>
 
-          <Link href="#contacto">
-            <Button
-              size="lg"
-              className="bg-white text-black hover:bg-stone-100 px-8 sm:px-10 h-11 sm:h-12 text-sm sm:text-base font-medium"
-            >
-              Agenda tu valoración gratuita
+          <Link href="#seller-contact-form">
+            <Button size="lg" className="h-11 bg-white px-8 text-sm font-medium text-black hover:bg-stone-100 sm:h-12 sm:px-10 sm:text-base">
+              Agenda tu valoracion gratuita
             </Button>
           </Link>
         </div>

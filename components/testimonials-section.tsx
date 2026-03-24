@@ -1,81 +1,88 @@
 import { Card, CardContent } from "@/components/ui/card"
 import { Quote, Star } from "lucide-react"
-import Image from "next/image"
 
 export default function TestimonialsSection() {
   const testimonials = [
     {
       content:
-        "El trato fue exquisito, el trabajo impoluto. Laura a pesar de ser tan joven, es una gran profesional. Claramente aconsejaría sin dudar a mi contacto, trabajar con Valera Visionarias!!!",
-      role: "Propietario",
+        "El trato fue exquisito y el trabajo impecable. Nos asesoraron desde la valoracion hasta la firma y sentimos que defendian nuestro precio en cada paso.",
+      role: "Propietario vendedor",
       rating: 5,
+      highlight: "Vendida con estrategia clara",
+      result: "Operacion cerrada con acompanamiento completo",
     },
     {
       content:
-        "Gran profesional, seria, formal, atenta en todos los detalles, con asesoramiento completo del principio al final de la operación de compra. Nuestra experiencia ha sido de 10 y la recomendamos 100% para quien necesite comprar o vender su casa.",
-      role: "Compradores",
-      rating: 5,
-    },
-    {
-      content:
-        "Muy buena profesional. He vendido mi casa en poco tiempo y por el precio estipulado. Se encargan de todos los trámites y facilitan mucho la operación de compra venta.",
+        "Muy buena profesional. Vendi mi casa en poco tiempo y por el precio estipulado. Se encargaron de los tramites y me fueron informando siempre de como iba cada visita.",
       role: "Vendedora",
       rating: 5,
+      highlight: "Tiempo de venta: poco tiempo",
+      result: "Resultado: precio acordado",
+    },
+    {
+      content:
+        "Transmiten confianza, filtran a los compradores y te quitan mucha carga. Note diferencia desde la preparacion del anuncio hasta la negociacion final.",
+      role: "Propietaria",
+      rating: 5,
+      highlight: "Visitas mejor filtradas",
+      result: "Resultado: proceso mas agil y seguro",
     },
   ]
 
   return (
-    <section id="testimonios" className="py-16 sm:py-20 md:py-24 lg:py-32 bg-white">
+    <section id="testimonios" className="bg-white py-16 sm:py-20 md:py-24 lg:py-32">
       <div className="container mx-auto px-4 sm:px-6 lg:px-12">
-        {/* Cabecera */}
-        <div className="max-w-3xl mb-12 sm:mb-16 lg:mb-20">
-          <p className="text-xs tracking-[0.3em] uppercase text-stone-500 mb-3 sm:mb-4">Testimonios</p>
-          <h2 className="font-playfair text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light text-black mb-4 sm:mb-6 leading-tight">
-            Lo que dicen nuestros clientes
+        <div className="mb-12 max-w-3xl sm:mb-16 lg:mb-20">
+          <p className="mb-3 text-xs uppercase tracking-[0.3em] text-stone-500 sm:mb-4">Testimonios</p>
+          <h2 className="mb-4 font-playfair text-3xl font-light leading-tight text-black sm:text-4xl md:text-5xl lg:text-6xl sm:mb-6">
+            Propietarios que ya han vendido con nosotros
           </h2>
-          <p className="text-base sm:text-lg text-stone-700 leading-relaxed">
-            La confianza de nuestros clientes es nuestro mayor logro. Sus experiencias hablan por sí solas.
+          <p className="text-base leading-relaxed text-stone-700 sm:text-lg">
+            Resenas centradas en lo que mas importa al vender: tiempo, acompanamiento y resultado final.
           </p>
         </div>
 
-        {/* Tarjetas */}
-        <div className="grid md:grid-cols-3 gap-6 sm:gap-8 max-w-6xl mx-auto">
+        <div className="mx-auto grid max-w-6xl gap-6 md:grid-cols-3 sm:gap-8">
           {testimonials.map((testimonial, index) => (
-            <Card key={index} className="border border-stone-200 hover:border-black transition-all">
+            <Card key={index} className="border border-stone-200 transition-all hover:border-black">
               <CardContent className="p-6 sm:p-8">
-                <div className="flex items-center gap-4 mb-6">
+                <div className="mb-6 flex items-center gap-4">
                   <div>
-                    <p className="text-stone-600 text-xs sm:text-sm">{testimonial.role}</p>
+                    <p className="text-xs text-stone-600 sm:text-sm">{testimonial.role}</p>
                   </div>
                 </div>
 
-                <div className="flex gap-1 mb-4" aria-label={`Valoración: ${testimonial.rating} de 5 estrellas`}>
+                <div className="mb-4 space-y-2">
+                  <div className="inline-flex rounded-full bg-stone-100 px-3 py-1 text-xs font-medium text-stone-700">
+                    {testimonial.highlight}
+                  </div>
+                  <p className="text-sm font-medium text-black">{testimonial.result}</p>
+                </div>
+
+                <div className="mb-4 flex gap-1" aria-label={`Valoracion: ${testimonial.rating} de 5 estrellas`}>
                   {[...Array(testimonial.rating)].map((_, i) => (
-                    <Star key={i} className="w-4 h-4 fill-black text-black" aria-hidden="true" />
+                    <Star key={i} className="h-4 w-4 fill-black text-black" aria-hidden="true" />
                   ))}
                 </div>
 
-                <Quote className="w-8 h-8 sm:w-10 sm:h-10 text-stone-300 mb-4" aria-hidden="true" />
-                <p className="text-sm sm:text-base text-stone-700 leading-relaxed italic">"{testimonial.content}"</p>
+                <Quote className="mb-4 h-8 w-8 text-stone-300 sm:h-10 sm:w-10" aria-hidden="true" />
+                <p className="text-sm italic leading-relaxed text-stone-700 sm:text-base">"{testimonial.content}"</p>
               </CardContent>
             </Card>
           ))}
         </div>
 
-        {/* CTA al final */}
-        <div className="max-w-6xl mx-auto mt-12 sm:mt-16 flex flex-col sm:flex-row items-center justify-between gap-6">
-          <p className="text-sm text-stone-600 text-center sm:text-left">
-            ¿Has trabajado con nosotros? Nos encantaría conocer tu experiencia.
+        <div className="mx-auto mt-12 flex max-w-6xl flex-col items-center justify-between gap-6 sm:mt-16 sm:flex-row">
+          <p className="text-center text-sm text-stone-600 sm:text-left">
+            Quieres vender con una estrategia parecida? Cuentanos tu caso y te orientamos.
           </p>
 
           <a
-            href="https://search.google.com/local/writereview?placeid=ChIJkd5T31M3Yg0RFZlh_cFG74g"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-full border border-black px-6 py-3 text-sm font-medium hover:bg-black hover:text-white transition"
+            href="#seller-contact-form"
+            className="inline-flex items-center gap-2 rounded-full border border-black px-6 py-3 text-sm font-medium transition hover:bg-black hover:text-white"
           >
-            <Star className="w-4 h-4 fill-current" />
-            Déjanos tu reseña
+            <Star className="h-4 w-4 fill-current" />
+            Quiero mi valoracion
           </a>
         </div>
       </div>
