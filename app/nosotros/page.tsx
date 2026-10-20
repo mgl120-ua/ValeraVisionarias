@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     "Conoce al equipo de Valera Visionarias, inmobiliaria en San Vicente del Raspeig. Te acompañamos en la compra, venta y alquiler de tu vivienda.",
   alternates: { canonical: "/nosotros" },
 }
-const embedSrc = `https://maps.google.com/maps?q=${contactInfo.mapsEmbedQuery}&z=16&output=embed`
+const embedSrc = contactInfo.mapsEmbedSrc
 
 
 export default function NosotrosPage() {

@@ -1,3 +1,5 @@
+const MAPS_QUERY = "Calle Villafranqueza 50, 03690 San Vicente del Raspeig, Alicante, España"
+
 export const contactInfo = {
   phone: "617 31 45 84",
   phoneHref: "tel:+34617314584",
@@ -5,16 +7,19 @@ export const contactInfo = {
   email: "Valeravisionarias@gmail.com",
   emailHref: "mailto:Valeravisionarias@gmail.com",
   whatsappHref: "https://wa.me/34617314584",
-  addressLine1: "Calle Alicante 13, entreplanta 3",
+  addressLine1: "C/ Villafranqueza 50, Local 1",
   addressLine2: "San Vicente del Raspeig, Alicante",
   postalCode: "03690",
-  fullAddress: "Calle Alicante 13, entreplanta 3, San Vicente del Raspeig, 03690, Alicante",
-  mapsSearchHref:
-    "https://www.google.com/maps/search/?api=1&query=Calle+Alicante+13+entreplanta+3+San+Vicente+del+Raspeig+Alicante+03690",
-  mapsEmbedQuery:
-    "Calle+Alicante+13,+entreplanta+3,+03690+San+Vicente+del+Raspeig,+Alicante",
-  mapsDirectionsHref:
-    "https://www.google.com/maps/dir/?api=1&destination=Calle+Alicante+13+entreplanta+3+03690+San+Vicente+del+Raspeig+Alicante",
+  fullAddress: "C/ Villafranqueza 50, Local 1, 03690 San Vicente del Raspeig, Alicante",
+  // Mapas: una sola consulta para todos los enlaces, con la dirección de la ficha de Google.
+  // Sin "Local 1", que confunde al buscador; con código postal y municipio para no caer en Alicante ciudad.
+  mapsSearchHref: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(MAPS_QUERY)}`,
+  mapsEmbedSrc: `https://maps.google.com/maps?q=${encodeURIComponent(MAPS_QUERY)}&z=17&hl=es&output=embed`,
+  mapsDirectionsHref: `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(MAPS_QUERY)}`,
+  // Ficha de Google: se usa cuando no hay enlace directo devuelto por la API de Places
+  googleProfileHref: "https://www.google.com/maps/search/?api=1&query=Valera+Visionarias+San+Vicente+del+Raspeig",
+  googleRating: "4,3",
+  googleReviewCount: "Más de 20",
   hoursSummary: "Lunes a viernes de 9:00 a 20:00 y sábados de 9:00 a 14:00.",
   appointmentNote: "Atención personal solo con cita previa.",
   socialLinks: {

@@ -12,7 +12,6 @@ import SellerStickyBar from "@/components/SellerStickyBar"
 import { contactInfo } from "@/lib/contact-info"
 import { getSellerWhatsAppMessage, sellerExperiment, setupScrollDepthTracking, trackSellerEvent } from "@/lib/seller-leads"
 
-const TestimonialsSection = dynamic(() => import("@/components/testimonials-section"))
 const AchievementsSection = dynamic(() => import("@/components/achievements-section"))
 const SanVicenteSection = dynamic(() => import("@/components/san-vicente-section"))
 const FAQSection = dynamic(() => import("@/components/faq-section"))
@@ -21,8 +20,10 @@ const SellingProcess = dynamic(() => import("@/components/SellingProcess"))
 
 export default function ValeraVisionariasLandingClient({
   featuredSlot,
+  reviewsSlot,
 }: {
   featuredSlot?: ReactNode
+  reviewsSlot?: ReactNode
 }) {
   useEffect(() => {
     return setupScrollDepthTracking()
@@ -166,7 +167,7 @@ export default function ValeraVisionariasLandingClient({
 
         <SellingProcess />
 
-        <TestimonialsSection />
+        {reviewsSlot}
         <AchievementsSection />
         <SanVicenteSection />
 
