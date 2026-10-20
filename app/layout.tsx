@@ -71,7 +71,6 @@ const organizationJsonLd = {
     postalCode: contactInfo.postalCode,
     addressCountry: "ES",
   },
-  geo: { "@type": "GeoCoordinates", latitude: 38.3936, longitude: -0.5247 },
   hasMap: contactInfo.mapsSearchHref,
   openingHoursSpecification,
   contactPoint: [

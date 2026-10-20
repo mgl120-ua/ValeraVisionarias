@@ -9,7 +9,7 @@ const ContactForm = dynamic(() => import("@/components/ContactForm"), { ssr: fal
 export const metadata: Metadata = {
   title: "Contacto: inmobiliaria en San Vicente del Raspeig",
   description:
-    "Llama, escribe o visita Valera Visionarias en Calle Alicante 13, San Vicente del Raspeig (Alicante). Te atendemos con cita previa para vender, comprar o valorar tu vivienda.",
+    "Llama, escribe o visita Valera Visionarias en C/ Villafranqueza 50, San Vicente del Raspeig (Alicante). Te atendemos con cita previa para vender, comprar o valorar tu vivienda.",
   alternates: { canonical: "/contacto" },
   openGraph: {
     title: "Contacto | Valera Visionarias",
