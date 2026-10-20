@@ -17,9 +17,9 @@ export default function AchievementsSection() {
       tag: "Ventas rápidas",
     },
     {
-      value: "4,9/5",
-      label: "Satisfacción del cliente",
-      description: "Acompañamiento cercano, comunicación clara y negociacion transparente.",
+      value: "4,3/5",
+      label: "Valoración en Google",
+      description: "Más de 20 reseñas de clientes en nuestra ficha de Google.",
       tag: "Confianza local",
     },
   ]
