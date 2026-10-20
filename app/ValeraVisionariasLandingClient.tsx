@@ -10,7 +10,7 @@ import ContactForm from "@/components/ContactForm"
 import SellerMiniForm from "@/components/SellerMiniForm"
 import SellerStickyBar from "@/components/SellerStickyBar"
 import SellerTrustBar from "@/components/SellerTrustBar"
-import { contactInfo, openingHoursSpecification } from "@/lib/contact-info"
+import { contactInfo } from "@/lib/contact-info"
 import { getSellerWhatsAppMessage, sellerExperiment, setupScrollDepthTracking, trackSellerEvent } from "@/lib/seller-leads"
 
 const TestimonialsSection = dynamic(() => import("@/components/testimonials-section"))
@@ -25,76 +25,16 @@ export default function ValeraVisionariasLandingClient({
 }: {
   featuredSlot?: ReactNode
 }) {
-  const year = new Date().getFullYear()
   useEffect(() => {
     return setupScrollDepthTracking()
   }, [])
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "LocalBusiness",
-            "@id": "https://www.valeravisionarias.com/#organization",
-            additionalType: ["https://schema.org/Organization", "https://schema.org/RealEstateAgent"],
-            name: "Valera Visionarias",
-            url: "https://www.valeravisionarias.com",
-            logo: "https://www.valeravisionarias.com/images/logo-dark.png",
-            image: [
-              "https://www.valeravisionarias.com/images/logo-dark.png",
-              "https://www.valeravisionarias.com/images/hero-architecture.jpg",
-            ],
-            description:
-              "Inmobiliaria en San Vicente del Raspeig especializada en ayudar a propietarios a vender su vivienda con valoración gratuita, estrategia comercial y seguimiento completo.",
-            telephone: contactInfo.phoneE164,
-            priceRange: "EUR",
-            address: {
-              "@type": "PostalAddress",
-              streetAddress: contactInfo.addressLine1,
-              addressLocality: "San Vicente del Raspeig",
-              addressRegion: "Alicante",
-              postalCode: "03690",
-              addressCountry: "ES",
-            },
-            geo: {
-              "@type": "GeoCoordinates",
-              latitude: 38.3936,
-              longitude: -0.5247,
-            },
-            openingHoursSpecification,
-            contactPoint: [
-              {
-                "@type": "ContactPoint",
-                telephone: contactInfo.phoneE164,
-                contactType: "customer service",
-                availableLanguage: ["Spanish", "English"],
-                areaServed: "ES",
-              },
-            ],
-            sameAs: [
-              contactInfo.socialLinks.instagram,
-              contactInfo.socialLinks.tiktok,
-              contactInfo.socialLinks.idealista,
-            ],
-            aggregateRating: {
-              "@type": "AggregateRating",
-              ratingValue: "5.0",
-              reviewCount: "3",
-              bestRating: "5",
-              worstRating: "1",
-            },
-          }),
-        }}
-      />
-
       <div className="min-h-screen bg-white">
         <section
-          id="main-content"
-          className="relative flex min-h-[72vh] items-center justify-center overflow-hidden pt-20 scroll-mt-20"
-          aria-label="Hero propietarios"
+          className="relative flex min-h-[72vh] items-center justify-center overflow-hidden"
+          aria-labelledby="hero-title"
         >
           <div className="absolute inset-0">
             <Image
@@ -115,7 +55,7 @@ export default function ValeraVisionariasLandingClient({
                 Especialistas en venta de vivienda en San Vicente
               </p>
 
-              <h1 className="mx-auto max-w-6xl font-playfair text-4xl font-light leading-[1.04] tracking-tight sm:text-5xl md:text-[4.1rem] lg:text-[4.5rem]">
+              <h1 id="hero-title" className="mx-auto max-w-6xl font-playfair text-4xl font-light leading-[1.04] tracking-tight sm:text-5xl md:text-[4.1rem] lg:text-[4.5rem]">
                 <span className="block lg:whitespace-nowrap">{sellerExperiment.heroTitle}</span>
                 <span className="mx-auto mt-4 block max-w-4xl text-3xl leading-[1.08] sm:text-4xl md:text-[2.5rem] lg:text-[2.9rem] lg:whitespace-nowrap">
                   {sellerExperiment.heroSubtitle}
@@ -178,11 +118,11 @@ export default function ValeraVisionariasLandingClient({
             <div className="mb-12 max-w-3xl sm:mb-16 lg:mb-20">
               <p className="mb-3 text-xs uppercase tracking-[0.3em] text-stone-500 sm:mb-4">Propiedades destacadas</p>
               <h2 className="mb-4 font-playfair text-3xl font-light leading-tight text-black sm:text-4xl md:text-5xl lg:text-6xl sm:mb-6">
-                Viviendas en Alicante
+                Viviendas en San Vicente del Raspeig
               </h2>
               <p className="text-base leading-relaxed text-stone-700 sm:text-lg">
-                Selección de pisos y casas verificadas. Mantenemos esta sección para compradores, pero el foco de la
-                página está en captar propietarios que quieren vender.
+                Una selección de los pisos y casas que tenemos ahora en venta y alquiler en San Vicente del Raspeig y
+                alrededores.
               </p>
             </div>
 
@@ -276,15 +216,11 @@ export default function ValeraVisionariasLandingClient({
 
         <SellingProcess />
 
-        <section id="testimonios">
-          <TestimonialsSection />
-        </section>
+        <TestimonialsSection />
         <AchievementsSection />
         <SanVicenteSection />
 
-        <section id="faq">
-          <FAQSection />
-        </section>
+        <FAQSection />
 
         <section id="contacto" className="scroll-mt-24 bg-stone-50 py-16 sm:py-20 md:py-24 lg:py-32">
           <div className="container mx-auto px-4 sm:px-6 lg:px-12">
@@ -413,12 +349,6 @@ export default function ValeraVisionariasLandingClient({
             </div>
           </div>
         </section>
-
-        <footer className="border-t border-stone-200 bg-white py-6">
-          <div className="container mx-auto px-4 text-center text-sm text-stone-500 sm:px-6 lg:px-12">
-            © {year} Valera Visionarias
-          </div>
-        </footer>
 
         <SellerStickyBar />
       </div>

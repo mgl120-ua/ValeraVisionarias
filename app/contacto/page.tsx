@@ -1,57 +1,39 @@
 import type { Metadata } from "next"
-import Script from "next/script"
 import Image from "next/image"
 import dynamic from "next/dynamic"
-import { contactInfo, openingHoursSpecification } from "@/lib/contact-info"
+import { contactInfo } from "@/lib/contact-info"
+import { SITE_URL } from "@/lib/site"
 
 const ContactForm = dynamic(() => import("@/components/ContactForm"), { ssr: false })
 
 export const metadata: Metadata = {
-  title: "Contacto - Valera Visionarias",
+  title: "Contacto",
   description:
-    "Habla con Valera Visionarias por telefono, email o WhatsApp. Estamos en San Vicente del Raspeig, Alicante.",
+    "Habla con Valera Visionarias por teléfono, email o WhatsApp. Estamos en San Vicente del Raspeig, Alicante.",
   alternates: { canonical: "/contacto" },
   openGraph: {
-    title: "Contacto - Valera Visionarias",
+    title: "Contacto | Valera Visionarias",
     description:
-      "Compra, venta y alquiler cerca de la Universidad de Alicante. Escribenos para una consulta gratuita.",
-    url: "https://valeravisionarias.com/contacto",
-    images: [{ url: "/og/cover.jpg" }],
+      "Compra, venta y alquiler cerca de la Universidad de Alicante. Escríbenos para una consulta gratuita.",
+    url: "/contacto",
   },
 }
 
 export default function ContactoPage() {
   return (
     <>
-      <Script id="contact-jsonld" type="application/ld+json" strategy="afterInteractive">
-        {JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "ContactPage",
-          name: "Contacto - Valera Visionarias",
-          url: "https://valeravisionarias.com/contacto",
-          mainEntity: {
-            "@type": "RealEstateAgent",
-            name: "Valera Visionarias",
-            address: {
-              "@type": "PostalAddress",
-              streetAddress: contactInfo.addressLine1,
-              addressLocality: "San Vicente del Raspeig",
-              addressRegion: "Alicante",
-              postalCode: contactInfo.postalCode,
-              addressCountry: "ES",
-            },
-            telephone: contactInfo.phoneE164,
-            email: contactInfo.email,
-            areaServed: "San Vicente del Raspeig, Alicante",
-            openingHoursSpecification,
-            sameAs: [
-              contactInfo.socialLinks.instagram,
-              contactInfo.socialLinks.tiktok,
-              contactInfo.socialLinks.idealista,
-            ],
-          },
-        })}
-      </Script>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "ContactPage",
+            name: "Contacto | Valera Visionarias",
+            url: `${SITE_URL}/contacto`,
+            mainEntity: { "@id": `${SITE_URL}/#organization` },
+          }),
+        }}
+      />
 
       <section className="relative overflow-hidden">
         <div className="relative h-[280px] sm:h-[360px]">

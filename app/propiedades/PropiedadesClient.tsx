@@ -179,7 +179,7 @@ export default function PropiedadesClient({
       </section>
 
       {/* LISTADO */}
-      <main className="py-10">
+      <div className="py-10">
         <div className="container mx-auto px-4 sm:px-6 lg:px-12">
           {/* Estado vacío elegante */}
           {propiedadesFiltradas.length === 0 && (
@@ -292,7 +292,7 @@ export default function PropiedadesClient({
             </div>
           )}
         </div>
-      </main>
+      </div>
     </>
   );
 }

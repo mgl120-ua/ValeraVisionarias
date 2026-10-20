@@ -96,7 +96,7 @@ export function trackSellerEvent(eventName: SellerTrackingEvent, payload: Record
     }
   }
 
-  console.log("[seller-tracking]", eventPayload)
+  if (process.env.NODE_ENV !== "production") console.debug("[seller-tracking]", eventPayload)
 }
 
 export function setupScrollDepthTracking() {
@@ -135,13 +135,9 @@ export async function submitSellerLead(payload: SellerLeadPayload) {
       body: JSON.stringify(payload),
     })
 
-    if (!response.ok) {
-      throw new Error("request_failed")
-    }
-
-    return { ok: true as const, fallback: false as const }
-  } catch (error) {
-    console.log("[seller-lead:fallback]", payload, error)
-    return { ok: true as const, fallback: true as const }
+    return { ok: response.ok }
+  } catch {
+    // Sin conexión o error de red: el formulario debe ofrecer teléfono/WhatsApp como alternativa
+    return { ok: false }
   }
 }

@@ -5,15 +5,15 @@ export default function TestimonialsSection() {
   const testimonials = [
     {
       content:
-        "El trato fue exquisito y el trabajo impecable. Nos asesoraron desde la valoracion hasta la firma y sentimos que defendian nuestro precio en cada paso.",
+        "El trato fue exquisito y el trabajo impecable. Nos asesoraron desde la valoración hasta la firma y sentimos que defendían nuestro precio en cada paso.",
       role: "Propietario vendedor",
       rating: 5,
       highlight: "Vendida con estrategia clara",
-      result: "Operacion cerrada con acompanamiento completo",
+      result: "Operación cerrada con acompañamiento completo",
     },
     {
       content:
-        "Muy buena profesional. Vendi mi casa en poco tiempo y por el precio estipulado. Se encargaron de los tramites y me fueron informando siempre de como iba cada visita.",
+        "Muy buena profesional. Vendí mi casa en poco tiempo y por el precio estipulado. Se encargaron de los trámites y me fueron informando siempre de cómo iba cada visita.",
       role: "Vendedora",
       rating: 5,
       highlight: "Tiempo de venta: poco tiempo",
@@ -21,11 +21,11 @@ export default function TestimonialsSection() {
     },
     {
       content:
-        "Transmiten confianza, filtran a los compradores y te quitan mucha carga. Note diferencia desde la preparacion del anuncio hasta la negociacion final.",
+        "Transmiten confianza, filtran a los compradores y te quitan mucha carga. Noté diferencia desde la preparación del anuncio hasta la negociación final.",
       role: "Propietaria",
       rating: 5,
       highlight: "Visitas mejor filtradas",
-      result: "Resultado: proceso mas agil y seguro",
+      result: "Resultado: proceso más ágil y seguro",
     },
   ]
 
@@ -38,7 +38,7 @@ export default function TestimonialsSection() {
             Propietarios que ya han vendido con nosotros
           </h2>
           <p className="text-base leading-relaxed text-stone-700 sm:text-lg">
-            Resenas centradas en lo que mas importa al vender: tiempo, acompanamiento y resultado final.
+            Reseñas centradas en lo que más importa al vender: tiempo, acompañamiento y resultado final.
           </p>
         </div>
 
@@ -59,7 +59,7 @@ export default function TestimonialsSection() {
                   <p className="text-sm font-medium text-black">{testimonial.result}</p>
                 </div>
 
-                <div className="mb-4 flex gap-1" aria-label={`Valoracion: ${testimonial.rating} de 5 estrellas`}>
+                <div className="mb-4 flex gap-1" aria-label={`Valoración: ${testimonial.rating} de 5 estrellas`}>
                   {[...Array(testimonial.rating)].map((_, i) => (
                     <Star key={i} className="h-4 w-4 fill-black text-black" aria-hidden="true" />
                   ))}
@@ -74,15 +74,15 @@ export default function TestimonialsSection() {
 
         <div className="mx-auto mt-12 flex max-w-6xl flex-col items-center justify-between gap-6 sm:mt-16 sm:flex-row">
           <p className="text-center text-sm text-stone-600 sm:text-left">
-            Quieres vender con una estrategia parecida? Cuentanos tu caso y te orientamos.
+            ¿Quieres vender con una estrategia parecida? Cuéntanos tu caso y te orientamos.
           </p>
 
           <a
             href="#seller-contact-form"
             className="inline-flex items-center gap-2 rounded-full border border-black px-6 py-3 text-sm font-medium transition hover:bg-black hover:text-white"
           >
-            <Star className="h-4 w-4 fill-current" />
-            Quiero mi valoracion
+            <Star className="h-4 w-4 fill-current" aria-hidden="true" />
+            Quiero mi valoración
           </a>
         </div>
       </div>

@@ -3,12 +3,16 @@
 import { useState } from "react"
 import { AnimatePresence, motion } from "framer-motion"
 import { CheckCircle2, ShieldCheck } from "lucide-react"
-import { isValidSellerContact, submitSellerLead, trackSellerEvent } from "@/lib/seller-leads"
+import Link from "next/link"
+import { contactInfo } from "@/lib/contact-info"
+import { getSellerWhatsAppMessage, isValidSellerContact, submitSellerLead, trackSellerEvent } from "@/lib/seller-leads"
 
 export default function ContactForm() {
   const [step, setStep] = useState<1 | 2>(1)
   const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle")
   const [contactValue, setContactValue] = useState("")
+  // El nombre se pide en el paso 1, que se desmonta al pasar al paso 2: lo guardamos en estado
+  const [nameValue, setNameValue] = useState("")
   const [contactError, setContactError] = useState("")
 
   const goToStepTwo = () => {
@@ -38,7 +42,7 @@ export default function ContactForm() {
 
     try {
       const payload = {
-        name: formData.get("name") as string,
+        name: nameValue,
         contacto: contactValue,
         zona: (formData.get("zona") as string) || "No indicada",
         tipo: (formData.get("tipo") as string) || "No indicado",
@@ -49,21 +53,22 @@ export default function ContactForm() {
       }
 
       const result = await submitSellerLead(payload)
+      if (!result.ok) throw new Error("request_failed")
+
       trackSellerEvent("lead_form_submit", {
         source: payload.source,
         property_type: payload.tipo,
         form_name: "contact-form",
-        fallback: result.fallback,
       })
 
       setStatus("success")
       setStep(1)
       setContactValue("")
+      setNameValue("")
       form.reset()
-      setTimeout(() => setStatus("idle"), 4500)
     } catch {
+      // Conservamos lo escrito para que pueda reintentar o usar otra vía de contacto
       setStatus("error")
-      setTimeout(() => setStatus("idle"), 4500)
     }
   }
 
@@ -84,10 +89,13 @@ export default function ContactForm() {
       {step === 1 ? (
         <div className="space-y-4">
           <div>
-            <label className="mb-1 block text-sm font-medium text-stone-700">Nombre</label>
+            <label htmlFor="cf-name" className="mb-1 block text-sm font-medium text-stone-700">Nombre</label>
             <input
+              id="cf-name"
               type="text"
               name="name"
+              value={nameValue}
+              onChange={(event) => setNameValue(event.target.value)}
               autoComplete="given-name"
               placeholder="Cómo te llamas"
               className="w-full rounded-lg border border-stone-300 bg-white p-3 text-base focus:outline-none focus:ring-2 focus:ring-black"
@@ -95,13 +103,12 @@ export default function ContactForm() {
           </div>
 
           <div>
-            <label className="mb-1 block text-sm font-medium text-stone-700">Teléfono o email *</label>
+            <label htmlFor="cf-contacto" className="mb-1 block text-sm font-medium text-stone-700">Teléfono o email *</label>
             <input
+              id="cf-contacto"
               type="text"
               name="contacto"
               required
-              autoComplete="email"
-              inputMode="email"
               value={contactValue}
               onChange={(event) => {
                 const value = event.target.value
@@ -114,9 +121,10 @@ export default function ContactForm() {
               }}
               placeholder="Ej. 600 123 123 o tu@email.com"
               aria-invalid={Boolean(contactError)}
+              aria-describedby={contactError ? "cf-contacto-error" : undefined}
               className="w-full rounded-lg border border-stone-300 bg-white p-3 text-base focus:outline-none focus:ring-2 focus:ring-black"
             />
-            {contactError ? <p className="mt-2 text-sm text-red-600">{contactError}</p> : null}
+            {contactError ? <p id="cf-contacto-error" className="mt-2 text-sm text-red-600">{contactError}</p> : null}
           </div>
 
           <div className="rounded-xl border border-stone-200 bg-stone-50 p-4">
@@ -141,8 +149,9 @@ export default function ContactForm() {
         <div className="space-y-4">
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
             <div>
-              <label className="mb-1 block text-sm font-medium text-stone-700">Zona o dirección</label>
+              <label htmlFor="cf-zona" className="mb-1 block text-sm font-medium text-stone-700">Zona o dirección</label>
               <input
+                id="cf-zona"
                 type="text"
                 name="zona"
                 autoComplete="street-address"
@@ -151,18 +160,19 @@ export default function ContactForm() {
               />
             </div>
             <div>
-              <label className="mb-1 block text-sm font-medium text-stone-700">Tipo de vivienda</label>
+              <label htmlFor="cf-tipo" className="mb-1 block text-sm font-medium text-stone-700">Tipo de vivienda</label>
               <select
+                id="cf-tipo"
                 name="tipo"
                 className="w-full rounded-lg border border-stone-300 bg-white p-3 text-base focus:outline-none focus:ring-2 focus:ring-black"
                 defaultValue=""
               >
                 <option value="">Selecciona</option>
                 <option value="piso">Piso</option>
-                <option value="atico">Atico</option>
+                <option value="atico">Ático</option>
                 <option value="chalet">Chalet</option>
                 <option value="adosado">Adosado</option>
-                <option value="duplex">Duplex</option>
+                <option value="duplex">Dúplex</option>
                 <option value="bungalow">Bungalow</option>
                 <option value="otro">Otro</option>
               </select>
@@ -171,8 +181,9 @@ export default function ContactForm() {
 
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
             <div>
-              <label className="mb-1 block text-sm font-medium text-stone-700">Cuándo te gustaría vender</label>
+              <label htmlFor="cf-timeline" className="mb-1 block text-sm font-medium text-stone-700">Cuándo te gustaría vender</label>
               <select
+                id="cf-timeline"
                 name="timeline"
                 className="w-full rounded-lg border border-stone-300 bg-white p-3 text-base focus:outline-none focus:ring-2 focus:ring-black"
                 defaultValue=""
@@ -185,8 +196,9 @@ export default function ContactForm() {
               </select>
             </div>
             <div>
-              <label className="mb-1 block text-sm font-medium text-stone-700">Motivo de venta</label>
+              <label htmlFor="cf-reason" className="mb-1 block text-sm font-medium text-stone-700">Motivo de venta</label>
               <select
+                id="cf-reason"
                 name="reason"
                 className="w-full rounded-lg border border-stone-300 bg-white p-3 text-base focus:outline-none focus:ring-2 focus:ring-black"
                 defaultValue=""
@@ -202,8 +214,9 @@ export default function ContactForm() {
           </div>
 
           <div>
-            <label className="mb-1 block text-sm font-medium text-stone-700">Detalles adicionales</label>
+            <label htmlFor="cf-message" className="mb-1 block text-sm font-medium text-stone-700">Detalles adicionales</label>
             <textarea
+              id="cf-message"
               name="message"
               rows={4}
               placeholder="Ej. Piso reformado de 3 habitaciones, con ascensor y garaje."
@@ -279,19 +292,42 @@ export default function ContactForm() {
         </div>
       )}
 
-      {status === "success" ? (
-        <div className="rounded-xl border border-green-200 bg-green-50 p-3 text-sm text-green-700">
-          Hemos recibido tu solicitud. Te responderemos lo antes posible.
-        </div>
-      ) : null}
-      {status === "error" ? (
-        <div className="rounded-xl border border-red-200 bg-red-50 p-3 text-sm text-red-700">
-          No se pudo enviar. Escríbenos a valeravisionarias@gmail.com o usa WhatsApp.
-        </div>
-      ) : null}
+      <div aria-live="polite">
+        {status === "success" ? (
+          <div className="rounded-xl border border-green-200 bg-green-50 p-3 text-sm text-green-800">
+            <p className="font-medium">Hemos recibido tu solicitud.</p>
+            <p className="mt-1">
+              Revisaremos los datos y te contactaremos por el teléfono o email que nos has indicado para preparar tu
+              valoración.
+            </p>
+          </div>
+        ) : null}
+        {status === "error" ? (
+          <div className="rounded-xl border border-red-200 bg-red-50 p-3 text-sm text-red-800">
+            No se ha podido enviar el formulario. Inténtalo de nuevo o escríbenos por{" "}
+            <a
+              href={`${contactInfo.whatsappHref}?text=${encodeURIComponent(getSellerWhatsAppMessage("contact"))}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-medium underline"
+            >
+              WhatsApp
+            </a>{" "}
+            o llámanos al{" "}
+            <a href={contactInfo.phoneHref} className="font-medium underline">
+              {contactInfo.phone}
+            </a>
+            .
+          </div>
+        ) : null}
+      </div>
 
       <p className="text-xs text-stone-500">
-        Sin compromiso. Al enviarlo, aceptas que te contactemos para prepararte una valoración de venta.
+        Sin compromiso. Usaremos tus datos solo para responder a tu solicitud de valoración. Más información en la{" "}
+        <Link href="/privacidad" className="underline hover:text-black">
+          política de privacidad
+        </Link>
+        .
       </p>
     </form>
   )

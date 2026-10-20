@@ -47,7 +47,7 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
     .eq("id", params.id)
     .single();
 
-  if (!data) return { title: "Propiedad | Valera Visionarias" };
+  if (!data) return { title: "Propiedad no encontrada", robots: { index: false } };
 
   const cover =
     (data.property_images ?? [])
@@ -56,10 +56,13 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
   const title = `${data.title} · ${formatEUR(Number(data.price))}${data.category === "alquiler" ? " / mes" : ""} | Valera Visionarias`;
 
   return {
-    title,
+    // absolute: el título ya incluye la marca y no debe repetirse con la plantilla del layout
+    title: { absolute: title },
     description: data.description?.slice(0, 155) ?? "",
+    alternates: { canonical: `/propiedad/${params.id}` },
     openGraph: {
       title,
+      url: `/propiedad/${params.id}`,
       images: cover ? [cover] : [],
     },
   };
@@ -180,25 +183,29 @@ const jsonLd = {
 
 
   return (
-    <main className="container mx-auto px-4 py-6">
+    <div className="container mx-auto px-4 py-6 pb-28 lg:pb-12">
       {/* JSON-LD */}
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
       {/* Breadcrumb / back */}
       <div className="mb-4 flex items-center justify-between gap-4 flex-wrap text-sm">
-        <div className="flex items-center gap-2">
+        <nav aria-label="Ruta de navegación" className="flex items-center gap-2">
           <Link href="/propiedades" className="text-stone-600 hover:underline">Propiedades</Link>
-          <span className="text-stone-400">/</span>
-          <span className="text-stone-800 truncate max-w-[70vw]">{prop.title}</span>
-        </div>
+          <span className="text-stone-400" aria-hidden="true">/</span>
+          <span aria-current="page" className="text-stone-800 truncate max-w-[70vw]">{prop.title}</span>
+        </nav>
         <div className="flex items-center gap-2">
           <Button variant="outline" className="h-9" asChild>
-            <a href={`https://wa.me/?text=${encodeURIComponent(`Estoy interesado/a en ${prop.title} - https://valeravisionarias.com/propiedad/${prop.id}`)}`} target="_blank" rel="noopener noreferrer">
+            <a href={`https://wa.me/?text=${encodeURIComponent(`Estoy interesado/a en ${prop.title} - https://www.valeravisionarias.com/propiedad/${prop.id}`)}`} target="_blank" rel="noopener noreferrer">
               <Share2 className="w-4 h-4 mr-2" /> Compartir
             </a>
           </Button>
         </div>
       </div>
+
+      <h1 className="mb-5 font-playfair text-2xl font-light leading-tight text-black sm:text-3xl md:text-4xl">
+        {prop.title}
+      </h1>
 
       {/* Hero: galería + panel sticky (desktop) */}
       <section className="grid lg:grid-cols-3 gap-6">
@@ -207,7 +214,7 @@ const jsonLd = {
         </div>
 
         {/* Panel sticky con CTA (inspirado en layouts con lateral fijo) */}
-        <aside className="lg:sticky lg:top-6 h-fit space-y-4">
+        <aside className="lg:sticky lg:top-24 h-fit space-y-4">
           <Card className="border-stone-200">
             <CardContent className="p-5 space-y-4">
               <div className="flex items-start justify-between gap-3">
@@ -248,8 +255,8 @@ const jsonLd = {
 
               {/* CTA primaria */}
               <Button className="w-full bg-black text-white h-11" asChild>
-                <a href={`/contacto`}>
-                  <CalendarDays className="w-4 h-4 mr-2" /> Solicitar información / visita
+                <a href="#solicitar-visita">
+                  <CalendarDays className="w-4 h-4 mr-2" aria-hidden="true" /> Solicitar información / visita
                 </a>
               </Button>
 
@@ -270,7 +277,7 @@ const jsonLd = {
             <div className="text-xs text-stone-500">{prop.size} m² · {prop.bedrooms} hab · {prop.bathrooms} baños</div>
           </div>
           <Button className="bg-black text-white h-10" asChild>
-            <a href={`/colabora?ref=${encodeURIComponent(prop.id)}&title=${encodeURIComponent(prop.title)}`}>Contactar</a>
+            <a href="#solicitar-visita">Solicitar visita</a>
           </Button>
         </div>
       </div>
@@ -321,11 +328,11 @@ const jsonLd = {
         <aside className="space-y-6">
 
           {/* Mini “cómo concertar visita” */}
-          <Card className="border-stone-200">
+          <Card id="solicitar-visita" className="border-stone-200 scroll-mt-24">
             <CardContent className="p-6 space-y-4">
-              <h3 className="text-lg font-medium">¿Te interesa?</h3>
+              <h2 className="text-lg font-medium">¿Te interesa?</h2>
               <p className="text-sm text-stone-600">Selecciona una fecha y solicita tu visita.</p>
-              <VisitForm propiedad={prop.title} propiedadUrl={`https://valeravisionarias.com/propiedad/${prop.id}`} />
+              <VisitForm propiedad={prop.title} propiedadUrl={`https://www.valeravisionarias.com/propiedad/${prop.id}`} />
             </CardContent>
           </Card>
         </aside>
@@ -380,7 +387,7 @@ const jsonLd = {
           </div>
         </section>
       )}
-    </main>
+    </div>
   );
 }
 

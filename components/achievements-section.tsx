@@ -11,15 +11,15 @@ export default function AchievementsSection() {
       tag: "Resultados reales",
     },
     {
-      value: "21 dias",
+      value: "21 días",
       label: "Tiempo medio de venta",
-      description: "Ventas rapidas gracias a precio, presentacion y filtrado comercial.",
-      tag: "Ventas rapidas",
+      description: "Ventas rápidas gracias a precio, presentación y filtrado comercial.",
+      tag: "Ventas rápidas",
     },
     {
       value: "4,9/5",
-      label: "Satisfaccion cliente",
-      description: "Acompanamiento cercano, comunicacion clara y negociacion transparente.",
+      label: "Satisfacción del cliente",
+      description: "Acompañamiento cercano, comunicación clara y negociacion transparente.",
       tag: "Confianza local",
     },
   ]
@@ -38,7 +38,7 @@ export default function AchievementsSection() {
       <div className="relative container mx-auto px-4 text-center text-white sm:px-6 lg:px-12">
         <div className="mx-auto max-w-4xl">
           <div className="mb-6 inline-flex h-14 w-14 items-center justify-center rounded-full border border-white/20 bg-white/10 sm:mb-8 sm:h-16 sm:w-16">
-            <TrendingUp className="h-7 w-7 text-white sm:h-8 sm:w-8" />
+            <TrendingUp className="h-7 w-7 text-white sm:h-8 sm:w-8" aria-hidden="true" />
           </div>
 
           <h2 className="mb-6 font-playfair text-3xl font-light leading-tight text-white sm:text-4xl md:text-5xl lg:text-6xl">
@@ -46,7 +46,7 @@ export default function AchievementsSection() {
           </h2>
 
           <p className="mx-auto mb-10 max-w-2xl text-base leading-relaxed text-white/85 sm:text-lg">
-            Menos tiempo en mercado, mejor preparacion comercial y una experiencia cuidada de principio a fin.
+            Menos tiempo en mercado, mejor preparación comercial y una experiencia cuidada de principio a fin.
           </p>
 
           <div className="mb-10 grid gap-6 sm:mb-12 sm:grid-cols-3">
@@ -67,7 +67,7 @@ export default function AchievementsSection() {
 
           <Link href="#seller-contact-form">
             <Button size="lg" className="h-11 bg-white px-8 text-sm font-medium text-black hover:bg-stone-100 sm:h-12 sm:px-10 sm:text-base">
-              Agenda tu valoracion gratuita
+              Agenda tu valoración gratuita
             </Button>
           </Link>
         </div>

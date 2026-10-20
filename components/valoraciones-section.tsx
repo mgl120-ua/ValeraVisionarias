@@ -6,6 +6,8 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
 import { Checkbox } from "@/components/ui/checkbox"
+import Link from "next/link"
+import { contactInfo } from "@/lib/contact-info"
 import { Mail, Send } from "lucide-react"
 
 interface FormData {
@@ -103,7 +105,7 @@ export default function ValoracionesSection() {
       const res = await fetch("/api/valoraciones", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({ ...formData, source: "pagina-valoraciones" }),
       })
 
       if (!res.ok) {
@@ -111,11 +113,11 @@ export default function ValoracionesSection() {
         throw new Error(data?.error || "Error al enviar la solicitud")
       }
 
-      setSent({ ok: true, msg: "¡Solicitud enviada! Te contactaremos con la valoración." })
+      setSent({ ok: true, msg: "¡Solicitud enviada! Revisaremos los datos y te contactaremos con tu valoración." })
       // Opcional: limpiar algunos campos
       // setFormData({...formData, contacto: ""})
     } catch (err: any) {
-      setSent({ ok: false, msg: err.message || "No se pudo enviar. Inténtalo de nuevo." })
+      setSent({ ok: false, msg: `No se ha podido enviar. Inténtalo de nuevo o llámanos al ${contactInfo.phone}.` })
     } finally {
       setSubmitting(false)
     }
@@ -125,13 +127,30 @@ export default function ValoracionesSection() {
     <section className="py-16 sm:py-20 md:py-24 lg:py-32 bg-white">
       <div className="container mx-auto px-4 sm:px-6 lg:px-12 max-w-6xl">
         <div className="mb-12 sm:mb-16 lg:mb-20">
-          <p className="text-xs tracking-[0.3em] uppercase text-stone-500 mb-3 sm:mb-4">Valoraciones</p>
-          <h2 className="font-playfair text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light text-black mb-4 sm:mb-6 leading-tight">
-            Solicita una valoración profesional
-          </h2>
+          <p className="text-xs tracking-[0.3em] uppercase text-stone-500 mb-3 sm:mb-4">Valoración gratuita</p>
+          <h1 className="font-playfair text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light text-black mb-4 sm:mb-6 leading-tight text-balance">
+            ¿Cuánto vale tu vivienda en San Vicente del Raspeig?
+          </h1>
           <p className="text-base sm:text-lg text-stone-600 max-w-2xl leading-relaxed">
-            Déjanos los datos y te devolveremos una valoración ajustada al mercado.
+            Cuéntanos cómo es tu vivienda y te prepararemos una valoración orientativa según el mercado de la zona,
+            sin coste y sin compromiso.
           </p>
+
+          <ol className="mt-8 grid gap-4 sm:grid-cols-3 max-w-4xl">
+            {[
+              { title: "Nos envías los datos", text: "Solo lo básico: zona, tipo, superficie y cómo contactarte." },
+              { title: "Analizamos el mercado", text: "Revisamos viviendas comparables en tu zona y su situación." },
+              { title: "Te contactamos", text: "Te explicamos el rango de precio y, si quieres, la estrategia de venta." },
+            ].map((item, index) => (
+              <li key={item.title} className="rounded-xl border border-stone-200 bg-stone-50 p-4 sm:p-5">
+                <span className="font-playfair text-2xl text-stone-400" aria-hidden="true">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+                <p className="mt-2 font-medium text-black">{item.title}</p>
+                <p className="mt-1 text-sm text-stone-600 leading-relaxed">{item.text}</p>
+              </li>
+            ))}
+          </ol>
         </div>
 
         <Card className="border border-stone-200 bg-white">
@@ -363,12 +382,19 @@ export default function ValoracionesSection() {
                 {submitting ? "Enviando…" : "Solicitar valoración"}
               </Button>
 
-              {sent && (
-                <div className={`mt-4 text-sm ${sent.ok ? "text-green-700" : "text-red-700"}`}>{sent.msg}</div>
-              )}
+              <div aria-live="polite">
+                {sent && (
+                  <div className={`mt-4 text-sm ${sent.ok ? "text-green-700" : "text-red-700"}`}>{sent.msg}</div>
+                )}
+              </div>
 
-              <p className="text-[10px] sm:text-xs text-center text-stone-500 mt-2">
-                * Al enviar, aceptas ser contactada/o por Valera Visionarias para facilitarte la valoración.
+              <p className="text-xs text-center text-stone-500 mt-2 leading-relaxed">
+                La valoración es orientativa y no sustituye a una tasación oficial. Usaremos tus datos solo para
+                responder a tu solicitud. Más información en la{" "}
+                <Link href="/privacidad" className="underline hover:text-black">
+                  política de privacidad
+                </Link>
+                .
               </p>
             </form>
           </CardContent>

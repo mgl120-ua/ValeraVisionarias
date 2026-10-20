@@ -15,7 +15,7 @@ export default function FAQSection() {
     {
       question: "¿Qué zonas de San Vicente del Raspeig recomiendan?",
       answer:
-        "Las zonas más demandadas son las cercanas a la Universidad de Alicante (ideal para inversores en alquiler estudiantil), el centro urbano con todos los servicios, y las áreas residenciales más tranquilas como Villafranqueza. Cada zona tiene ventajas según tu perfil: familia, estudiante o inversor.",
+        "Las zonas más demandadas son las cercanas a la Universidad de Alicante (ideal para inversores en alquiler estudiantil), el centro urbano con todos los servicios, y las urbanizaciones residenciales más tranquilas del término municipal. Cada zona tiene ventajas según tu perfil: familia, estudiante o inversor.",
     },
     {
       question: "¿Qué rentabilidad puedo esperar del alquiler en San Vicente?",
@@ -25,7 +25,7 @@ export default function FAQSection() {
     {
       question: "¿Cuáles son los gastos de compraventa que debo considerar?",
       answer:
-        "En la compra: ITP (8% en segunda mano) o IVA + AJD (10% + 1.5% en obra nueva), notaría, registro y gestoría. En la venta: plusvalía municipal e IRPF si hay ganancia patrimonial. Te asesoramos en todo el proceso para que no haya sorpresas y optimices los costes.",
+        "En la compra, en la Comunitat Valenciana: ITP en segunda mano (tipo general del 9 % desde junio de 2026, con tipos reducidos para algunos perfiles) o IVA del 10 % + AJD en obra nueva, además de notaría, registro y gestoría. En la venta: plusvalía municipal e IRPF si hay ganancia patrimonial. Los tipos dependen de la fecha de la escritura y de tu situación, así que confírmalos con tu notaría o asesor; nosotros te acompañamos en todo el proceso para que no haya sorpresas.",
     },
   ]
 
@@ -34,7 +34,7 @@ export default function FAQSection() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-12">
         <div className="max-w-3xl mx-auto">
           <div className="mb-12 sm:mb-16">
-            <p className="text-xs tracking-[0.3em] uppercase text-stone-500 mb-3 sm:mb-4">Preguntas Frecuentes</p>
+            <p className="text-xs tracking-[0.3em] uppercase text-stone-500 mb-3 sm:mb-4">Preguntas frecuentes</p>
             <h2 className="font-playfair text-3xl sm:text-4xl md:text-5xl font-light text-black mb-4 sm:mb-6 leading-tight">
               Resolvemos tus dudas
             </h2>

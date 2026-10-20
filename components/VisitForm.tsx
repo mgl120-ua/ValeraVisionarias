@@ -100,6 +100,12 @@ export default function VisitForm({
         </AnimatePresence>
       </motion.button>
 
+      <p className="text-xs text-stone-500">
+        Usaremos tus datos solo para gestionar tu solicitud de visita.{" "}
+        <a href="/privacidad" className="underline hover:text-black">
+          Política de privacidad
+        </a>
+      </p>
     </form>
   )
 }

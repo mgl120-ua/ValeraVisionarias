@@ -11,9 +11,10 @@ import { officeImages } from "./office-images"
 import { contactInfo } from "@/lib/contact-info"
 
 export const metadata: Metadata = {
-  title: "Quiénes Somos | Valera Visionarias - Tu Inmobiliaria en San Vicente",
+  title: "Quiénes somos: tu inmobiliaria en San Vicente del Raspeig",
   description:
-    "Conoce al equipo de Valera Visionarias. Profesionales dedicados a encontrar tu hogar ideal en San Vicente del Raspeig con resultados garantizados.",
+    "Conoce al equipo de Valera Visionarias, inmobiliaria en San Vicente del Raspeig. Te acompañamos en la compra, venta y alquiler de tu vivienda.",
+  alternates: { canonical: "/nosotros" },
 }
 const embedSrc = `https://maps.google.com/maps?q=${contactInfo.mapsEmbedQuery}&z=16&output=embed`
 
@@ -23,7 +24,7 @@ export default function NosotrosPage() {
     <>
       <div className="min-h-screen bg-white">
         {/* Hero con fondo real de tu oficina */}
-        <section id="main-content" className="pt-32 sm:pt-40 pb-16 sm:pb-20 bg-white relative overflow-hidden">
+        <section className="pt-16 sm:pt-24 pb-16 sm:pb-20 bg-white relative overflow-hidden">
           <div className="absolute inset-0">
             <Image
               src={officeImages[0]}
@@ -40,10 +41,10 @@ export default function NosotrosPage() {
           <div className="container mx-auto px-4 sm:px-6 lg:px-12 relative z-10">
             <div className="max-w-3xl mx-auto text-center mb-16">
               <p className="text-xs tracking-[0.3em] uppercase text-stone-600 mb-4">Quiénes Somos</p>
-              <h2 className="font-playfair text-4xl sm:text-5xl md:text-6xl font-light text-black mb-6 leading-tight">
+              <h1 className="font-playfair text-4xl sm:text-5xl md:text-6xl font-light text-black mb-6 leading-tight">
                 Tu inmobiliaria de confianza
                 <span className="block mt-2">en San Vicente del Raspeig</span>
-              </h2>
+              </h1>
               <p className="text-lg sm:text-xl text-stone-700 leading-relaxed">
                 Fotos reales de nuestra oficina. Cercanía, transparencia y resultados.
               </p>

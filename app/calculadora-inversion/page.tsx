@@ -38,7 +38,7 @@ export default function CalculadoraInversion() {
   }, [capital, aportacion, rentabilidad, plazo])
 
   return (
-    <main className="mx-auto max-w-6xl px-4 py-10">
+    <div className="mx-auto max-w-6xl px-4 py-10">
       <RentabilidadHeader />
 
       <div className="grid gap-6 md:grid-cols-5">
@@ -162,7 +162,7 @@ export default function CalculadoraInversion() {
           </CardContent>
         </Card>
       </div>
-    </main>
+    </div>
   )
 }
 

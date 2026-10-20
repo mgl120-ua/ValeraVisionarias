@@ -19,15 +19,15 @@ import CaptadoresForm from "@/components/CaptadoresForm"
 import { contactInfo } from "@/lib/contact-info"
 
 export const metadata: Metadata = {
-  title: "Colabora con Valera Visionarias | Gana 1.500€ por captación",
+  title: "Colabora con nosotros: gana 1.500 € por captación",
   description:
     "Únete a nuestro equipo como captador inmobiliario. Gana 1.500€ mínimo por cada inmueble que captes. Flexibilidad total e ingresos ilimitados.",
+  alternates: { canonical: "/colabora" },
 }
 
 export default function ColaboraPage() {
   return (
     <div className="min-h-screen bg-white">
-      <div className="h-16 sm:h-20"></div>
 
       {/* Hero Section */}
       <section className="py-16 sm:py-20 md:py-24 lg:py-32 bg-gradient-to-b from-white to-stone-50">

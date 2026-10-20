@@ -1,7 +1,6 @@
 // app/layout.tsx
 import type React from "react"
-import type { Metadata } from "next"
-import Script from "next/script"
+import type { Metadata, Viewport } from "next"
 import "./globals.css"
 
 import { Inter, Playfair_Display } from "next/font/google"
@@ -12,6 +11,7 @@ import WhatsAppFloat from "@/components/site/WhatsAppFloat"
 import SkipToContent from "@/components/skip-to-content"
 import CookieBanner from "@/components/cookie-banner"
 import { contactInfo, openingHoursSpecification } from "@/lib/contact-info"
+import { SITE_URL } from "@/lib/site"
 
 const inter = Inter({
   subsets: ["latin"],
@@ -29,29 +29,79 @@ const playfair = Playfair_Display({
 export const metadata: Metadata = {
   // conservamos tu metadato original
   generator: "v0.app",
-  metadataBase: new URL("https://valeravisionarias.com"),
+  metadataBase: new URL(SITE_URL),
   title: {
     default: "Valera Visionarias — Inmobiliaria en San Vicente del Raspeig",
     template: "%s | Valera Visionarias",
   },
   description:
-    "Compra, venta y alquiler en San Vicente del Raspeig (Alicante). Especialistas en UA. Valoración gratuita.",
-  alternates: { canonical: "/" },
+    "Inmobiliaria en San Vicente del Raspeig (Alicante): venta, compra y alquiler de viviendas con trato cercano. Solicita tu valoración gratuita.",
+  // Sin canonical global: cada página declara el suyo para no canonicalizarlas todas a la portada
   openGraph: {
     type: "website",
     siteName: "Valera Visionarias",
-    url: "https://valeravisionarias.com",
-    title: "Inmobiliaria en San Vicente del Raspeig",
-    description:
-      "Compra, venta y alquiler cerca de la Universidad de Alicante. Valoración gratuita.",
-    images: [{ url: "/og/cover.jpg" }],
+    url: SITE_URL,
+    title: "Valera Visionarias — Inmobiliaria en San Vicente del Raspeig",
+    description: "Venta, compra y alquiler de viviendas en San Vicente del Raspeig. Valoración gratuita.",
+    images: [{ url: "/images/hero-architecture.jpg", alt: "Valera Visionarias, inmobiliaria en San Vicente del Raspeig" }],
     locale: "es_ES",
   },
   twitter: {
     card: "summary_large_image",
-    site: "@valeravisionarias",
   },
   robots: { index: true, follow: true },
+}
+
+export const viewport: Viewport = {
+  themeColor: "#ffffff",
+}
+
+const organizationJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "RealEstateAgent",
+  "@id": `${SITE_URL}/#organization`,
+  name: "Valera Visionarias",
+  url: SITE_URL,
+  logo: `${SITE_URL}/images/logo-dark.png`,
+  image: [`${SITE_URL}/images/logo-dark.png`, `${SITE_URL}/images/hero-architecture.jpg`],
+  description:
+    "Inmobiliaria en San Vicente del Raspeig especializada en la compraventa de viviendas, con valoración gratuita y acompañamiento durante todo el proceso.",
+  telephone: contactInfo.phoneE164,
+  email: contactInfo.email,
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: contactInfo.addressLine1,
+    addressLocality: "San Vicente del Raspeig",
+    addressRegion: "Alicante",
+    postalCode: contactInfo.postalCode,
+    addressCountry: "ES",
+  },
+  geo: { "@type": "GeoCoordinates", latitude: 38.3936, longitude: -0.5247 },
+  openingHoursSpecification,
+  contactPoint: [
+    {
+      "@type": "ContactPoint",
+      telephone: contactInfo.phoneE164,
+      contactType: "customer service",
+      availableLanguage: ["Spanish"],
+      areaServed: "ES",
+    },
+  ],
+  sameAs: [contactInfo.socialLinks.instagram, contactInfo.socialLinks.tiktok, contactInfo.socialLinks.idealista],
+  areaServed: [
+    { "@type": "City", name: "San Vicente del Raspeig" },
+    { "@type": "City", name: "Alicante" },
+  ],
+}
+
+const websiteJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "@id": `${SITE_URL}/#website`,
+  name: "Valera Visionarias",
+  url: SITE_URL,
+  inLanguage: "es-ES",
+  publisher: { "@id": `${SITE_URL}/#organization` },
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -68,7 +118,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Header />
 
         {/* Contenido de las páginas (padding top para header fijo) */}
-        <main id="main-content" className="pt-[72px] md:pt-[80px]">
+        <main id="main-content" tabIndex={-1} className="pt-[64px] lg:pt-[72px] focus:outline-none">
           {children}
         </main>
 
@@ -77,51 +127,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {/* Footer global */}
         <Footer year={year} />
 
-        {/* JSON-LD global (RealEstateAgent) */}
-        <Script id="org-jsonld" type="application/ld+json" strategy="afterInteractive">
-          {JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "RealEstateAgent",
-            name: "Valera Visionarias",
-            image: "https://valeravisionarias.com/images/logo-dark.png",
-            "@id": "https://valeravisionarias.com",
-            url: "https://valeravisionarias.com",
-            telephone: contactInfo.phoneE164,
-            email: contactInfo.email,
-            address: {
-              "@type": "PostalAddress",
-              streetAddress: contactInfo.addressLine1,
-              addressLocality: "San Vicente del Raspeig",
-              addressRegion: "Alicante",
-              postalCode: contactInfo.postalCode,
-              addressCountry: "ES",
-            },
-            geo: { "@type": "GeoCoordinates", latitude: 38.3936, longitude: -0.5247 },
-            openingHoursSpecification: openingHoursSpecification,
-            sameAs: [
-              contactInfo.socialLinks.instagram,
-              contactInfo.socialLinks.tiktok,
-              contactInfo.socialLinks.idealista,
-            ],
-            priceRange: "€€",
-            areaServed: "San Vicente del Raspeig, Alicante",
-          })}
-        </Script>
-
-        {/* JSON-LD WebSite (Site Search) */}
-        <Script id="site-jsonld" type="application/ld+json" strategy="afterInteractive">
-          {JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "WebSite",
-            name: "Valera Visionarias",
-            url: "https://valeravisionarias.com",
-            potentialAction: {
-              "@type": "SearchAction",
-              target: "https://valeravisionarias.com/propiedades?q={search_term_string}",
-              "query-input": "required name=search_term_string",
-            },
-          })}
-        </Script>
+        {/* Datos estructurados globales: se renderizan en el HTML para que los lean los buscadores */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify([organizationJsonLd, websiteJsonLd]) }}
+        />
       </body>
     </html>
   )

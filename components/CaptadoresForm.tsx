@@ -116,6 +116,12 @@ export default function CaptadoresForm() {
           </motion.div>
         )}
       </AnimatePresence>
+      <p className="text-xs text-stone-500">
+        Usaremos tus datos solo para gestionar tu solicitud de colaboración.{" "}
+        <a href="/privacidad" className="underline hover:text-black">
+          Política de privacidad
+        </a>
+      </p>
     </form>
   )
 }

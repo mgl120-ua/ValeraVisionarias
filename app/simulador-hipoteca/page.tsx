@@ -68,7 +68,7 @@ export default function SimuladorHipotecaPage() {
   }
 
   return (
-    <main className="mx-auto max-w-6xl px-4 py-10">
+    <div className="mx-auto max-w-6xl px-4 py-10">
       <section className="mb-10 text-center">
         <span className="inline-flex items-center gap-2 rounded-full border px-3 py-1 text-xs uppercase tracking-wider">
           <Calculator className="h-4 w-4" /> Simulador de Hipoteca
@@ -314,6 +314,6 @@ export default function SimuladorHipotecaPage() {
           </Card>
         </div>
       </div>
-    </main>
+    </div>
   )
 }

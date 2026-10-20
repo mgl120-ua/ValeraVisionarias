@@ -1,9 +1,20 @@
-import Script from "next/script"
+import type { Metadata } from "next"
 import { createSupabaseServer } from "@/lib/supabase/server"
 import PropiedadesClient from "./PropiedadesClient"
 import { contactInfo } from "@/lib/contact-info"
 
 export const revalidate = 60
+
+export const metadata: Metadata = {
+  title: "Pisos y casas en venta y alquiler en San Vicente del Raspeig",
+  description:
+    "Consulta las viviendas en venta y alquiler de Valera Visionarias en San Vicente del Raspeig y alrededores: fotos, características y contacto directo.",
+  alternates: { canonical: "/propiedades" },
+  openGraph: {
+    title: "Viviendas en venta y alquiler en San Vicente del Raspeig",
+    url: "/propiedades",
+  },
+}
 
 export default async function PropiedadesPage() {
   const supabase = createSupabaseServer()
@@ -77,7 +88,7 @@ export default async function PropiedadesPage() {
     mainEntityOfPage: "https://www.valeravisionarias.com/propiedades",
     name: "Propiedades en venta y alquiler — Valera Visionarias",
     description:
-      "Catálogo de viviendas en San Vicente del Raspeig y Alicante: pisos, chalets y apartamentos en venta o alquiler. Todas las propiedades verificadas por Valera Visionarias.",
+      "Catálogo de viviendas en San Vicente del Raspeig y Alicante: pisos, chalets y apartamentos en venta o alquiler.",
     provider: {
       "@type": "RealEstateAgent",
       name: "Valera Visionarias",
@@ -99,10 +110,8 @@ export default async function PropiedadesPage() {
   return (
     <>
       {/* ✅ JSON-LD catálogo inmobiliario */}
-      <Script
-        id="catalog-jsonld"
+      <script
         type="application/ld+json"
-        strategy="afterInteractive"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdCatalog) }}
       />
 
