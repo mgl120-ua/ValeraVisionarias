@@ -5,22 +5,22 @@ import { Button } from "@/components/ui/button"
 export default function AchievementsSection() {
   const metrics = [
     {
-      value: "+120",
-      label: "Viviendas vendidas",
-      description: "Operaciones cerradas con seguimiento completo y foco en propietarios.",
-      tag: "Resultados reales",
-    },
-    {
-      value: "21 días",
-      label: "Tiempo medio de venta",
-      description: "Ventas rápidas gracias a precio, presentación y filtrado comercial.",
-      tag: "Ventas rápidas",
-    },
-    {
       value: "4,3/5",
       label: "Valoración en Google",
       description: "Más de 20 reseñas de clientes en nuestra ficha de Google.",
-      tag: "Confianza local",
+      tag: "Opiniones reales",
+    },
+    {
+      value: "Gratis",
+      label: "Valoración de tu vivienda",
+      description: "Te orientamos sobre precio y estrategia de venta sin coste y sin compromiso.",
+      tag: "Sin compromiso",
+    },
+    {
+      value: "24 h",
+      label: "Respuesta a tu solicitud",
+      description: "Revisamos tu caso y te contactamos en menos de 24 horas.",
+      tag: "Trato cercano",
     },
   ]
 
@@ -42,11 +42,11 @@ export default function AchievementsSection() {
           </div>
 
           <h2 className="mb-6 font-playfair text-3xl font-light leading-tight text-white sm:text-4xl md:text-5xl lg:text-6xl">
-            Resultados reales
+            Por qué confiar en nosotros
           </h2>
 
           <p className="mx-auto mb-10 max-w-2xl text-base leading-relaxed text-white/85 sm:text-lg">
-            Menos tiempo en mercado, mejor preparación comercial y una experiencia cuidada de principio a fin.
+            Conocemos el mercado de San Vicente del Raspeig y te acompañamos de principio a fin, con trato directo y transparente.
           </p>
 
           <div className="mb-10 grid gap-6 sm:mb-12 sm:grid-cols-3">

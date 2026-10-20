@@ -10,7 +10,7 @@ export default function FAQSection() {
     {
       question: "¿Cuánto tiempo tardan en venderse las propiedades?",
       answer:
-        "El 80% de nuestras ventas se cierran en menos de una semana, muchas en menos de 48 horas. El 20% restante, siempre al precio estipulado, no tarda más de tres meses. Trabajamos con estrategias de marketing efectivas y una red consolidada de clientes.",
+        "Depende sobre todo del precio, el estado de la vivienda y la zona. Una vivienda con un precio ajustado al mercado y bien presentada se vende antes, por eso empezamos con una valoración realista y preparamos el anuncio, las visitas y la negociación para que no pierdas meses en el mercado.",
     },
     {
       question: "¿Qué zonas de San Vicente del Raspeig recomiendan?",
@@ -20,7 +20,7 @@ export default function FAQSection() {
     {
       question: "¿Qué rentabilidad puedo esperar del alquiler en San Vicente?",
       answer:
-        "La rentabilidad media en San Vicente del Raspeig ronda el 5-7% anual, especialmente en propiedades cercanas a la Universidad de Alicante. El alquiler estudiantil tiene alta demanda todo el año, lo que reduce los períodos de vacío y maximiza los ingresos.",
+        "Depende del precio de compra, de los gastos (comunidad, IBI, seguros, mantenimiento) y del tipo de alquiler. Las viviendas cercanas a la Universidad de Alicante tienen demanda de alquiler estudiantil. Puedes hacer una estimación con nuestra calculadora de rentabilidad y revisamos contigo el caso concreto.",
     },
     {
       question: "¿Cuáles son los gastos de compraventa que debo considerar?",
