@@ -29,7 +29,7 @@ export default function CookieBanner() {
 
   return (
     <div className="fixed bottom-0 left-0 right-0 z-50 p-3 sm:p-4 animate-slide-up" role="region" aria-label="Aviso de cookies">
-      <Card className="max-w-4xl mx-auto border-2 border-stone-200 shadow-2xl">
+      <Card className="max-w-4xl mx-auto border-2 border-black/[0.08] shadow-2xl">
         <CardContent className="p-4 sm:p-8">
           <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
             <div className="flex-1">
@@ -48,7 +48,7 @@ export default function CookieBanner() {
               <Button
                 onClick={rejectCookies}
                 variant="outline"
-                className="border-2 border-stone-300 text-black hover:bg-stone-100 w-full sm:w-auto bg-transparent"
+                className="border-2 border-black/10 text-black hover:bg-stone-100 w-full sm:w-auto bg-transparent"
               >
                 Rechazar
               </Button>

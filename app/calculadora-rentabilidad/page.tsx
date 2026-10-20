@@ -135,7 +135,7 @@ export default function RentabilidadPage() {
       <span className="inline-flex items-center gap-2 rounded-full border px-3 py-1 text-xs uppercase tracking-wider">
         <Calculator className="h-4 w-4" /> Calculadora de Rentabilidad
       </span>
-      <h1 className="font-playfair mt-4 text-3xl sm:text-4xl md:text-5xl">
+      <h1 className="page-title mt-4">
         Calcula la rentabilidad de tu inversión
       </h1>
       <p className="text-muted-foreground mt-3 text-base md:text-lg max-w-2xl mx-auto">
@@ -248,21 +248,21 @@ export default function RentabilidadPage() {
             ) : (
               <div className="space-y-4">
                 <Stat label="Inversión inicial" value={fmt.format(resultado.inversionInicial)} />
-                <hr className="border-stone-200" />
+                <hr className="border-black/[0.08]" />
                 <Stat label="Rentabilidad bruta" value={`${fmt2.format(resultado.rentabilidadBruta)} %`} />
                 <Stat label="Rentabilidad neta (NOI/Precio)" value={`${fmt2.format(resultado.rentabilidadNeta)} %`} />
-                <hr className="border-stone-200" />
+                <hr className="border-black/[0.08]" />
                 <Stat label="Cash-flow mensual" value={fmt.format(resultado.cashFlowMensual)} emphasis />
                 <Stat label="Cash-on-Cash (año 1)" value={`${fmt2.format(resultado.cashOnCash)} %`} />
                 {resultado.cuotaHipotecaMes > 0 && (
                   <Stat label="Cuota hipoteca (mes)" value={fmt.format(resultado.cuotaHipotecaMes)} />
                 )}
-                <hr className="border-stone-200" />
+                <hr className="border-black/[0.08]" />
                 <Stat label="Alquiler de equilibrio (mes)" value={fmt.format(resultado.alquilerMensualBreakEven)} />
               </div>
             )}
 
-            <div className="mt-6 rounded-xl border border-stone-200 p-4 bg-stone-50">
+            <div className="mt-6 rounded-xl border border-black/[0.08] p-4 bg-stone-50">
               <div className="flex items-center gap-2 mb-2">
                 <TrendingUp className="w-5 h-5" />
                 <p className="font-medium">Consejo rápido</p>

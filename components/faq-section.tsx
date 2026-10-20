@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { ChevronDown } from "lucide-react"
+import { Plus } from "lucide-react"
 
 export default function FAQSection() {
   const [openIndex, setOpenIndex] = useState<number | null>(0)
@@ -30,49 +30,47 @@ export default function FAQSection() {
   ]
 
   return (
-    <section id="faq" className="py-16 sm:py-20 md:py-24 lg:py-32 bg-stone-50">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-12">
-        <div className="max-w-3xl mx-auto">
-          <div className="mb-12 sm:mb-16">
-            <p className="text-xs tracking-[0.3em] uppercase text-stone-500 mb-3 sm:mb-4">Preguntas frecuentes</p>
-            <h2 className="font-playfair text-3xl sm:text-4xl md:text-5xl font-light text-black mb-4 sm:mb-6 leading-tight">
-              Resolvemos tus dudas
-            </h2>
-            <p className="text-base sm:text-lg text-stone-600 leading-relaxed">
+    <section id="faq" className="py-24 md:py-32">
+      <div className="mx-auto max-w-page px-4 sm:px-6 lg:px-10">
+        <div className="grid gap-12 lg:grid-cols-[1fr_1.5fr] lg:gap-20">
+          <div>
+            <p className="eyebrow mb-4">Preguntas frecuentes</p>
+            <h2 className="section-title text-black">Resolvemos tus dudas</h2>
+            <p className="mt-5 text-lg leading-[1.33] text-stone-600">
               Las preguntas más comunes sobre compraventa y alquiler en San Vicente del Raspeig.
             </p>
           </div>
 
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="border border-stone-200 bg-white rounded-lg overflow-hidden">
-                <button
-                  onClick={() => setOpenIndex(openIndex === index ? null : index)}
-                  className="w-full flex items-center justify-between p-5 sm:p-6 text-left hover:bg-stone-50 transition-colors"
-                  aria-expanded={openIndex === index}
-                  aria-controls={`faq-answer-${index}`}
-                >
-                  <span className="font-playfair text-base sm:text-lg font-semibold text-black pr-4">
-                    {faq.question}
-                  </span>
-                  <ChevronDown
-                    className={`w-5 h-5 text-black flex-shrink-0 transition-transform ${
-                      openIndex === index ? "rotate-180" : ""
-                    }`}
-                  />
-                </button>
-                <div
-                  id={`faq-answer-${index}`}
-                  className={`transition-all duration-300 ${
-                    openIndex === index ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
-                  } overflow-hidden`}
-                >
-                  <div className="px-5 sm:px-6 pb-5 sm:pb-6">
-                    <p className="text-sm sm:text-base text-stone-600 leading-relaxed">{faq.answer}</p>
+          <div className="border-b border-black/10">
+            {faqs.map((faq, index) => {
+              const open = openIndex === index
+              return (
+                <div key={index} className="border-t border-black/10">
+                  <button
+                    type="button"
+                    onClick={() => setOpenIndex(open ? null : index)}
+                    className="flex w-full items-start justify-between gap-6 py-6 text-left"
+                    aria-expanded={open}
+                    aria-controls={`faq-answer-${index}`}
+                  >
+                    <span className="text-xl font-light leading-[1.25] tracking-[-0.02em] text-black sm:text-[23px]">
+                      {faq.question}
+                    </span>
+                    <Plus
+                      aria-hidden="true"
+                      className={`mt-1 h-5 w-5 flex-shrink-0 text-black transition-transform duration-300 ${open ? "rotate-45" : ""}`}
+                    />
+                  </button>
+                  <div
+                    id={`faq-answer-${index}`}
+                    aria-hidden={!open}
+                    className={`overflow-hidden transition-all duration-300 ${open ? "max-h-96 opacity-100" : "max-h-0 opacity-0"}`}
+                  >
+                    <p className="max-w-2xl pb-6 text-base leading-[1.49] text-stone-600">{faq.answer}</p>
                   </div>
                 </div>
-              </div>
-            ))}
+              )
+            })}
           </div>
         </div>
       </div>

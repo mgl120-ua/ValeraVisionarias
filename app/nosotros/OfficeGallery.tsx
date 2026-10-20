@@ -18,11 +18,11 @@ export default function OfficeGallery() {
   const next = () => setCurrent((i) => (i + 1) % officeImages.length)
 
   return (
-    <section className="py-16 sm:py-20 bg-white">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-12">
+    <section className="py-16 sm:py-20">
+      <div className="mx-auto max-w-page px-4 sm:px-6 lg:px-10">
         <div className="max-w-3xl mb-10 sm:mb-12">
           <p className="text-xs tracking-[0.3em] uppercase text-stone-500 mb-3">Nuestra Oficina</p>
-          <h3 className="font-playfair text-3xl sm:text-4xl font-light text-black">
+          <h3 className="font-display text-3xl sm:text-4xl font-light text-black">
             Un espacio pensado para acompañarte
           </h3>
         </div>

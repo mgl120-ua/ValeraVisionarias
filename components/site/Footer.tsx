@@ -7,13 +7,13 @@ import { contactInfo } from "@/lib/contact-info"
 export default function Footer({ year }: { year: number }) {
   return (
     <footer id="site-footer" className="bg-black py-12 text-white sm:py-16 lg:py-20">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-12">
+      <div className="mx-auto max-w-page px-4 sm:px-6 lg:px-10">
         <div className="mb-12 grid gap-8 sm:grid-cols-2 md:grid-cols-4 sm:gap-10 lg:gap-12">
           <div className="sm:col-span-2">
             <div className="mb-6 flex items-center gap-2 sm:mb-8 sm:gap-3">
               <Image src="/images/logo-light.png" alt="" width={32} height={32} className="h-8 w-8 sm:h-9 sm:w-9" />
               <div>
-                <h3 className="font-playfair text-base font-semibold sm:text-lg">Valera Visionarias</h3>
+                <h3 className="font-display text-base font-medium sm:text-lg">Valera Visionarias</h3>
                 <p className="text-[9px] uppercase tracking-[0.2em] text-stone-400 sm:text-[10px]">Inmobiliaria</p>
               </div>
             </div>

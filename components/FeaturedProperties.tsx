@@ -35,25 +35,17 @@ export default async function FeaturedProperties() {
 
   if (error) {
     return (
-      <section className="container mx-auto px-4 py-8">
-        <h2 className="text-xl font-semibold mb-4">Destacadas</h2>
-        <p className="text-red-600 text-sm">Error: {error.message}</p>
-      </section>
+      <p className="text-stone-600">
+        Ahora mismo no podemos mostrar las viviendas destacadas. Puedes verlas todas en la página de propiedades.
+      </p>
     )
   }
 
   if (!data || data.length === 0) return null
 
   return (
-    <section className="container mx-auto px-4 py-8">
-      <div className="flex items-center justify-between mb-4">
-        <h2 className="text-xl sm:text-2xl font-semibold">Propiedades destacadas</h2>
-        <Link href="/propiedades" className="text-sm underline underline-offset-2">
-          Ver todas
-        </Link>
-      </div>
-
-      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+    <div>
+      <div className="grid gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
         {data.map((p: any) => {
           const imgs: any[] = p.property_images ?? []
           const sortedImgs = [...imgs].sort((a, b) => (a.position ?? 0) - (b.position ?? 0))
@@ -115,7 +107,7 @@ export default async function FeaturedProperties() {
           return (
             <article
               key={p.id}
-              className="group block rounded-xl border border-stone-200 bg-white overflow-hidden hover:shadow-lg transition-shadow relative"
+              className="group relative block"
             >
               {/* ✅ Structured Data for Google (server-rendered) */}
               <script
@@ -123,13 +115,13 @@ export default async function FeaturedProperties() {
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
               />
 
-              <Link href={`/propiedad/${p.id}`}>
-                <div className="relative aspect-[16/10] bg-stone-100">
+              <Link href={`/propiedad/${p.id}`} className="block rounded-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-4">
+                <div className="relative aspect-[4/3] overflow-hidden rounded-xl bg-stone-200 shadow-subtle">
                   {mainImg ? (
                     <img
                       src={mainImg}
                       alt={`Propiedad en ${p.city || "San Vicente del Raspeig"} – ${p.title}`}
-                      className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                      className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
                       loading="lazy"
                     />
                   ) : (
@@ -139,32 +131,21 @@ export default async function FeaturedProperties() {
                   )}
                 </div>
 
-                <div className="p-4">
-                  <div className="flex items-start justify-between gap-3">
-                    <h3 className="text-base sm:text-lg font-medium line-clamp-1">{p.title}</h3>
-                    <span className="text-[10px] uppercase tracking-wide bg-black text-white px-2 py-1 rounded">
-                      Destacada
-                    </span>
-                  </div>
-
-                  <p className="mt-2 text-sm text-stone-600 line-clamp-2">{p.description}</p>
-
-                  <div className="mt-3 flex flex-wrap items-center gap-3 text-sm text-stone-700">
-                    <span className="font-semibold">
-                      {Number(p.price).toLocaleString("es-ES")} €
-                    </span>
-                    <span>· {p.size} m²</span>
-                    <span>· {p.bedrooms} hab</span>
-                    <span>· {p.bathrooms} baños</span>
-                  </div>
-
-                  <p className="mt-1 text-xs text-stone-500">{p.city}</p>
+                <div className="pt-5">
+                  <p className="text-xs uppercase tracking-[0.18em] text-stone-500">{p.city || "San Vicente del Raspeig"}</p>
+                  <h3 className="mt-2 text-xl font-light tracking-[-0.02em] text-black line-clamp-1 sm:text-[23px]">{p.title}</h3>
+                  <p className="mt-3 text-[23px] font-light tracking-[-0.03em] text-black">
+                    {Number(p.price).toLocaleString("es-ES")} €
+                  </p>
+                  <p className="mt-2 text-sm text-stone-600">
+                    {p.size} m² · {p.bedrooms} hab · {p.bathrooms} baños
+                  </p>
                 </div>
               </Link>
             </article>
           )
         })}
       </div>
-    </section>
+    </div>
   )
 }

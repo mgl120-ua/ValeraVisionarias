@@ -17,13 +17,13 @@ export const metadata: Metadata = {
 
 export default function ValoracionesPage() {
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen">
       <ValoracionesSection />
 
-      <section className="py-16 sm:py-20 md:py-24 lg:py-32 bg-stone-50">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-12">
+      <section className="py-16 sm:py-20 md:py-24 lg:py-32">
+        <div className="mx-auto max-w-page px-4 sm:px-6 lg:px-10">
           <div className="max-w-4xl mx-auto text-center">
-            <h2 className="font-playfair text-3xl sm:text-4xl lg:text-5xl font-light text-black mb-4 sm:mb-6 leading-tight px-4 text-balance">
+            <h2 className="section-title text-black mb-4 sm:mb-6 px-4 text-balance">
               ¿Prefieres que veamos la vivienda en persona?
             </h2>
             <p className="text-base sm:text-lg text-stone-600 mb-8 sm:mb-10 leading-relaxed px-4">

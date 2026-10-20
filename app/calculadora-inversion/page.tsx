@@ -169,7 +169,7 @@ export default function CalculadoraInversion() {
 // 🪶 Encabezado con diseño premium cálido
 function RentabilidadHeader() {
   return (
-    <section className="relative mb-12 overflow-hidden rounded-3xl bg-white from-stone-50 via-amber-50/40 to-white py-20 text-center shadow-sm">
+    <section className="relative mb-12 overflow-hidden rounded-3xl from-stone-50 via-amber-50/40 to-white py-20 text-center shadow-subtle">
       <motion.div
         className="absolute inset-0 bg-white"
         animate={{ opacity: [0.6, 0.9, 0.6] }}
@@ -180,7 +180,7 @@ function RentabilidadHeader() {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="inline-flex items-center gap-2 rounded-full border border-stone-300/70 bg-white/60 px-3 py-1 text-xs uppercase tracking-wider backdrop-blur-sm"
+          className="inline-flex items-center gap-2 rounded-full border border-black/[0.08] bg-white/60 px-3 py-1 text-xs uppercase tracking-wider backdrop-blur-sm"
         >
           <PiggyBank className="h-4 w-4 text-amber-700" /> Calculadora de Inversión
         </motion.span>
@@ -188,7 +188,7 @@ function RentabilidadHeader() {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="font-playfair mt-6 text-3xl sm:text-4xl md:text-5xl text-stone-900"
+          className="page-title mt-6 text-stone-900"
         >
           Calcula el crecimiento de tu inversión
         </motion.h1>

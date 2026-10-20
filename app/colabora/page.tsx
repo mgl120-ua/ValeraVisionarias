@@ -27,17 +27,17 @@ export const metadata: Metadata = {
 
 export default function ColaboraPage() {
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen">
 
       {/* Hero Section */}
-      <section className="py-16 sm:py-20 md:py-24 lg:py-32 bg-gradient-to-b from-white to-stone-50">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-12">
+      <section className="py-16 sm:py-20 md:py-24 lg:py-32">
+        <div className="mx-auto max-w-page px-4 sm:px-6 lg:px-10">
           <div className="max-w-4xl mx-auto text-center">
             <div className="inline-flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 bg-black rounded-full mb-6 sm:mb-8">
               <Users className="w-7 h-7 sm:w-8 sm:h-8 text-white" />
             </div>
 
-            <h1 className="font-playfair text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-light text-black mb-6 sm:mb-8 leading-tight">
+            <h1 className="page-title text-black mb-6 sm:mb-8">
               ¡Gana 1.500€ por cada inmueble que captes!
             </h1>
 
@@ -46,20 +46,20 @@ export default function ColaboraPage() {
             </p>
 
             <div className="grid sm:grid-cols-3 gap-6 sm:gap-8 mb-12 sm:mb-16">
-              <Card className="border border-stone-200 hover:border-black transition-all">
+              <Card className="border border-black/[0.08] hover:border-black transition-all">
                 <CardContent className="p-6 sm:p-8 text-center">
                   <DollarSign className="w-10 h-10 sm:w-12 sm:h-12 text-black mx-auto mb-4 sm:mb-6" />
-                  <h3 className="font-playfair text-2xl sm:text-3xl font-semibold text-black mb-3">1.500€ mínimo</h3>
+                  <h3 className="font-display text-2xl sm:text-3xl font-normal text-black mb-3">1.500€ mínimo</h3>
                   <p className="text-sm sm:text-base text-stone-600 leading-relaxed">
                     Por cada inmueble que captes y se cierre
                   </p>
                 </CardContent>
               </Card>
 
-              <Card className="border border-stone-200 hover:border-black transition-all">
+              <Card className="border border-black/[0.08] hover:border-black transition-all">
                 <CardContent className="p-6 sm:p-8 text-center">
                   <Clock className="w-10 h-10 sm:w-12 sm:h-12 text-black mx-auto mb-4 sm:mb-6" />
-                  <h3 className="font-playfair text-2xl sm:text-3xl font-semibold text-black mb-3">
+                  <h3 className="font-display text-2xl sm:text-3xl font-normal text-black mb-3">
                     Total flexibilidad
                   </h3>
                   <p className="text-sm sm:text-base text-stone-600 leading-relaxed">
@@ -68,10 +68,10 @@ export default function ColaboraPage() {
                 </CardContent>
               </Card>
 
-              <Card className="border border-stone-200 hover:border-black transition-all">
+              <Card className="border border-black/[0.08] hover:border-black transition-all">
                 <CardContent className="p-6 sm:p-8 text-center">
                   <TrendingUp className="w-10 h-10 sm:w-12 sm:h-12 text-black mx-auto mb-4 sm:mb-6" />
-                  <h3 className="font-playfair text-2xl sm:text-3xl font-semibold text-black mb-3">
+                  <h3 className="font-display text-2xl sm:text-3xl font-normal text-black mb-3">
                     Ingresos ilimitados
                   </h3>
                   <p className="text-sm sm:text-base text-stone-600 leading-relaxed">
@@ -94,13 +94,13 @@ export default function ColaboraPage() {
       </section>
 
       {/* Form Section */}
-      <section id="formulario" className="py-16 sm:py-20 md:py-24 lg:py-32 bg-white">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-12">
-          <div className="grid lg:grid-cols-2 gap-12 sm:gap-16 max-w-7xl mx-auto">
+      <section id="formulario" className="py-16 sm:py-20 md:py-24 lg:py-32">
+        <div className="mx-auto max-w-page px-4 sm:px-6 lg:px-10">
+          <div className="grid lg:grid-cols-2 gap-12 sm:gap-16">
             {/* Lado izquierdo: Info */}
             <div>
               <p className="text-xs tracking-[0.3em] uppercase text-stone-500 mb-3 sm:mb-4">Únete al equipo</p>
-              <h2 className="font-playfair text-3xl sm:text-4xl md:text-5xl font-light text-black mb-6 sm:mb-8 leading-tight">
+              <h2 className="section-title text-black mb-6 sm:mb-8">
                 Solicita información sobre el programa de captadores
               </h2>
               <p className="text-base sm:text-lg text-stone-600 leading-relaxed mb-10 sm:mb-12">
@@ -161,7 +161,7 @@ export default function ColaboraPage() {
             </div>
 
             {/* Lado derecho: Formulario */}
-            <Card className="border border-stone-200 bg-white">
+            <Card className="border border-black/[0.08] bg-white">
               <CardContent className="p-6 sm:p-8 lg:p-10">
                 <CaptadoresForm />
               </CardContent>

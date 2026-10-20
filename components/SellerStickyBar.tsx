@@ -36,7 +36,7 @@ export default function SellerStickyBar() {
   return (
     <div
       aria-hidden={hidden}
-      className={`fixed inset-x-0 bottom-0 z-40 border-t border-stone-200 bg-white/95 p-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] shadow-[0_-10px_30px_rgba(0,0,0,0.08)] backdrop-blur transition-transform duration-300 md:hidden ${
+      className={`fixed inset-x-0 bottom-0 z-40 border-t border-black/[0.08] bg-white/95 p-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] shadow-[0_-10px_30px_rgba(0,0,0,0.08)] backdrop-blur transition-transform duration-300 md:hidden ${
         hidden ? "pointer-events-none translate-y-full" : "translate-y-0"
       }`}
     >
@@ -45,7 +45,7 @@ export default function SellerStickyBar() {
           type="button"
           tabIndex={hidden ? -1 : undefined}
           onClick={scrollToForm}
-          className="flex-1 rounded-full bg-black px-4 py-3 text-sm font-medium text-white transition hover:-translate-y-0.5 hover:bg-stone-800 active:translate-y-0"
+          className="flex-1 rounded-xl bg-black px-4 py-3 text-sm font-medium text-white transition hover:-translate-y-0.5 hover:bg-stone-800 active:translate-y-0"
         >
           Valorar mi vivienda
         </button>
@@ -55,7 +55,7 @@ export default function SellerStickyBar() {
           target="_blank"
           rel="noopener noreferrer"
           onClick={() => trackSellerEvent("whatsapp_click", { placement: "sticky-bar" })}
-          className="inline-flex items-center justify-center gap-2 rounded-full border border-stone-300 px-4 py-3 text-sm font-medium text-black transition hover:-translate-y-0.5 hover:border-black active:translate-y-0"
+          className="inline-flex items-center justify-center gap-2 rounded-xl border border-black/10 px-4 py-3 text-sm font-medium text-black transition hover:-translate-y-0.5 hover:border-black active:translate-y-0"
         >
           <MessageCircle className="h-4 w-4" aria-hidden="true" />
           WhatsApp

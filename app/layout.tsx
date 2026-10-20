@@ -3,7 +3,7 @@ import type React from "react"
 import type { Metadata, Viewport } from "next"
 import "./globals.css"
 
-import { Inter, Playfair_Display } from "next/font/google"
+import { Plus_Jakarta_Sans } from "next/font/google"
 
 import Header from "@/components/site/Header"
 import Footer from "@/components/site/Footer"
@@ -13,16 +13,11 @@ import CookieBanner from "@/components/cookie-banner"
 import { contactInfo, openingHoursSpecification } from "@/lib/contact-info"
 import { SITE_URL } from "@/lib/site"
 
-const inter = Inter({
+// Tipografía geométrica única para todo el sitio: titulares en peso ligero, texto en regular
+const jakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
-  variable: "--font-inter",
-  display: "swap",
-})
-
-const playfair = Playfair_Display({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-playfair",
+  weight: ["300", "400", "500", "600"],
+  variable: "--font-sans",
   display: "swap",
 })
 
@@ -53,7 +48,7 @@ export const metadata: Metadata = {
 }
 
 export const viewport: Viewport = {
-  themeColor: "#ffffff",
+  themeColor: "#fafaf9",
 }
 
 const organizationJsonLd = {
@@ -108,8 +103,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   const year = new Date().getFullYear()
 
   return (
-    <html lang="es" className={`${inter.variable} ${playfair.variable} h-full`}>
-      <body className="min-h-screen bg-white text-stone-900 antialiased">
+    <html lang="es" className={`${jakarta.variable} h-full`}>
+      <body className="min-h-screen bg-stone-50 text-black antialiased">
         {/* Accesibilidad + cookies */}
         <SkipToContent />
         <CookieBanner />

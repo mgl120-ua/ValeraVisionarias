@@ -58,7 +58,7 @@ export default function MobileNav() {
         ref={openBtnRef}
         type="button"
         onClick={() => setIsOpen(true)}
-        className="lg:hidden inline-flex h-10 w-10 items-center justify-center rounded-full border border-stone-200 bg-white text-black transition-colors hover:bg-stone-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-black"
+        className="lg:hidden inline-flex h-10 w-10 items-center justify-center rounded-xl border border-stone-200 bg-white text-black transition-colors hover:bg-stone-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-black"
         aria-label="Abrir menú"
         aria-expanded={isOpen}
         aria-controls="mobile-menu"
@@ -86,7 +86,7 @@ export default function MobileNav() {
         }`}
       >
         <div className="flex items-center justify-between px-6 py-4 border-b border-stone-200">
-          <span className="font-playfair text-xl text-black">Menú</span>
+          <span className="font-display text-xl text-black">Menú</span>
           <button
             ref={closeBtnRef}
             type="button"
@@ -153,14 +153,14 @@ export default function MobileNav() {
 
           <div className="mt-8 space-y-3 px-2">
             <Link href="/valoraciones" onClick={closeMenu} className="block">
-              <Button className="w-full h-12 rounded-full bg-black text-white hover:bg-stone-800 text-base">
+              <Button className="w-full h-12 rounded-xl bg-black text-white hover:bg-stone-800 text-base">
                 Valoración gratuita
               </Button>
             </Link>
             <Link href="/colabora" onClick={closeMenu} className="block">
               <Button
                 variant="outline"
-                className="w-full h-12 rounded-full border-black text-black hover:bg-black hover:text-white text-base"
+                className="w-full h-12 rounded-xl border-black text-black hover:bg-black hover:text-white text-base"
               >
                 Colabora con nosotros
               </Button>

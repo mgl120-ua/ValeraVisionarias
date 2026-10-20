@@ -47,15 +47,15 @@ export default function ContactoPage() {
           />
           <div className="absolute inset-0 bg-black/50" />
           <div className="relative z-10 flex h-full items-center justify-center">
-            <h1 className="font-playfair text-4xl font-light text-white sm:text-5xl">Contacto</h1>
+            <h1 className="page-title text-white">Contacto</h1>
           </div>
         </div>
 
-        <div className="container mx-auto px-4 py-12 sm:px-6 sm:py-16 lg:px-12 lg:py-20">
+        <div className="mx-auto max-w-page px-4 py-12 sm:px-6 sm:py-16 lg:px-12 lg:py-20">
           <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
             <div>
               <p className="mb-3 text-xs uppercase tracking-[0.3em] text-stone-500">Escribenos</p>
-              <h2 className="mb-4 font-playfair text-3xl font-light text-black sm:text-4xl">
+              <h2 className="section-title mb-4 text-black">
                 Comencemos tu proyecto inmobiliario
               </h2>
               <p className="mb-8 text-stone-700">
@@ -111,7 +111,7 @@ export default function ContactoPage() {
                 </ul>
               </div>
 
-              <div className="mt-8 overflow-hidden rounded-xl border border-stone-200">
+              <div className="mt-8 overflow-hidden rounded-xl border border-black/[0.08]">
                 <iframe
                   title="Ubicacion Valera Visionarias"
                   className="h-[280px] w-full"

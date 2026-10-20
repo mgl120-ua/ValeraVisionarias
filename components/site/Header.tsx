@@ -63,16 +63,16 @@ export default function Header() {
 
   return (
     <header
-      className={`fixed top-0 inset-x-0 z-50 border-b bg-white/90 backdrop-blur-md supports-[backdrop-filter]:bg-white/75 transition-shadow duration-300 ${
-        scrolled ? "border-stone-200 shadow-[0_8px_30px_rgba(0,0,0,0.06)]" : "border-stone-200/60"
+      className={`fixed top-0 inset-x-0 z-50 border-b bg-stone-50/90 backdrop-blur-md supports-[backdrop-filter]:bg-stone-50/75 transition-shadow duration-300 ${
+        scrolled ? "border-black/[0.08] shadow-subtle" : "border-black/[0.04]"
       }`}
     >
-      <div className="container mx-auto px-4 sm:px-6 lg:px-12">
+      <div className="mx-auto max-w-page px-4 sm:px-6 lg:px-10">
         <div className="flex items-center justify-between gap-3 py-3 lg:py-4">
           {/* Logo */}
           <Link
             href="/"
-            className="group flex items-center gap-2 sm:gap-3 focus:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2 rounded-lg"
+            className="group flex items-center gap-2 sm:gap-3 focus:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2 rounded-xl"
             aria-label="Valera Visionarias, ir al inicio"
           >
             <Image
@@ -84,7 +84,7 @@ export default function Header() {
               priority
             />
             <div className="leading-tight">
-              <span className="font-playfair text-base sm:text-lg font-semibold text-black tracking-tight">
+              <span className="font-display text-base sm:text-lg font-medium text-black tracking-tight">
                 Valera Visionarias
               </span>
               <span className="block text-[10px] sm:text-[11px] text-stone-600 tracking-[0.24em] uppercase">
@@ -132,7 +132,7 @@ export default function Header() {
               {openDropdown && (
                 <ul
                   id="calculadoras-menu"
-                  className="absolute left-0 mt-2 w-52 bg-white border border-stone-200 rounded-lg shadow-lg py-2 z-50 animate-in fade-in-0 zoom-in-95"
+                  className="absolute left-0 mt-2 w-52 bg-white border border-black/[0.08] rounded-xl shadow-lifted py-2 z-50 animate-in fade-in-0 zoom-in-95"
                 >
                   {calculatorLinks.map((link) => (
                     <li key={link.href}>
@@ -151,7 +151,7 @@ export default function Header() {
             </div>
 
             <Link href="/valoraciones" className="ml-3">
-              <Button className="bg-black hover:bg-stone-800 text-white text-sm px-5 h-10 rounded-full">
+              <Button className="bg-black hover:bg-stone-800 text-white text-sm px-5 h-10 rounded-xl">
                 Valoración gratuita
               </Button>
             </Link>
@@ -161,7 +161,7 @@ export default function Header() {
           <div className="flex items-center gap-2 lg:hidden">
             <Link
               href="/valoraciones"
-              className="inline-flex h-10 items-center rounded-full bg-black px-4 text-sm font-medium text-white transition-colors hover:bg-stone-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2"
+              className="inline-flex h-10 items-center rounded-xl bg-black px-4 text-sm font-medium text-white transition-colors hover:bg-stone-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2"
             >
               Valorar
               <span className="sr-only"> mi vivienda gratis</span>

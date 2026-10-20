@@ -96,7 +96,7 @@ export default function DestacadosPage() {
     <div className="space-y-6">
       {/* Header */}
       <div>
-        <h1 className="text-3xl font-playfair font-light text-black mb-2">Propiedades Destacadas</h1>
+        <h1 className="text-3xl font-display font-light text-black mb-2">Propiedades Destacadas</h1>
         {loading ? (
           <p className="text-stone-600">Cargando propiedades…</p>
         ) : error ? (
@@ -174,7 +174,7 @@ export default function DestacadosPage() {
                     </div>
 
                     <div className="p-6">
-                      <h3 className="font-playfair text-xl font-semibold text-black mb-2">{property.title}</h3>
+                      <h3 className="font-display text-xl font-semibold text-black mb-2">{property.title}</h3>
                       {property.address && <p className="text-sm text-stone-600 mb-4">{property.address}</p>}
 
                       <div className="flex items-center justify-between mb-4">
@@ -217,7 +217,7 @@ export default function DestacadosPage() {
             <Card className="border-2 border-stone-200">
               <CardContent className="p-12 text-center">
                 <Star className="w-16 h-16 text-stone-300 mx-auto mb-4" aria-hidden="true" />
-                <h3 className="font-playfair text-2xl font-light text-black mb-2">No hay propiedades destacadas</h3>
+                <h3 className="font-display text-2xl font-light text-black mb-2">No hay propiedades destacadas</h3>
                 <p className="text-stone-600 mb-6">
                   Ve a la sección de propiedades y activa la opción “Destacar” en las que quieras mostrar.
                 </p>

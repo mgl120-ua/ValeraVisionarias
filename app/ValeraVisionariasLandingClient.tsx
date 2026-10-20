@@ -2,14 +2,13 @@
 
 import { useEffect, type ReactNode } from "react"
 import dynamic from "next/dynamic"
-import { MessageCircle, Phone, Mail, MapPin, Navigation, Search, ShieldCheck, Clock3 } from "lucide-react"
+import { ArrowUpRight, MessageCircle, Phone, Mail, MapPin, Navigation, Search } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import ContactForm from "@/components/ContactForm"
 import SellerMiniForm from "@/components/SellerMiniForm"
 import SellerStickyBar from "@/components/SellerStickyBar"
-import SellerTrustBar from "@/components/SellerTrustBar"
 import { contactInfo } from "@/lib/contact-info"
 import { getSellerWhatsAppMessage, sellerExperiment, setupScrollDepthTracking, trackSellerEvent } from "@/lib/seller-leads"
 
@@ -31,93 +30,70 @@ export default function ValeraVisionariasLandingClient({
 
   return (
     <>
-      <div className="min-h-screen bg-white">
-        <section
-          className="relative flex min-h-[72vh] items-center justify-center overflow-hidden"
-          aria-labelledby="hero-title"
-        >
-          <div className="absolute inset-0">
-            <Image
-              src="/images/hero-architecture.jpg"
-              alt="Viviendas en San Vicente del Raspeig"
-              fill
-              className="object-cover"
-              priority
-              sizes="100vw"
-              quality={85}
-            />
-            <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/55 to-black/75" />
-          </div>
+      <div className="min-h-screen">
+        <section className="relative flex min-h-[88svh] items-end overflow-hidden bg-black" aria-labelledby="hero-title">
+          <Image
+            src="/images/hero-architecture.jpg"
+            alt="Viviendas en San Vicente del Raspeig"
+            fill
+            className="object-cover"
+            priority
+            sizes="100vw"
+            quality={85}
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/45 to-black/30" aria-hidden="true" />
 
-          <div className="relative z-10 w-full px-4 py-24 text-white sm:px-6">
-            <div className="mx-auto max-w-5xl text-center">
-              <p className="mx-auto mb-3 inline-flex items-center rounded-full border border-white/30 bg-white/10 px-3 py-1 text-[11px] uppercase tracking-[0.24em] backdrop-blur-sm">
-                Especialistas en venta de vivienda en San Vicente
+          <div className="relative z-10 mx-auto w-full max-w-page px-4 pb-28 pt-32 text-white sm:px-6 sm:pb-32 lg:px-10">
+            <p className="mb-6 text-xs uppercase tracking-[0.24em] text-white/90">
+              Inmobiliaria en San Vicente del Raspeig
+            </p>
+
+            <h1
+              id="hero-title"
+              className="max-w-5xl font-display text-[2.75rem] font-light leading-[0.95] tracking-[-0.045em] sm:text-6xl md:text-7xl lg:text-[96px] lg:leading-[0.9]"
+            >
+              {sellerExperiment.heroTitle}
+              <span className="block text-white/60">{sellerExperiment.heroSubtitle}</span>
+            </h1>
+
+            <div className="mt-10 flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
+              <p className="max-w-xl text-lg leading-[1.33] text-white/85 sm:text-[23px] sm:leading-[1.25] sm:tracking-[-0.02em]">
+                Descubre cuánto puede valer tu vivienda y qué estrategia seguir para vender sin malvender ni perder
+                meses.
               </p>
 
-              <h1 id="hero-title" className="mx-auto max-w-6xl font-playfair text-4xl font-light leading-[1.04] tracking-tight sm:text-5xl md:text-[4.1rem] lg:text-[4.5rem]">
-                <span className="block lg:whitespace-nowrap">{sellerExperiment.heroTitle}</span>
-                <span className="mx-auto mt-4 block max-w-4xl text-3xl leading-[1.08] sm:text-4xl md:text-[2.5rem] lg:text-[2.9rem] lg:whitespace-nowrap">
-                  {sellerExperiment.heroSubtitle}
-                </span>
-              </h1>
-
-              <p className="mx-auto mt-6 max-w-2xl text-balance text-base font-light leading-relaxed text-white/90 sm:text-lg md:text-[1.1rem]">
-                Descubre cuánto puede valer tu vivienda, cómo posicionarla mejor y qué estrategia seguir para vender sin
-                malvender ni perder meses.
-              </p>
-
-              <div className="mx-auto mt-5 flex max-w-3xl flex-wrap items-center justify-center gap-3 text-sm text-white/85">
-                <span className="inline-flex items-center gap-1 rounded-full border border-white/20 bg-white/10 px-3 py-1">
-                  <ShieldCheck className="h-4 w-4" aria-hidden="true" />
-                  Sin compromiso
-                </span>
-                <span className="inline-flex items-center gap-1 rounded-full border border-white/20 bg-white/10 px-3 py-1">
-                  <Clock3 className="h-4 w-4" aria-hidden="true" />
-                  Respuesta en menos de 24h
-                </span>
-              </div>
-
-              <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:mt-10 sm:flex-row sm:gap-4">
-                <Link href="#seller-contact-form">
-                  <Button
-                    size="lg"
-                    onClick={() => trackSellerEvent("cta_click", { placement: "hero", target: "seller-contact-form" })}
-                    className="h-12 w-full bg-white px-8 text-sm text-black transition-transform duration-200 hover:-translate-y-0.5 hover:bg-stone-100 sm:h-14 sm:w-auto sm:px-10 sm:text-base"
-                  >
-                    {sellerExperiment.primaryCta}
-                  </Button>
+              <div className="flex flex-col gap-3 sm:flex-row">
+                <Link
+                  href="#seller-contact-form"
+                  onClick={() => trackSellerEvent("cta_click", { placement: "hero", target: "seller-contact-form" })}
+                  className="inline-flex h-12 items-center justify-center rounded-xl bg-white px-7 text-[15px] text-black shadow-subtle transition-colors hover:bg-stone-100"
+                >
+                  {sellerExperiment.primaryCta}
                 </Link>
-
-                <Link href="#propiedades">
-                  <Button
-                    size="lg"
-                    variant="outline"
-                    onClick={() => trackSellerEvent("cta_click", { placement: "hero-secondary", target: "propiedades" })}
-                    className="h-12 w-full border border-white/35 bg-white/5 px-8 text-sm text-white/90 transition-transform duration-200 hover:-translate-y-0.5 hover:bg-white/10 hover:text-white sm:h-14 sm:w-auto sm:px-10 sm:text-base"
-                  >
-                    <Search className="mr-2 h-5 w-5" aria-hidden="true" />
-                    {sellerExperiment.secondaryCta}
-                  </Button>
+                <Link
+                  href="#propiedades"
+                  onClick={() => trackSellerEvent("cta_click", { placement: "hero-secondary", target: "propiedades" })}
+                  className="inline-flex h-12 items-center justify-center gap-2 rounded-3xl bg-white/10 px-6 text-[15px] text-white backdrop-blur-sm transition-colors hover:bg-white/20"
+                >
+                  <Search className="h-4 w-4" aria-hidden="true" />
+                  {sellerExperiment.secondaryCta}
                 </Link>
               </div>
-
-              <p className="mt-4 text-sm text-white/80">
-                Te orientamos antes de que tomes ninguna decisión: precio, estrategia y siguientes pasos.
-              </p>
-
-              <SellerMiniForm />
             </div>
           </div>
         </section>
 
-        <SellerTrustBar />
+        {/* Formulario rápido de valoración, elevado sobre el borde del hero */}
+        <div className="relative z-20 mx-auto -mt-16 w-full max-w-page px-4 sm:px-6 lg:px-10">
+          <SellerMiniForm />
+        </div>
 
-        <section id="propiedades" className="scroll-mt-24 bg-neutral-100 py-16 sm:py-20 md:py-24 lg:py-32">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-12">
+
+        <section id="propiedades" className="scroll-mt-24 py-24 md:py-32">
+          <div className="mx-auto max-w-page px-4 sm:px-6 lg:px-10">
             <div className="mb-12 max-w-3xl sm:mb-16 lg:mb-20">
               <p className="mb-3 text-xs uppercase tracking-[0.3em] text-stone-500 sm:mb-4">Propiedades destacadas</p>
-              <h2 className="mb-4 font-playfair text-3xl font-light leading-tight text-black sm:text-4xl md:text-5xl lg:text-6xl sm:mb-6">
+              <h2 className="section-title mb-4 text-black sm:mb-6">
                 Viviendas en San Vicente del Raspeig
               </h2>
               <p className="text-base leading-relaxed text-stone-700 sm:text-lg">
@@ -128,16 +104,13 @@ export default function ValeraVisionariasLandingClient({
 
             {featuredSlot ?? <div className="text-stone-600">Sin destacadas por ahora.</div>}
 
-            <div className="mt-12 text-center sm:mt-16">
-              <Link href="/propiedades">
-                <Button
-                  variant="outline"
-                  size="lg"
-                  onClick={() => trackSellerEvent("cta_click", { placement: "properties-section", target: "/propiedades" })}
-                  className="h-11 w-full border-2 border-black bg-transparent px-8 text-sm text-black hover:bg-black hover:text-white sm:h-12 sm:w-auto sm:px-10 sm:text-base"
-                >
-                  Ver todas las propiedades
-                </Button>
+            <div className="mt-14 sm:mt-16">
+              <Link
+                href="/propiedades"
+                onClick={() => trackSellerEvent("cta_click", { placement: "properties-section", target: "/propiedades" })}
+                className="inline-flex h-12 w-full items-center justify-center rounded-xl bg-black px-7 text-[15px] text-white transition-colors hover:bg-stone-800 sm:w-auto"
+              >
+                Ver todas las propiedades
               </Link>
             </div>
           </div>
@@ -145,70 +118,47 @@ export default function ValeraVisionariasLandingClient({
 
         <section
           id="servicios"
-          className="relative scroll-mt-24 bg-gradient-to-b from-stone-50 to-stone-100 py-20 md:py-28"
+          className="relative scroll-mt-24 py-24 md:py-32"
         >
-          <div className="container mx-auto px-4 sm:px-6 lg:px-12">
+          <div className="mx-auto max-w-page px-4 sm:px-6 lg:px-10">
             <ServiciosScroll />
 
-            <div className="mx-auto mt-12 max-w-4xl">
-              <div className="relative overflow-hidden rounded-2xl border border-stone-200 bg-stone-50 transition-all duration-300 hover:shadow-xl">
-                <div
-                  className="absolute inset-0 bg-cover bg-center opacity-10"
-                  style={{
-                    backgroundImage:
-                      "url('https://images.unsplash.com/photo-1575516478880-7dfb1a114073?q=80&w=2072&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')",
-                  }}
-                />
-
-                <div className="relative flex flex-col items-start justify-between gap-10 p-10 sm:p-14 lg:flex-row lg:items-center">
-                  <div className="max-w-xl">
-                    <h3 className="mb-4 font-playfair text-2xl font-light text-black sm:text-3xl lg:text-4xl">
-                      Calculadoras y recursos inmobiliarios
-                    </h3>
-                    <p className="text-sm leading-relaxed text-stone-600 sm:text-base">
-                      Recursos útiles para calcular hipoteca, estimar rentabilidad y analizar una inversión inmobiliaria
-                      en Alicante. Un bloque pensado para resolver dudas frecuentes y ayudarte a comparar escenarios con
-                      más contexto.
-                    </p>
-                    <div className="mt-5 flex flex-wrap gap-2">
-                      {[
-                        "Calcular hipoteca",
-                        "Estimar rentabilidad",
-                        "Analizar inversión inmobiliaria en Alicante",
-                      ].map((item) => (
-                        <span
-                          key={item}
-                          className="inline-flex rounded-full border border-stone-200 bg-white px-3 py-1 text-xs text-stone-600"
-                        >
-                          {item}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div className="flex flex-col gap-4 sm:flex-row sm:gap-6">
-                    <Link
-                      href="/simulador-hipoteca"
-                      className="inline-flex items-center justify-center rounded-full bg-black px-6 py-3 text-sm font-medium text-white transition-all hover:bg-stone-800"
-                    >
-                      <span>Simulador hipoteca</span>
-                    </Link>
-
-                    <Link
-                      href="/calculadora-rentabilidad"
-                      className="inline-flex items-center justify-center rounded-full border border-stone-300 px-6 py-3 text-sm font-medium text-black transition-all hover:bg-black hover:text-white"
-                    >
-                      <span>Calculadora rentabilidad</span>
-                    </Link>
-
-                    <Link
-                      href="/calculadora-inversion"
-                      className="inline-flex items-center justify-center rounded-full border border-stone-300 px-6 py-3 text-sm font-medium text-black transition-all hover:bg-black hover:text-white"
-                    >
-                      <span>Calculadora inversión</span>
-                    </Link>
-                  </div>
+            <div className="mt-24 rounded-2xl bg-stone-100 p-7 shadow-subtle sm:p-9 lg:p-12">
+              <div className="grid gap-10 lg:grid-cols-[1fr_1.4fr] lg:items-end">
+                <div>
+                  <p className="eyebrow mb-4">Herramientas</p>
+                  <h3 className="text-3xl font-light leading-[1.1] tracking-[-0.035em] text-black sm:text-4xl">
+                    Calculadoras para decidir con datos
+                  </h3>
+                  <p className="mt-4 max-w-md text-base leading-[1.49] text-stone-600">
+                    Calcula tu hipoteca, estima la rentabilidad de un alquiler o simula una inversión. Resultados
+                    orientativos para comparar escenarios.
+                  </p>
                 </div>
+
+                <ul className="grid gap-3 sm:grid-cols-3">
+                  {[
+                    { href: "/simulador-hipoteca", title: "Hipoteca", text: "Cuota mensual e intereses" },
+                    { href: "/calculadora-rentabilidad", title: "Rentabilidad", text: "Alquiler bruto y neto" },
+                    { href: "/calculadora-inversion", title: "Inversión", text: "Crecimiento a largo plazo" },
+                  ].map((tool) => (
+                    <li key={tool.href}>
+                      <Link
+                        href={tool.href}
+                        className="group flex h-full flex-col justify-between gap-8 rounded-xl bg-white p-5 shadow-subtle transition-shadow hover:shadow-soft focus:outline-none focus-visible:ring-2 focus-visible:ring-black"
+                      >
+                        <span className="text-[23px] font-light tracking-[-0.03em] text-black">{tool.title}</span>
+                        <span className="flex items-center justify-between text-sm text-stone-600">
+                          {tool.text}
+                          <ArrowUpRight
+                            className="h-4 w-4 text-black transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                            aria-hidden="true"
+                          />
+                        </span>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
               </div>
             </div>
           </div>
@@ -222,12 +172,12 @@ export default function ValeraVisionariasLandingClient({
 
         <FAQSection />
 
-        <section id="contacto" className="scroll-mt-24 bg-stone-50 py-16 sm:py-20 md:py-24 lg:py-32">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-12">
-            <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-2 sm:gap-16">
+        <section id="contacto" className="scroll-mt-24 py-24 md:py-32">
+          <div className="mx-auto max-w-page px-4 sm:px-6 lg:px-10">
+            <div className="grid gap-12 lg:grid-cols-2 lg:gap-20">
               <div>
-                <p className="mb-3 text-xs uppercase tracking-[0.3em] text-stone-500 sm:mb-4">Contacto para propietarios</p>
-                <h2 className="mb-6 font-playfair text-3xl font-light leading-tight text-black sm:text-4xl md:text-5xl lg:text-6xl sm:mb-8">
+                <p className="eyebrow mb-4">Contacto para propietarios</p>
+                <h2 className="section-title mb-6 text-black sm:mb-8">
                   Recibe una valoración y tu plan de venta
                 </h2>
                 <p className="mb-10 text-base leading-relaxed text-stone-700 sm:text-lg sm:mb-12">
@@ -235,8 +185,8 @@ export default function ValeraVisionariasLandingClient({
                   en menos de 24 horas.
                 </p>
 
-                <div className="mb-8 space-y-6 sm:space-y-8">
-                  <div className="flex items-start space-x-4">
+                <div className="mb-8 divide-y divide-black/[0.08] border-t border-black/[0.08]">
+                  <div className="flex items-start gap-4 py-5">
                     <Phone className="mt-1 h-4 w-4 flex-shrink-0 text-black sm:h-5 sm:w-5" aria-hidden="true" />
                     <div>
                       <p className="mb-1 text-xs text-stone-600 sm:text-sm">Teléfono</p>
@@ -250,7 +200,7 @@ export default function ValeraVisionariasLandingClient({
                     </div>
                   </div>
 
-                  <div className="flex items-start space-x-4">
+                  <div className="flex items-start gap-4 py-5">
                     <Mail className="mt-1 h-4 w-4 flex-shrink-0 text-black sm:h-5 sm:w-5" aria-hidden="true" />
                     <div>
                       <p className="mb-1 text-xs text-stone-600 sm:text-sm">Email</p>
@@ -264,7 +214,7 @@ export default function ValeraVisionariasLandingClient({
                     </div>
                   </div>
 
-                  <div className="flex items-start space-x-4">
+                  <div className="flex items-start gap-4 py-5">
                     <MapPin className="mt-1 h-4 w-4 flex-shrink-0 text-black sm:h-5 sm:w-5" aria-hidden="true" />
                     <div>
                       <p className="mb-1 text-xs text-stone-600 sm:text-sm">Oficina</p>
@@ -278,7 +228,7 @@ export default function ValeraVisionariasLandingClient({
                     </div>
                   </div>
 
-                  <div className="flex items-start space-x-4">
+                  <div className="flex items-start gap-4 py-5">
                     <MessageCircle className="mt-1 h-4 w-4 flex-shrink-0 text-black sm:h-5 sm:w-5" aria-hidden="true" />
                     <div>
                       <p className="mb-1 text-xs text-stone-600 sm:text-sm">WhatsApp y redes</p>
@@ -320,7 +270,7 @@ export default function ValeraVisionariasLandingClient({
                     </div>
                   </div>
 
-                  <div className="rounded-xl border border-stone-200 bg-white p-4 sm:p-5">
+                  <div className="!mt-8 rounded-2xl !border-0 bg-stone-100 p-6 shadow-subtle">
                     <p className="mb-1 text-sm font-medium text-black">Horario</p>
                     <p className="text-sm text-stone-700">{contactInfo.hoursSummary}</p>
                     <p className="mt-1 text-sm text-stone-700">{contactInfo.appointmentNote}</p>
@@ -335,7 +285,7 @@ export default function ValeraVisionariasLandingClient({
                 >
                   <Button
                     variant="outline"
-                    className="h-11 w-full border-2 border-black bg-transparent px-6 text-black hover:bg-black hover:text-white focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2 sm:h-12 sm:w-auto"
+                    className="h-12 w-full rounded-xl border border-black/15 bg-white px-6 text-black shadow-subtle hover:bg-black hover:text-white focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2 sm:w-auto"
                   >
                     <Navigation className="mr-2 h-4 w-4" aria-hidden="true" />
                     Cómo llegar
