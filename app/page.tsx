@@ -1,6 +1,8 @@
 import ValeraVisionariasLandingClient from "./ValeraVisionariasLandingClient"
 import type { Metadata } from "next"
 import FeaturedProperties from "@/components/FeaturedProperties"
+import TestimonialsSection from "@/components/testimonials-section"
+import { getGoogleReviews } from "@/lib/google-reviews"
 
 export const metadata: Metadata = {
   title: { absolute: "Inmobiliaria en San Vicente del Raspeig | Valera Visionarias" },
@@ -16,7 +18,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Valera Visionarias – Inmobiliaria en San Vicente del Raspeig",
     description:
-      "Compra, venta y alquiler de viviendas cerca de la Universidad de Alicante. Expertos locales en resultados rápidos y trato transparente.",
+      "Compra, venta y alquiler de viviendas en San Vicente del Raspeig, junto a la Universidad de Alicante. Valoración gratuita y trato cercano.",
     type: "website",
     url: "/",
     images: [
@@ -38,12 +40,15 @@ export const metadata: Metadata = {
 }
 
 
-export default function ValeraVisionariasLanding() {
+export default async function ValeraVisionariasLanding() {
+  const googleReviews = await getGoogleReviews()
+
   return (
     <ValeraVisionariasLandingClient
       featuredSlot={
         <FeaturedProperties />
       }
+      reviewsSlot={<TestimonialsSection data={googleReviews} />}
     />
   )
 }

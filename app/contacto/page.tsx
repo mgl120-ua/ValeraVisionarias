@@ -7,14 +7,14 @@ import { SITE_URL } from "@/lib/site"
 const ContactForm = dynamic(() => import("@/components/ContactForm"), { ssr: false })
 
 export const metadata: Metadata = {
-  title: "Contacto",
+  title: "Contacto: inmobiliaria en San Vicente del Raspeig",
   description:
-    "Habla con Valera Visionarias por teléfono, email o WhatsApp. Estamos en San Vicente del Raspeig, Alicante.",
+    "Llama, escribe o visita Valera Visionarias en Calle Alicante 13, San Vicente del Raspeig (Alicante). Te atendemos con cita previa para vender, comprar o valorar tu vivienda.",
   alternates: { canonical: "/contacto" },
   openGraph: {
     title: "Contacto | Valera Visionarias",
     description:
-      "Compra, venta y alquiler cerca de la Universidad de Alicante. Escríbenos para una consulta gratuita.",
+      "Oficina en San Vicente del Raspeig. Escríbenos para vender, comprar o valorar tu vivienda.",
     url: "/contacto",
   },
 }
@@ -54,7 +54,7 @@ export default function ContactoPage() {
         <div className="mx-auto max-w-page px-4 py-12 sm:px-6 sm:py-16 lg:px-12 lg:py-20">
           <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
             <div>
-              <p className="mb-3 text-xs uppercase tracking-[0.3em] text-stone-500">Escribenos</p>
+              <p className="mb-3 text-xs uppercase tracking-[0.3em] text-stone-500">Escríbenos</p>
               <h2 className="section-title mb-4 text-black">
                 Comencemos tu proyecto inmobiliario
               </h2>
@@ -105,21 +105,27 @@ export default function ContactoPage() {
                 <h3 className="mb-2 font-semibold text-black">Horario</h3>
                 <ul className="space-y-1 text-stone-600">
                   <li>Lunes a viernes: 9:00-20:00</li>
-                  <li>Sabado: 9:00-14:00</li>
+                  <li>Sábado: 9:00-14:00</li>
                   <li>Domingo: Cerrado</li>
-                  <li>Atencion personal solo con cita previa</li>
+                  <li>Atención personal solo con cita previa</li>
                 </ul>
               </div>
 
               <div className="mt-8 overflow-hidden rounded-xl border border-black/[0.08]">
                 <iframe
-                  title="Ubicacion Valera Visionarias"
+                  title="Ubicación de la oficina de Valera Visionarias en San Vicente del Raspeig"
                   className="h-[280px] w-full"
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
-                  src={`https://www.google.com/maps?q=${contactInfo.mapsEmbedQuery}&output=embed`}
+                  src={contactInfo.mapsEmbedSrc}
                 />
               </div>
+              <p className="mt-3 text-sm text-stone-600">
+                {contactInfo.fullAddress} ·{" "}
+                <a className="text-black underline underline-offset-2" href={contactInfo.mapsDirectionsHref} target="_blank" rel="noopener noreferrer">
+                  Cómo llegar
+                </a>
+              </p>
             </div>
 
             <div>

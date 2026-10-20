@@ -11,7 +11,7 @@ import {
 } from "lucide-react";
 import type { Metadata } from "next"
 import VisitForm from "@/components/VisitForm"
-import { contactInfo } from "@/lib/contact-info"
+import { SITE_URL, absoluteUrl } from "@/lib/site"
 
 
 // Opcional: ISR
@@ -39,11 +39,22 @@ type Property = {
 const formatEUR = (n: number) =>
   new Intl.NumberFormat("es-ES", { style: "currency", currency: "EUR", maximumFractionDigits: 0 }).format(n);
 
+// Descripción para buscadores: datos clave primero y el texto del anuncio cortado sin partir palabras
+function buildDescription(d: { title: string; city: string | null; description: string | null; category: string | null; size?: number | null; bedrooms?: number | null }) {
+  const operacion = d.category === "alquiler" ? "en alquiler" : "en venta";
+  const datos = [d.bedrooms ? `${d.bedrooms} hab.` : null, d.size ? `${d.size} m²` : null].filter(Boolean).join(", ");
+  const base = `${d.title} ${operacion} en ${d.city || "San Vicente del Raspeig"}${datos ? ` (${datos})` : ""}.`;
+  const resto = (d.description ?? "").replace(/\s+/g, " ").trim();
+  const full = resto ? `${base} ${resto}` : base;
+  if (full.length <= 158) return full;
+  return full.slice(0, 155).replace(/\s+\S*$/, "") + "…";
+}
+
 export async function generateMetadata({ params }: { params: { id: string } }) {
   const supabase = createSupabaseServer();
   const { data } = await supabase
     .from("properties")
-    .select("title, city, description, price, category, property_images(url, position)")
+    .select("title, city, description, price, category, size, bedrooms, property_images(url, position)")
     .eq("id", params.id)
     .single();
 
@@ -58,13 +69,14 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
   return {
     // absolute: el título ya incluye la marca y no debe repetirse con la plantilla del layout
     title: { absolute: title },
-    description: data.description?.slice(0, 155) ?? "",
+    description: buildDescription(data),
     alternates: { canonical: `/propiedad/${params.id}` },
     openGraph: {
       title,
       url: `/propiedad/${params.id}`,
-      images: cover ? [cover] : [],
+      images: cover ? [{ url: cover, alt: data.title }] : [],
     },
+    twitter: { card: "summary_large_image", title, images: cover ? [cover] : [] },
   };
 }
 
@@ -111,76 +123,54 @@ export default async function PropertyDetailPage({ params }: { params: { id: str
   const mapQuery = encodeURIComponent([prop.address, prop.city].filter(Boolean).join(", "));
   const mapSrc = `https://www.google.com/maps?q=${mapQuery}&output=embed`;
 
-  // JSON-LD RealEstateListing (mejora SEO + enriquecimiento)
-  // JSON-LD RealEstateListing + Offer + Place + Agent
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@type": "RealEstateListing",
-  name: prop.title,
-  description: prop.description,
-  url: `https://www.valeravisionarias.com/propiedad/${prop.id}`,
-  datePosted: prop.created_at,
-  image: imageUrls.length
-    ? imageUrls.map((u) => `https://www.valeravisionarias.com${u}`)
-    : ["https://www.valeravisionarias.com/images/logo-dark.png"],
-  address: {
-    "@type": "PostalAddress",
-    streetAddress: prop.address ?? "",
-    addressLocality: prop.city ?? "San Vicente del Raspeig",
-    postalCode: prop.postal_code ?? "03690",
-    addressRegion: "Alicante",
-    addressCountry: "ES",
-  },
-  geo: {
-    "@type": "GeoCoordinates",
-    latitude: 38.3936,
-    longitude: -0.5247,
-  },
-  offers: {
-    "@type": "Offer",
-    price: Number(prop.price),
-    priceCurrency: "EUR",
-    availability:
-      prop.status === "activo"
-        ? "https://schema.org/InStock"
-        : "https://schema.org/SoldOut",
-    url: `https://www.valeravisionarias.com/propiedad/${prop.id}`,
-    itemOffered: {
-      "@type": "House",
+  // JSON-LD RealEstateListing + Offer + BreadcrumbList
+  const pageUrl = absoluteUrl(`/propiedad/${prop.id}`)
+  const toAbsolute = (u: string) => (u.startsWith("http") ? u : absoluteUrl(u))
+  const jsonLd = [
+    {
+      "@context": "https://schema.org",
+      "@type": "RealEstateListing",
       name: prop.title,
-      numberOfRoomsTotal: Number(prop.bedrooms),
-      numberOfBathroomsTotal: Number(prop.bathrooms),
-      floorSize: {
-        "@type": "QuantitativeValue",
-        value: prop.size,
-        unitCode: "MTK",
+      description: prop.description,
+      url: pageUrl,
+      datePosted: prop.created_at,
+      image: imageUrls.length ? imageUrls.map(toAbsolute) : [absoluteUrl("/images/logo-dark.png")],
+      offers: {
+        "@type": "Offer",
+        price: Number(prop.price),
+        priceCurrency: "EUR",
+        availability: prop.status === "activo" ? "https://schema.org/InStock" : "https://schema.org/SoldOut",
+        url: pageUrl,
+        businessFunction:
+          prop.category === "alquiler" ? "http://purl.org/goodrelations/v1#LeaseOut" : "http://purl.org/goodrelations/v1#Sell",
+        seller: { "@id": `${SITE_URL}/#organization` },
+        itemOffered: {
+          "@type": "Accommodation",
+          name: prop.title,
+          numberOfBedrooms: Number(prop.bedrooms),
+          numberOfBathroomsTotal: Number(prop.bathrooms),
+          floorSize: { "@type": "QuantitativeValue", value: prop.size, unitCode: "MTK" },
+          address: {
+            "@type": "PostalAddress",
+            ...(prop.address ? { streetAddress: prop.address } : {}),
+            addressLocality: prop.city ?? "San Vicente del Raspeig",
+            ...(prop.postal_code ? { postalCode: prop.postal_code } : {}),
+            addressRegion: "Alicante",
+            addressCountry: "ES",
+          },
+        },
       },
-      category: prop.category === "alquiler" ? "for rent" : "for sale",
     },
-    seller: {
-      "@type": "RealEstateAgent",
-      name: "Valera Visionarias",
-      url: "https://www.valeravisionarias.com",
-      telephone: contactInfo.phoneE164,
-      logo: "https://www.valeravisionarias.com/images/logo-dark.png",
-      address: {
-        "@type": "PostalAddress",
-        streetAddress: contactInfo.addressLine1,
-        addressLocality: "San Vicente del Raspeig",
-        addressRegion: "Alicante",
-        postalCode: contactInfo.postalCode,
-        addressCountry: "ES",
-      },
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Inicio", item: absoluteUrl("/") },
+        { "@type": "ListItem", position: 2, name: "Propiedades", item: absoluteUrl("/propiedades") },
+        { "@type": "ListItem", position: 3, name: prop.title, item: pageUrl },
+      ],
     },
-  },
-  additionalProperty: [
-    { "@type": "PropertyValue", name: "Superficie", value: `${prop.size} m²` },
-    { "@type": "PropertyValue", name: "Dormitorios", value: prop.bedrooms },
-    { "@type": "PropertyValue", name: "Baños", value: prop.bathrooms },
-    { "@type": "PropertyValue", name: "Categoría", value: prop.category },
-  ],
-}
-
+  ]
 
   return (
     <div className="mx-auto max-w-page px-4 py-8 pb-28 sm:px-6 lg:px-10 lg:pb-24">
@@ -196,7 +186,7 @@ const jsonLd = {
         </nav>
         <div className="flex items-center gap-2">
           <Button variant="outline" className="h-9" asChild>
-            <a href={`https://wa.me/?text=${encodeURIComponent(`Estoy interesado/a en ${prop.title} - https://www.valeravisionarias.com/propiedad/${prop.id}`)}`} target="_blank" rel="noopener noreferrer">
+            <a href={`https://wa.me/?text=${encodeURIComponent(`Estoy interesado/a en ${prop.title} - ${pageUrl}`)}`} target="_blank" rel="noopener noreferrer">
               <Share2 className="w-4 h-4 mr-2" /> Compartir
             </a>
           </Button>
@@ -208,13 +198,13 @@ const jsonLd = {
       </h1>
 
       {/* Hero: galería + panel sticky (desktop) */}
-      <section className="grid lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-2">
-          <PropertyGallery images={imageUrls} />
+      <section className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+        <div className="min-w-0 lg:col-span-2">
+          <PropertyGallery images={imageUrls} title={prop.title} />
         </div>
 
         {/* Panel sticky con CTA (inspirado en layouts con lateral fijo) */}
-        <aside className="lg:sticky lg:top-24 h-fit space-y-4">
+        <aside className="min-w-0 lg:sticky lg:top-24 h-fit space-y-4">
           <Card className="rounded-2xl">
             <CardContent className="p-5 space-y-4">
               <div className="flex items-start justify-between gap-3">
@@ -283,9 +273,9 @@ const jsonLd = {
       </div>
 
       {/* Sección descripción + características + mapa */}
-      <section className="mt-10 grid lg:grid-cols-3 gap-8">
+      <section className="mt-10 grid grid-cols-1 gap-8 lg:grid-cols-3">
         {/* Descripción */}
-        <div className="lg:col-span-2 space-y-8">
+        <div className="min-w-0 lg:col-span-2 space-y-8">
           <Card className="rounded-2xl">
             <CardContent className="p-6">
               <h2 className="text-2xl font-light tracking-[-0.03em] mb-4">Descripción</h2>
@@ -325,14 +315,14 @@ const jsonLd = {
         </div>
 
         {/* Especificaciones / “Key facts” ampliados */}
-        <aside className="space-y-6">
+        <aside className="min-w-0 space-y-6">
 
           {/* Mini “cómo concertar visita” */}
           <Card id="solicitar-visita" className="rounded-2xl scroll-mt-24">
             <CardContent className="p-6 space-y-4">
               <h2 className="text-2xl font-light tracking-[-0.03em]">¿Te interesa?</h2>
               <p className="text-sm text-stone-600">Selecciona una fecha y solicita tu visita.</p>
-              <VisitForm propiedad={prop.title} propiedadUrl={`https://www.valeravisionarias.com/propiedad/${prop.id}`} />
+              <VisitForm propiedad={prop.title} propiedadUrl={`${pageUrl}`} />
             </CardContent>
           </Card>
         </aside>
@@ -353,7 +343,7 @@ const jsonLd = {
                 <article key={r.id} className="rounded-xl border border-black/[0.06] bg-white overflow-hidden shadow-subtle">
                   <div className="relative aspect-[16/10] bg-stone-100">
                     {cover ? (
-                      <img src={cover} alt={r.title} className="w-full h-full object-cover" loading="lazy" />
+                      <img src={cover} alt={`${r.title} en ${r.city || "San Vicente del Raspeig"}`} className="w-full h-full object-cover" loading="lazy" />
                     ) : (
                       <div className="w-full h-full grid place-items-center text-stone-400 text-sm">Sin imagen</div>
                     )}
