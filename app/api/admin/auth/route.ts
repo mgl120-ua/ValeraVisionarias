@@ -1,21 +1,28 @@
 import { type NextRequest, NextResponse } from "next/server"
 import { cookies } from "next/headers"
-
-// En producción, esta contraseña debe estar en variables de entorno
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "admin123"
+import {
+  ADMIN_COOKIE,
+  ADMIN_SESSION_MAX_AGE,
+  createAdminSessionToken,
+  isPasswordValid,
+} from "@/lib/admin-session"
 
 export async function POST(request: NextRequest) {
   try {
+    if (!process.env.ADMIN_PASSWORD) {
+      console.error("ADMIN_PASSWORD no está configurada: acceso al panel deshabilitado")
+      return NextResponse.json({ error: "Acceso no configurado" }, { status: 503 })
+    }
+
     const { password } = await request.json()
 
-    if (password === ADMIN_PASSWORD) {
-      // Establecer cookie de sesión (válida por 24 horas)
-      const cookieStore = await cookies()
-      cookieStore.set("admin-session", "authenticated", {
+    if (isPasswordValid(password)) {
+      // Cookie de sesión firmada (válida 24 horas)
+      cookies().set(ADMIN_COOKIE, await createAdminSessionToken(), {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
         sameSite: "strict",
-        maxAge: 60 * 60 * 24, // 24 horas
+        maxAge: ADMIN_SESSION_MAX_AGE,
         path: "/",
       })
 

@@ -20,8 +20,8 @@ const config: Config = {
     },
     extend: {
       fontFamily: {
-        playfair: ["var(--font-playfair)", "serif"],
-        inter: ["var(--font-inter)", "sans-serif"],
+        sans: ["var(--font-sans)", "ui-sans-serif", "system-ui", "sans-serif"],
+        display: ["var(--font-sans)", "ui-sans-serif", "system-ui", "sans-serif"],
       },
       colors: {
         stone: {
@@ -70,7 +70,16 @@ const config: Config = {
           foreground: "hsl(var(--card-foreground))",
         },
       },
+      boxShadow: {
+        subtle: "rgba(0, 0, 0, 0.12) 0px 0.5px 2px 0px",
+        soft: "rgba(0, 0, 0, 0.08) 0px 2px 10px 0px",
+        lifted: "rgba(0, 0, 0, 0.12) 0px 2px 4px 0px",
+      },
+      maxWidth: {
+        page: "1280px",
+      },
       borderRadius: {
+        "2xl": "18px",
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",

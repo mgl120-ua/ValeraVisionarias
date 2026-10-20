@@ -3,9 +3,9 @@ import type { Metadata } from "next"
 import FeaturedProperties from "@/components/FeaturedProperties"
 
 export const metadata: Metadata = {
-  title: "Inmobiliaria en San Vicente del Raspeig | Valera Visionarias – Compra, Alquiler y Venta cerca UA",
+  title: { absolute: "Inmobiliaria en San Vicente del Raspeig | Valera Visionarias" },
   description:
-    "Tu inmobiliaria de confianza en San Vicente del Raspeig (Alicante). 80 % de ventas en menos de una semana. Sin exclusivas forzadas y valoración gratuita. Contáctanos hoy.",
+    "Tu inmobiliaria en San Vicente del Raspeig (Alicante): venta, compra y alquiler de viviendas. Sin exclusivas forzadas y con valoración gratuita. Contáctanos hoy.",
   keywords: [
     "inmobiliaria San Vicente del Raspeig",
     "viviendas Alicante",
@@ -18,12 +18,10 @@ export const metadata: Metadata = {
     description:
       "Compra, venta y alquiler de viviendas cerca de la Universidad de Alicante. Expertos locales en resultados rápidos y trato transparente.",
     type: "website",
-    url: "https://www.valeravisionarias.com/",
+    url: "/",
     images: [
       {
-        url: "https://www.valeravisionarias.com/images/og-image.jpg",
-        width: 1200,
-        height: 630,
+        url: "/images/hero-architecture.jpg",
         alt: "Inmobiliaria Valera Visionarias en San Vicente del Raspeig",
       },
     ],
@@ -31,13 +29,12 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    site: "@valeravisionarias",
     title: "Valera Visionarias – Inmobiliaria San Vicente del Raspeig",
     description:
-      "80 % de ventas en menos de 1 semana. Compra, venta y alquiler de viviendas cerca de la UA.",
-    images: ["https://www.valeravisionarias.com/images/og-image.jpg"],
+      "Compra, venta y alquiler de viviendas en San Vicente del Raspeig, cerca de la UA. Valoración gratuita.",
+    images: ["/images/hero-architecture.jpg"],
   },
-  alternates: { canonical: "https://www.valeravisionarias.com/" },
+  alternates: { canonical: "/" },
 }
 
 

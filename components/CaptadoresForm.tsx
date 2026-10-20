@@ -42,24 +42,24 @@ export default function CaptadoresForm() {
     <form onSubmit={handleSubmit} className="space-y-5 sm:space-y-6 relative">
       {/* Campos */}
       <div className="grid sm:grid-cols-2 gap-5 sm:gap-6">
-        <Input name="nombre" required placeholder="Nombre" className="border-stone-300 h-11 sm:h-12" />
-        <Input name="apellidos" required placeholder="Apellidos" className="border-stone-300 h-11 sm:h-12" />
+        <Input name="nombre" required placeholder="Nombre" className="border-black/10 h-11 sm:h-12" />
+        <Input name="apellidos" required placeholder="Apellidos" className="border-black/10 h-11 sm:h-12" />
       </div>
 
-      <Input type="email" name="email" required placeholder="tu@email.com" className="border-stone-300 h-11 sm:h-12" />
-      <Input name="telefono" required placeholder="Teléfono" className="border-stone-300 h-11 sm:h-12" />
+      <Input type="email" name="email" required placeholder="tu@email.com" className="border-black/10 h-11 sm:h-12" />
+      <Input name="telefono" required placeholder="Teléfono" className="border-black/10 h-11 sm:h-12" />
 
       <Textarea
         name="mensaje"
         placeholder="Cuéntanos por qué te interesa colaborar..."
-        className="border-stone-300 min-h-[100px]"
+        className="border-black/10 min-h-[100px]"
       />
 
       {/* Botón */}
       <motion.button
         type="submit"
         disabled={status === "sending"}
-        className="w-full bg-black hover:bg-stone-800 text-white h-11 sm:h-12 rounded-lg relative overflow-hidden disabled:opacity-70"
+        className="w-full bg-black hover:bg-stone-800 text-white h-11 sm:h-12 rounded-xl relative overflow-hidden disabled:opacity-70"
         whileHover={{ scale: status === "sending" ? 1 : 1.02 }}
         whileTap={{ scale: 0.98 }}
       >
@@ -116,6 +116,12 @@ export default function CaptadoresForm() {
           </motion.div>
         )}
       </AnimatePresence>
+      <p className="text-xs text-stone-500">
+        Usaremos tus datos solo para gestionar tu solicitud de colaboración.{" "}
+        <a href="/privacidad" className="underline hover:text-black">
+          Política de privacidad
+        </a>
+      </p>
     </form>
   )
 }

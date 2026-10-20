@@ -5,7 +5,7 @@ export default function NuevaPropiedadPage() {
   return (
     <Card className="border-2 border-stone-200">
       <CardHeader>
-        <CardTitle className="font-playfair text-2xl font-light">Nueva Propiedad</CardTitle>
+        <CardTitle className="font-display text-2xl font-light">Nueva Propiedad</CardTitle>
       </CardHeader>
       <CardContent>
         <PropertyForm />

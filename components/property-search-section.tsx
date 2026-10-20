@@ -11,11 +11,11 @@ export default function PropertySearchSection() {
   const [showFilters, setShowFilters] = useState(false)
 
   return (
-    <section id="buscador" className="py-16 sm:py-20 md:py-24 bg-white">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-12">
+    <section id="buscador" className="py-16 sm:py-20 md:py-24">
+      <div className="mx-auto max-w-page px-4 sm:px-6 lg:px-10">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-8 sm:mb-12">
-            <h2 className="font-playfair text-3xl sm:text-4xl md:text-5xl font-light text-black mb-4 leading-tight">
+            <h2 className="section-title text-black mb-4">
               Encuentra tu propiedad ideal
             </h2>
             <p className="text-base sm:text-lg text-stone-700">
@@ -23,7 +23,7 @@ export default function PropertySearchSection() {
             </p>
           </div>
 
-          <Card className="border-2 border-stone-200">
+          <Card className="border-2 border-black/[0.08]">
             <CardContent className="p-6 sm:p-8">
               <form className="space-y-6" aria-label="Buscador de propiedades">
                 <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -35,7 +35,7 @@ export default function PropertySearchSection() {
                       id="precio-min"
                       type="number"
                       placeholder="€ 50.000"
-                      className="h-11 border-stone-300 focus:border-black focus:ring-black"
+                      className="h-11 border-black/10 focus:border-black focus:ring-black"
                       inputMode="numeric"
                     />
                   </div>
@@ -48,7 +48,7 @@ export default function PropertySearchSection() {
                       id="precio-max"
                       type="number"
                       placeholder="€ 500.000"
-                      className="h-11 border-stone-300 focus:border-black focus:ring-black"
+                      className="h-11 border-black/10 focus:border-black focus:ring-black"
                       inputMode="numeric"
                     />
                   </div>
@@ -59,7 +59,7 @@ export default function PropertySearchSection() {
                     </Label>
                     <select
                       id="habitaciones"
-                      className="w-full h-11 border border-stone-300 rounded-md px-3 bg-white focus:border-black focus:ring-black"
+                      className="w-full h-11 border border-black/10 rounded-md px-3 bg-white focus:border-black focus:ring-black"
                     >
                       <option value="">Cualquiera</option>
                       <option value="1">1+</option>
@@ -75,7 +75,7 @@ export default function PropertySearchSection() {
                     </Label>
                     <select
                       id="banos"
-                      className="w-full h-11 border border-stone-300 rounded-md px-3 bg-white focus:border-black focus:ring-black"
+                      className="w-full h-11 border border-black/10 rounded-md px-3 bg-white focus:border-black focus:ring-black"
                     >
                       <option value="">Cualquiera</option>
                       <option value="1">1+</option>
@@ -90,7 +90,7 @@ export default function PropertySearchSection() {
                     type="button"
                     variant="outline"
                     onClick={() => setShowFilters(!showFilters)}
-                    className="border-2 border-stone-300 hover:border-black text-black"
+                    className="border-2 border-black/10 hover:border-black text-black"
                   >
                     <SlidersHorizontal className="w-4 h-4 mr-2" aria-hidden="true" />
                     {showFilters ? "Ocultar filtros" : "Más filtros"}
@@ -98,7 +98,7 @@ export default function PropertySearchSection() {
                 </div>
 
                 {showFilters && (
-                  <div className="grid sm:grid-cols-2 gap-4 pt-4 border-t border-stone-200 animate-slide-down">
+                  <div className="grid sm:grid-cols-2 gap-4 pt-4 border-t border-black/[0.08] animate-slide-down">
                     <div>
                       <Label htmlFor="superficie-min" className="text-sm font-medium text-stone-800 mb-2 block">
                         Superficie mínima (m²)
@@ -107,7 +107,7 @@ export default function PropertySearchSection() {
                         id="superficie-min"
                         type="number"
                         placeholder="50"
-                        className="h-11 border-stone-300 focus:border-black focus:ring-black"
+                        className="h-11 border-black/10 focus:border-black focus:ring-black"
                         inputMode="numeric"
                       />
                     </div>
@@ -118,7 +118,7 @@ export default function PropertySearchSection() {
                       </Label>
                       <select
                         id="zona"
-                        className="w-full h-11 border border-stone-300 rounded-md px-3 bg-white focus:border-black focus:ring-black"
+                        className="w-full h-11 border border-black/10 rounded-md px-3 bg-white focus:border-black focus:ring-black"
                       >
                         <option value="">Todas las zonas</option>
                         <option value="centro">San Vicente Centro</option>
@@ -133,7 +133,7 @@ export default function PropertySearchSection() {
                         <input
                           type="checkbox"
                           id="cerca-universidad"
-                          className="w-4 h-4 rounded border-stone-300 text-black focus:ring-black"
+                          className="w-4 h-4 rounded border-black/10 text-black focus:ring-black"
                         />
                         <span className="text-sm text-stone-800">Cerca de la Universidad de Alicante</span>
                       </label>

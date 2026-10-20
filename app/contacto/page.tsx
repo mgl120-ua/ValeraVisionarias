@@ -1,57 +1,39 @@
 import type { Metadata } from "next"
-import Script from "next/script"
 import Image from "next/image"
 import dynamic from "next/dynamic"
-import { contactInfo, openingHoursSpecification } from "@/lib/contact-info"
+import { contactInfo } from "@/lib/contact-info"
+import { SITE_URL } from "@/lib/site"
 
 const ContactForm = dynamic(() => import("@/components/ContactForm"), { ssr: false })
 
 export const metadata: Metadata = {
-  title: "Contacto - Valera Visionarias",
+  title: "Contacto",
   description:
-    "Habla con Valera Visionarias por telefono, email o WhatsApp. Estamos en San Vicente del Raspeig, Alicante.",
+    "Habla con Valera Visionarias por teléfono, email o WhatsApp. Estamos en San Vicente del Raspeig, Alicante.",
   alternates: { canonical: "/contacto" },
   openGraph: {
-    title: "Contacto - Valera Visionarias",
+    title: "Contacto | Valera Visionarias",
     description:
-      "Compra, venta y alquiler cerca de la Universidad de Alicante. Escribenos para una consulta gratuita.",
-    url: "https://valeravisionarias.com/contacto",
-    images: [{ url: "/og/cover.jpg" }],
+      "Compra, venta y alquiler cerca de la Universidad de Alicante. Escríbenos para una consulta gratuita.",
+    url: "/contacto",
   },
 }
 
 export default function ContactoPage() {
   return (
     <>
-      <Script id="contact-jsonld" type="application/ld+json" strategy="afterInteractive">
-        {JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "ContactPage",
-          name: "Contacto - Valera Visionarias",
-          url: "https://valeravisionarias.com/contacto",
-          mainEntity: {
-            "@type": "RealEstateAgent",
-            name: "Valera Visionarias",
-            address: {
-              "@type": "PostalAddress",
-              streetAddress: contactInfo.addressLine1,
-              addressLocality: "San Vicente del Raspeig",
-              addressRegion: "Alicante",
-              postalCode: contactInfo.postalCode,
-              addressCountry: "ES",
-            },
-            telephone: contactInfo.phoneE164,
-            email: contactInfo.email,
-            areaServed: "San Vicente del Raspeig, Alicante",
-            openingHoursSpecification,
-            sameAs: [
-              contactInfo.socialLinks.instagram,
-              contactInfo.socialLinks.tiktok,
-              contactInfo.socialLinks.idealista,
-            ],
-          },
-        })}
-      </Script>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "ContactPage",
+            name: "Contacto | Valera Visionarias",
+            url: `${SITE_URL}/contacto`,
+            mainEntity: { "@id": `${SITE_URL}/#organization` },
+          }),
+        }}
+      />
 
       <section className="relative overflow-hidden">
         <div className="relative h-[280px] sm:h-[360px]">
@@ -65,15 +47,15 @@ export default function ContactoPage() {
           />
           <div className="absolute inset-0 bg-black/50" />
           <div className="relative z-10 flex h-full items-center justify-center">
-            <h1 className="font-playfair text-4xl font-light text-white sm:text-5xl">Contacto</h1>
+            <h1 className="page-title text-white">Contacto</h1>
           </div>
         </div>
 
-        <div className="container mx-auto px-4 py-12 sm:px-6 sm:py-16 lg:px-12 lg:py-20">
+        <div className="mx-auto max-w-page px-4 py-12 sm:px-6 sm:py-16 lg:px-12 lg:py-20">
           <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
             <div>
               <p className="mb-3 text-xs uppercase tracking-[0.3em] text-stone-500">Escribenos</p>
-              <h2 className="mb-4 font-playfair text-3xl font-light text-black sm:text-4xl">
+              <h2 className="section-title mb-4 text-black">
                 Comencemos tu proyecto inmobiliario
               </h2>
               <p className="mb-8 text-stone-700">
@@ -129,7 +111,7 @@ export default function ContactoPage() {
                 </ul>
               </div>
 
-              <div className="mt-8 overflow-hidden rounded-xl border border-stone-200">
+              <div className="mt-8 overflow-hidden rounded-xl border border-black/[0.08]">
                 <iframe
                   title="Ubicacion Valera Visionarias"
                   className="h-[280px] w-full"

@@ -71,7 +71,7 @@ export default async function AdminDashboardPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-playfair font-light text-black mb-2">
+          <h1 className="text-3xl font-display font-light text-black mb-2">
             Bienvenido al Dashboard
           </h1>
           <p className="text-stone-600">Resumen de tu inmobiliaria</p>
@@ -108,7 +108,7 @@ export default async function AdminDashboardPage() {
       <div className="grid lg:grid-cols-2 gap-6">
         <Card className="border-2 border-stone-200">
           <CardHeader>
-            <CardTitle className="font-playfair text-2xl font-light">Propiedades Recientes</CardTitle>
+            <CardTitle className="font-display text-2xl font-light">Propiedades Recientes</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
@@ -149,7 +149,7 @@ export default async function AdminDashboardPage() {
 
         <Card className="border-2 border-stone-200">
           <CardHeader>
-            <CardTitle className="font-playfair text-2xl font-light">Acciones Rápidas</CardTitle>
+            <CardTitle className="font-display text-2xl font-light">Acciones Rápidas</CardTitle>
           </CardHeader>
           <CardContent className="space-y-3">
             <Link href="/admin/dashboard/propiedades/nueva">

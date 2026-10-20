@@ -47,7 +47,7 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
     .eq("id", params.id)
     .single();
 
-  if (!data) return { title: "Propiedad | Valera Visionarias" };
+  if (!data) return { title: "Propiedad no encontrada", robots: { index: false } };
 
   const cover =
     (data.property_images ?? [])
@@ -56,10 +56,13 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
   const title = `${data.title} · ${formatEUR(Number(data.price))}${data.category === "alquiler" ? " / mes" : ""} | Valera Visionarias`;
 
   return {
-    title,
+    // absolute: el título ya incluye la marca y no debe repetirse con la plantilla del layout
+    title: { absolute: title },
     description: data.description?.slice(0, 155) ?? "",
+    alternates: { canonical: `/propiedad/${params.id}` },
     openGraph: {
       title,
+      url: `/propiedad/${params.id}`,
       images: cover ? [cover] : [],
     },
   };
@@ -180,25 +183,29 @@ const jsonLd = {
 
 
   return (
-    <main className="container mx-auto px-4 py-6">
+    <div className="mx-auto max-w-page px-4 py-8 pb-28 sm:px-6 lg:px-10 lg:pb-24">
       {/* JSON-LD */}
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
       {/* Breadcrumb / back */}
       <div className="mb-4 flex items-center justify-between gap-4 flex-wrap text-sm">
-        <div className="flex items-center gap-2">
+        <nav aria-label="Ruta de navegación" className="flex items-center gap-2">
           <Link href="/propiedades" className="text-stone-600 hover:underline">Propiedades</Link>
-          <span className="text-stone-400">/</span>
-          <span className="text-stone-800 truncate max-w-[70vw]">{prop.title}</span>
-        </div>
+          <span className="text-stone-400" aria-hidden="true">/</span>
+          <span aria-current="page" className="text-stone-800 truncate max-w-[70vw]">{prop.title}</span>
+        </nav>
         <div className="flex items-center gap-2">
           <Button variant="outline" className="h-9" asChild>
-            <a href={`https://wa.me/?text=${encodeURIComponent(`Estoy interesado/a en ${prop.title} - https://valeravisionarias.com/propiedad/${prop.id}`)}`} target="_blank" rel="noopener noreferrer">
+            <a href={`https://wa.me/?text=${encodeURIComponent(`Estoy interesado/a en ${prop.title} - https://www.valeravisionarias.com/propiedad/${prop.id}`)}`} target="_blank" rel="noopener noreferrer">
               <Share2 className="w-4 h-4 mr-2" /> Compartir
             </a>
           </Button>
         </div>
       </div>
+
+      <h1 className="mb-6 font-display text-3xl font-light leading-[1.02] tracking-[-0.04em] text-black sm:text-4xl md:text-5xl">
+        {prop.title}
+      </h1>
 
       {/* Hero: galería + panel sticky (desktop) */}
       <section className="grid lg:grid-cols-3 gap-6">
@@ -207,12 +214,12 @@ const jsonLd = {
         </div>
 
         {/* Panel sticky con CTA (inspirado en layouts con lateral fijo) */}
-        <aside className="lg:sticky lg:top-6 h-fit space-y-4">
-          <Card className="border-stone-200">
+        <aside className="lg:sticky lg:top-24 h-fit space-y-4">
+          <Card className="rounded-2xl">
             <CardContent className="p-5 space-y-4">
               <div className="flex items-start justify-between gap-3">
                 <div>
-                  <div className="text-2xl font-semibold leading-none">
+                  <div className="text-[30px] font-light leading-none tracking-[-0.03em]">
                     {formatEUR(Number(prop.price))}{prop.category === "alquiler" && <span className="text-sm text-stone-600"> / mes</span>}
                   </div>
                   <div className="mt-1 text-stone-600 text-sm flex items-center gap-1">
@@ -222,34 +229,34 @@ const jsonLd = {
                 </div>
                 <div className="flex gap-1">
                   {prop.category && (
-                    <Badge variant="secondary" className={prop.category === "venta" ? "bg-blue-100 text-blue-800" : "bg-green-100 text-green-800"}>
+                    <Badge variant="secondary" className={prop.category === "venta" ? "rounded-3xl bg-stone-100 text-black" : "rounded-3xl bg-stone-200 text-black"}>
                       {prop.category === "venta" ? "Venta" : "Alquiler"}
                     </Badge>
                   )}
-                  {prop.featured && <Badge className="bg-black text-white">Destacada</Badge>}
+                  {prop.featured && <Badge className="rounded-3xl bg-black text-white">Destacada</Badge>}
                 </div>
               </div>
 
               {/* key facts */}
               <div className="grid grid-cols-3 gap-2 text-center">
-                <div className="rounded bg-stone-50 p-3">
+                <div className="rounded-xl bg-stone-100 p-3">
                   <Bed className="w-4 h-4 mx-auto mb-1" />
                   <div className="text-sm">{prop.bedrooms} hab</div>
                 </div>
-                <div className="rounded bg-stone-50 p-3">
+                <div className="rounded-xl bg-stone-100 p-3">
                   <Bath className="w-4 h-4 mx-auto mb-1" />
                   <div className="text-sm">{prop.bathrooms} baños</div>
                 </div>
-                <div className="rounded bg-stone-50 p-3">
+                <div className="rounded-xl bg-stone-100 p-3">
                   <Ruler className="w-4 h-4 mx-auto mb-1" />
                   <div className="text-sm">{prop.size} m²</div>
                 </div>
               </div>
 
               {/* CTA primaria */}
-              <Button className="w-full bg-black text-white h-11" asChild>
-                <a href={`/contacto`}>
-                  <CalendarDays className="w-4 h-4 mr-2" /> Solicitar información / visita
+              <Button className="w-full bg-black text-white h-12 hover:bg-stone-800" asChild>
+                <a href="#solicitar-visita">
+                  <CalendarDays className="w-4 h-4 mr-2" aria-hidden="true" /> Solicitar información / visita
                 </a>
               </Button>
 
@@ -263,14 +270,14 @@ const jsonLd = {
       </section>
 
       {/* Barra pegajosa móvil */}
-      <div className="fixed bottom-0 inset-x-0 z-20 border-t bg-white p-3 lg:hidden">
+      <div className="fixed bottom-0 inset-x-0 z-20 border-t border-black/[0.08] bg-stone-50/95 backdrop-blur-md p-3 lg:hidden">
         <div className="flex items-center justify-between">
           <div>
-            <div className="text-lg font-semibold leading-none">{formatEUR(Number(prop.price))}{prop.category === "alquiler" && <span className="text-xs text-stone-600"> / mes</span>}</div>
+            <div className="text-xl font-light tracking-[-0.02em] leading-none">{formatEUR(Number(prop.price))}{prop.category === "alquiler" && <span className="text-xs text-stone-600"> / mes</span>}</div>
             <div className="text-xs text-stone-500">{prop.size} m² · {prop.bedrooms} hab · {prop.bathrooms} baños</div>
           </div>
           <Button className="bg-black text-white h-10" asChild>
-            <a href={`/colabora?ref=${encodeURIComponent(prop.id)}&title=${encodeURIComponent(prop.title)}`}>Contactar</a>
+            <a href="#solicitar-visita">Solicitar visita</a>
           </Button>
         </div>
       </div>
@@ -279,18 +286,18 @@ const jsonLd = {
       <section className="mt-10 grid lg:grid-cols-3 gap-8">
         {/* Descripción */}
         <div className="lg:col-span-2 space-y-8">
-          <Card className="border-stone-200">
+          <Card className="rounded-2xl">
             <CardContent className="p-6">
-              <h2 className="text-xl font-medium mb-3">Descripción</h2>
+              <h2 className="text-2xl font-light tracking-[-0.03em] mb-4">Descripción</h2>
               <p className="text-stone-700 leading-relaxed whitespace-pre-line">{prop.description}</p>
             </CardContent>
           </Card>
 
           {/* Mapa / entorno 
-          <Card className="border-stone-200">
+          <Card className="rounded-2xl">
             <CardContent className="p-0">
               <div className="p-6">
-                <h3 className="text-lg font-medium">Ubicación y entorno</h3>
+                <h3 className="text-2xl font-light tracking-[-0.03em]">Ubicación y entorno</h3>
                 <p className="text-sm text-stone-600 mt-1">
                   Consulta transporte, servicios y colegios cercanos en el mapa interactivo.
                 </p>
@@ -321,11 +328,11 @@ const jsonLd = {
         <aside className="space-y-6">
 
           {/* Mini “cómo concertar visita” */}
-          <Card className="border-stone-200">
+          <Card id="solicitar-visita" className="rounded-2xl scroll-mt-24">
             <CardContent className="p-6 space-y-4">
-              <h3 className="text-lg font-medium">¿Te interesa?</h3>
+              <h2 className="text-2xl font-light tracking-[-0.03em]">¿Te interesa?</h2>
               <p className="text-sm text-stone-600">Selecciona una fecha y solicita tu visita.</p>
-              <VisitForm propiedad={prop.title} propiedadUrl={`https://valeravisionarias.com/propiedad/${prop.id}`} />
+              <VisitForm propiedad={prop.title} propiedadUrl={`https://www.valeravisionarias.com/propiedad/${prop.id}`} />
             </CardContent>
           </Card>
         </aside>
@@ -333,9 +340,9 @@ const jsonLd = {
 
       {/* Similares */}
       {related && related.length > 0 && (
-        <section className="mt-12">
+        <section className="mt-24">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-xl font-medium">También podría interesarte</h2>
+            <h2 className="section-title !text-[2rem] sm:!text-[2.5rem]">También podría interesarte</h2>
             <Link href="/propiedades" className="text-sm underline underline-offset-2">Ver todas</Link>
           </div>
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -343,7 +350,7 @@ const jsonLd = {
               const cover = (r.property_images ?? [])
                 .sort((a: any, b: any) => (a.position ?? 0) - (b.position ?? 0))[0]?.url;
               return (
-                <article key={r.id} className="rounded-xl border border-stone-200 bg-white overflow-hidden">
+                <article key={r.id} className="rounded-xl border border-black/[0.06] bg-white overflow-hidden shadow-subtle">
                   <div className="relative aspect-[16/10] bg-stone-100">
                     {cover ? (
                       <img src={cover} alt={r.title} className="w-full h-full object-cover" loading="lazy" />
@@ -355,7 +362,7 @@ const jsonLd = {
                     <div className="flex items-start justify-between gap-3">
                       <h3 className="text-base font-medium">{r.title}</h3>
                       {r.featured && (
-                        <span className="text-[10px] uppercase tracking-wide bg-black text-white px-2 py-1">Destacada</span>
+                        <span className="text-[10px] uppercase tracking-wide rounded-3xl bg-black text-white px-2 py-1">Destacada</span>
                       )}
                     </div>
                     <p className="mt-1 text-sm text-stone-600">{r.city}</p>
@@ -380,13 +387,13 @@ const jsonLd = {
           </div>
         </section>
       )}
-    </main>
+    </div>
   );
 }
 
 function Detail({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded border border-stone-200 p-3">
+    <div className="rounded border border-black/[0.08] p-3">
       <p className="text-[11px] uppercase tracking-wide text-stone-500">{label}</p>
       <p className="text-stone-900 mt-0.5">{value}</p>
     </div>

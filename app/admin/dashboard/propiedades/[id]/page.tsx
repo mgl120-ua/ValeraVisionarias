@@ -15,7 +15,7 @@ export default async function EditarPropiedadPage({ params }: { params: { id: st
     <div className="space-y-6">
       <Card className="border-2 border-stone-200">
         <CardHeader>
-          <CardTitle className="font-playfair text-2xl font-light">Editar Propiedad</CardTitle>
+          <CardTitle className="font-display text-2xl font-light">Editar Propiedad</CardTitle>
         </CardHeader>
         <CardContent>
           <PropertyForm propertyId={params.id} defaultValues={property ?? {}} />
@@ -24,7 +24,7 @@ export default async function EditarPropiedadPage({ params }: { params: { id: st
 
       <Card className="border-2 border-stone-200">
         <CardHeader>
-          <CardTitle className="font-playfair text-2xl font-light">Galería</CardTitle>
+          <CardTitle className="font-display text-2xl font-light">Galería</CardTitle>
         </CardHeader>
         <CardContent>
           <ImageGalleryManager

@@ -1,11 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
-import { cookies } from "next/headers";
+import { isAdminRequest } from "@/lib/admin-session";
 import { createServiceClient } from "@/lib/supabase/service";
 
 // ✅ UPDATE
 export async function PATCH(req: NextRequest, { params }: { params: { id: string } }) {
-  const cookieStore = cookies();
-  const isAdmin = cookieStore.get("admin-session")?.value === "authenticated";
+  const isAdmin = await isAdminRequest();
   if (!isAdmin) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
   const body = await req.json().catch(() => ({}));
@@ -35,8 +34,7 @@ export async function PATCH(req: NextRequest, { params }: { params: { id: string
 
 // ✅ DELETE
 export async function DELETE(_req: NextRequest, { params }: { params: { id: string } }) {
-  const cookieStore = cookies();
-  const isAdmin = cookieStore.get("admin-session")?.value === "authenticated";
+  const isAdmin = await isAdminRequest();
   if (!isAdmin) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
   const supabase = createServiceClient();

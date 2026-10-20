@@ -50,7 +50,7 @@ export default function AdminLoginPage() {
           <div className="flex justify-center mb-4">
             <Image src="/images/logo-dark.png" alt="Valera Visionarias" width={60} height={60} className="w-15 h-15" />
           </div>
-          <CardTitle className="font-playfair text-3xl font-light text-black">Panel de Administración</CardTitle>
+          <CardTitle className="font-display text-3xl font-light text-black">Panel de Administración</CardTitle>
           <p className="text-sm text-stone-600">Acceso restringido solo para administradores</p>
         </CardHeader>
 

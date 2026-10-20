@@ -48,7 +48,7 @@ export default function ValoracionForm() {
         <label className="block text-sm text-stone-700 mb-1">Tipo de propiedad</label>
         <select
           name="tipo"
-          className="w-full border border-stone-300 rounded-lg p-2 text-sm"
+          className="w-full border border-black/10 rounded-xl p-2 text-sm"
           defaultValue=""
           required
         >
@@ -65,7 +65,7 @@ export default function ValoracionForm() {
         <Textarea
           name="direccion"
           required
-          className="border-stone-300 min-h-[80px] text-sm"
+          className="border-black/10 min-h-[80px] text-sm"
           placeholder="Calle, zona o urbanización..."
         />
       </div>
@@ -91,7 +91,7 @@ export default function ValoracionForm() {
       <motion.button
         type="submit"
         disabled={status === "sending"}
-        className="w-full bg-black hover:bg-stone-800 text-white h-11 rounded-lg disabled:opacity-70"
+        className="w-full bg-black hover:bg-stone-800 text-white h-11 rounded-xl disabled:opacity-70"
         whileHover={{ scale: status === "sending" ? 1 : 1.02 }}
         whileTap={{ scale: 0.98 }}
       >

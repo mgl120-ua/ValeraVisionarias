@@ -68,7 +68,7 @@ export default function VisitForm({
       <motion.button
         type="submit"
         disabled={status === "sending"}
-        className="w-full bg-black hover:bg-stone-800 text-white h-11 rounded-lg disabled:opacity-70"
+        className="w-full bg-black hover:bg-stone-800 text-white h-11 rounded-xl disabled:opacity-70"
         whileHover={{ scale: status === "sending" ? 1 : 1.02 }}
         whileTap={{ scale: 0.98 }}
       >
@@ -100,6 +100,12 @@ export default function VisitForm({
         </AnimatePresence>
       </motion.button>
 
+      <p className="text-xs text-stone-500">
+        Usaremos tus datos solo para gestionar tu solicitud de visita.{" "}
+        <a href="/privacidad" className="underline hover:text-black">
+          Política de privacidad
+        </a>
+      </p>
     </form>
   )
 }

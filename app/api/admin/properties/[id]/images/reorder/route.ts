@@ -1,10 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
-import { cookies } from "next/headers";
+import { isAdminRequest } from "@/lib/admin-session";
 import { createServiceClient } from "@/lib/supabase/service";
 
 export async function PATCH(req: NextRequest, { params }: { params: { id: string } }) {
-  const cookieStore = cookies();
-  const isAdmin = cookieStore.get("admin-session")?.value === "authenticated";
+  const isAdmin = await isAdminRequest();
   if (!isAdmin) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
   const { order } = await req.json().catch(() => ({ order: [] as { id: string; position: number }[] }));

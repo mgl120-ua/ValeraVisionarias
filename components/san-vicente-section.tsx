@@ -4,7 +4,6 @@ import { useState, useEffect } from "react"
 import { Users, GraduationCap, TrendingUp } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
-import { Button } from "@/components/ui/button"
 
 const images = [
   "/sanvi.jpeg",
@@ -25,12 +24,12 @@ export default function SanVicenteSection() {
   }, [])
 
   return (
-    <section id="san-vicente" className="py-16 sm:py-20 md:py-24 lg:py-32 bg-white">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-12">
-        <div className="grid lg:grid-cols-2 gap-10 sm:gap-12 lg:gap-16 items-center max-w-7xl mx-auto">
+    <section id="san-vicente" className="py-24 md:py-32">
+      <div className="mx-auto max-w-page px-4 sm:px-6 lg:px-10">
+        <div className="grid lg:grid-cols-2 gap-10 sm:gap-12 lg:gap-16 items-center">
           
           {/* Carrusel de imágenes */}
-          <div className="relative h-64 sm:h-80 lg:h-[500px] rounded-lg overflow-hidden">
+          <div className="relative aspect-[4/5] overflow-hidden rounded-xl bg-stone-200 shadow-subtle sm:aspect-[4/3] lg:aspect-[4/5]">
             {images.map((src, index) => (
               <div
                 key={index}
@@ -42,7 +41,6 @@ export default function SanVicenteSection() {
                   src={src}
                   alt={`San Vicente del Raspeig ${index + 1}`}
                   fill
-                  priority={index === 0}
                   className="object-cover"
                   sizes="(max-width: 1024px) 100vw, 50vw"
                 />
@@ -66,40 +64,38 @@ export default function SanVicenteSection() {
 
           {/* Contenido descriptivo */}
           <div>
-            <p className="text-xs tracking-[0.3em] uppercase text-stone-500 mb-3 sm:mb-4">San Vicente del Raspeig</p>
-            <h2 className="font-playfair text-3xl sm:text-4xl md:text-5xl font-light text-black mb-6 sm:mb-8 leading-tight">
+            <p className="eyebrow mb-4">San Vicente del Raspeig</p>
+            <h2 className="section-title text-black mb-6 sm:mb-8">
               Vive, estudia, invierte en San Vicente
             </h2>
-            <p className="text-base sm:text-lg text-stone-600 leading-relaxed mb-8 sm:mb-10">
+            <p className="mb-10 text-lg leading-[1.33] text-stone-600">
               San Vicente del Raspeig es ideal para familias, estudiantes e inversores: ubicación estratégica, servicios
               de calidad y entorno tranquilo cerca de Alicante.
             </p>
 
-            <div className="space-y-6 sm:space-y-8 mb-8 sm:mb-10">
+            <div className="mb-10">
               <Feature
                 Icon={Users}
-                title="Para Familias"
+                title="Para familias"
                 text="Zonas residenciales seguras, colegios de calidad y amplios espacios verdes para disfrutar en familia."
               />
               <Feature
                 Icon={GraduationCap}
-                title="Para Estudiantes"
+                title="Para estudiantes"
                 text="A pocos minutos de la Universidad de Alicante, con excelente conectividad y todas las comodidades."
               />
               <Feature
                 Icon={TrendingUp}
-                title="Para Inversores"
-                text="Alta demanda de vivienda, especialmente para alquiler estudiantil. Gran rentabilidad y revalorización constante."
+                title="Para inversores"
+                text="Demanda de alquiler, sobre todo estudiantil, por la cercanía a la Universidad de Alicante."
               />
             </div>
 
-            <Link href="#contacto">
-              <Button
-                size="lg"
-                className="w-full sm:w-auto bg-black hover:bg-stone-800 text-white px-8 sm:px-10 h-11 sm:h-12 text-sm sm:text-base"
-              >
-                Descubre propiedades en San Vicente
-              </Button>
+            <Link
+              href="/propiedades"
+              className="inline-flex h-12 w-full items-center justify-center rounded-xl bg-black px-7 text-[15px] text-white transition-colors hover:bg-stone-800 sm:w-auto"
+            >
+              Descubre propiedades en San Vicente
             </Link>
           </div>
         </div>
@@ -110,13 +106,11 @@ export default function SanVicenteSection() {
 
 function Feature({ Icon, title, text }: { Icon: any; title: string; text: string }) {
   return (
-    <div className="flex items-start space-x-4">
-      <div className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 bg-stone-100 rounded-full flex items-center justify-center">
-        <Icon className="w-5 h-5 sm:w-6 sm:h-6 text-black" />
-      </div>
+    <div className="flex items-start gap-4 border-t border-black/10 py-5">
+      <Icon className="mt-1 h-5 w-5 flex-shrink-0 text-black" aria-hidden="true" />
       <div>
-        <h3 className="font-playfair text-lg sm:text-xl font-semibold text-black mb-2">{title}</h3>
-        <p className="text-sm sm:text-base text-stone-600 leading-relaxed">{text}</p>
+        <h3 className="text-xl font-light tracking-[-0.02em] text-black">{title}</h3>
+        <p className="mt-1 text-base leading-[1.49] text-stone-600">{text}</p>
       </div>
     </div>
   )

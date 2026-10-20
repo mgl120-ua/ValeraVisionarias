@@ -1,11 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
-import { cookies } from "next/headers";
+import { isAdminRequest } from "@/lib/admin-session";
 import { createServiceClient } from "@/lib/supabase/service";
 
 // GET /api/admin/properties?search=&category=venta|alquiler|all&page=1&pageSize=10
 export async function GET(req: NextRequest) {
-  const cookieStore = cookies();
-  const isAdmin = cookieStore.get("admin-session")?.value === "authenticated";
+  const isAdmin = await isAdminRequest();
   if (!isAdmin) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
   const url = new URL(req.url);
@@ -65,8 +64,7 @@ export async function GET(req: NextRequest) {
 
 // POST /api/admin/properties  (crear)
 export async function POST(req: NextRequest) {
-  const cookieStore = cookies();
-  const isAdmin = cookieStore.get("admin-session")?.value === "authenticated";
+  const isAdmin = await isAdminRequest();
   if (!isAdmin) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
   const body = await req.json();

@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { ChevronDown } from "lucide-react"
+import { Plus } from "lucide-react"
 
 export default function FAQSection() {
   const [openIndex, setOpenIndex] = useState<number | null>(0)
@@ -10,69 +10,67 @@ export default function FAQSection() {
     {
       question: "¿Cuánto tiempo tardan en venderse las propiedades?",
       answer:
-        "El 80% de nuestras ventas se cierran en menos de una semana, muchas en menos de 48 horas. El 20% restante, siempre al precio estipulado, no tarda más de tres meses. Trabajamos con estrategias de marketing efectivas y una red consolidada de clientes.",
+        "Depende sobre todo del precio, el estado de la vivienda y la zona. Una vivienda con un precio ajustado al mercado y bien presentada se vende antes, por eso empezamos con una valoración realista y preparamos el anuncio, las visitas y la negociación para que no pierdas meses en el mercado.",
     },
     {
       question: "¿Qué zonas de San Vicente del Raspeig recomiendan?",
       answer:
-        "Las zonas más demandadas son las cercanas a la Universidad de Alicante (ideal para inversores en alquiler estudiantil), el centro urbano con todos los servicios, y las áreas residenciales más tranquilas como Villafranqueza. Cada zona tiene ventajas según tu perfil: familia, estudiante o inversor.",
+        "Las zonas más demandadas son las cercanas a la Universidad de Alicante (ideal para inversores en alquiler estudiantil), el centro urbano con todos los servicios, y las urbanizaciones residenciales más tranquilas del término municipal. Cada zona tiene ventajas según tu perfil: familia, estudiante o inversor.",
     },
     {
       question: "¿Qué rentabilidad puedo esperar del alquiler en San Vicente?",
       answer:
-        "La rentabilidad media en San Vicente del Raspeig ronda el 5-7% anual, especialmente en propiedades cercanas a la Universidad de Alicante. El alquiler estudiantil tiene alta demanda todo el año, lo que reduce los períodos de vacío y maximiza los ingresos.",
+        "Depende del precio de compra, de los gastos (comunidad, IBI, seguros, mantenimiento) y del tipo de alquiler. Las viviendas cercanas a la Universidad de Alicante tienen demanda de alquiler estudiantil. Puedes hacer una estimación con nuestra calculadora de rentabilidad y revisamos contigo el caso concreto.",
     },
     {
       question: "¿Cuáles son los gastos de compraventa que debo considerar?",
       answer:
-        "En la compra: ITP (8% en segunda mano) o IVA + AJD (10% + 1.5% en obra nueva), notaría, registro y gestoría. En la venta: plusvalía municipal e IRPF si hay ganancia patrimonial. Te asesoramos en todo el proceso para que no haya sorpresas y optimices los costes.",
+        "En la compra, en la Comunitat Valenciana: ITP en segunda mano (tipo general del 9 % desde junio de 2026, con tipos reducidos para algunos perfiles) o IVA del 10 % + AJD en obra nueva, además de notaría, registro y gestoría. En la venta: plusvalía municipal e IRPF si hay ganancia patrimonial. Los tipos dependen de la fecha de la escritura y de tu situación, así que confírmalos con tu notaría o asesor; nosotros te acompañamos en todo el proceso para que no haya sorpresas.",
     },
   ]
 
   return (
-    <section id="faq" className="py-16 sm:py-20 md:py-24 lg:py-32 bg-stone-50">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-12">
-        <div className="max-w-3xl mx-auto">
-          <div className="mb-12 sm:mb-16">
-            <p className="text-xs tracking-[0.3em] uppercase text-stone-500 mb-3 sm:mb-4">Preguntas Frecuentes</p>
-            <h2 className="font-playfair text-3xl sm:text-4xl md:text-5xl font-light text-black mb-4 sm:mb-6 leading-tight">
-              Resolvemos tus dudas
-            </h2>
-            <p className="text-base sm:text-lg text-stone-600 leading-relaxed">
+    <section id="faq" className="py-24 md:py-32">
+      <div className="mx-auto max-w-page px-4 sm:px-6 lg:px-10">
+        <div className="grid gap-12 lg:grid-cols-[1fr_1.5fr] lg:gap-20">
+          <div>
+            <p className="eyebrow mb-4">Preguntas frecuentes</p>
+            <h2 className="section-title text-black">Resolvemos tus dudas</h2>
+            <p className="mt-5 text-lg leading-[1.33] text-stone-600">
               Las preguntas más comunes sobre compraventa y alquiler en San Vicente del Raspeig.
             </p>
           </div>
 
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="border border-stone-200 bg-white rounded-lg overflow-hidden">
-                <button
-                  onClick={() => setOpenIndex(openIndex === index ? null : index)}
-                  className="w-full flex items-center justify-between p-5 sm:p-6 text-left hover:bg-stone-50 transition-colors"
-                  aria-expanded={openIndex === index}
-                  aria-controls={`faq-answer-${index}`}
-                >
-                  <span className="font-playfair text-base sm:text-lg font-semibold text-black pr-4">
-                    {faq.question}
-                  </span>
-                  <ChevronDown
-                    className={`w-5 h-5 text-black flex-shrink-0 transition-transform ${
-                      openIndex === index ? "rotate-180" : ""
-                    }`}
-                  />
-                </button>
-                <div
-                  id={`faq-answer-${index}`}
-                  className={`transition-all duration-300 ${
-                    openIndex === index ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
-                  } overflow-hidden`}
-                >
-                  <div className="px-5 sm:px-6 pb-5 sm:pb-6">
-                    <p className="text-sm sm:text-base text-stone-600 leading-relaxed">{faq.answer}</p>
+          <div className="border-b border-black/10">
+            {faqs.map((faq, index) => {
+              const open = openIndex === index
+              return (
+                <div key={index} className="border-t border-black/10">
+                  <button
+                    type="button"
+                    onClick={() => setOpenIndex(open ? null : index)}
+                    className="flex w-full items-start justify-between gap-6 py-6 text-left"
+                    aria-expanded={open}
+                    aria-controls={`faq-answer-${index}`}
+                  >
+                    <span className="text-xl font-light leading-[1.25] tracking-[-0.02em] text-black sm:text-[23px]">
+                      {faq.question}
+                    </span>
+                    <Plus
+                      aria-hidden="true"
+                      className={`mt-1 h-5 w-5 flex-shrink-0 text-black transition-transform duration-300 ${open ? "rotate-45" : ""}`}
+                    />
+                  </button>
+                  <div
+                    id={`faq-answer-${index}`}
+                    aria-hidden={!open}
+                    className={`overflow-hidden transition-all duration-300 ${open ? "max-h-96 opacity-100" : "max-h-0 opacity-0"}`}
+                  >
+                    <p className="max-w-2xl pb-6 text-base leading-[1.49] text-stone-600">{faq.answer}</p>
                   </div>
                 </div>
-              </div>
-            ))}
+              )
+            })}
           </div>
         </div>
       </div>

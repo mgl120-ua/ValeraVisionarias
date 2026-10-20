@@ -10,7 +10,7 @@ export default function PropertyGallery({ images }: { images: string[] }) {
 
   if (!hasImages) {
     return (
-      <div className="aspect-[16/10] w-full rounded-lg bg-stone-100 grid place-items-center text-stone-400">
+      <div className="aspect-[16/10] w-full rounded-xl bg-stone-100 grid place-items-center text-stone-400">
         Sin imagen
       </div>
     );
@@ -23,7 +23,7 @@ export default function PropertyGallery({ images }: { images: string[] }) {
   return (
     <div className="space-y-3">
       {/* Principal */}
-      <div className="relative aspect-[16/10] w-full overflow-hidden rounded-lg bg-stone-100">
+      <div className="relative aspect-[16/10] w-full overflow-hidden rounded-xl bg-stone-100">
         <img
           src={images[idx]}
           alt={`Imagen ${idx + 1}`}
@@ -58,7 +58,7 @@ export default function PropertyGallery({ images }: { images: string[] }) {
             <button
               key={i}
               className={`relative h-16 w-24 rounded-md overflow-hidden border ${
-                i === idx ? "border-black" : "border-stone-200"
+                i === idx ? "border-black" : "border-black/[0.08]"
               }`}
               onClick={() => setIdx(i)}
               aria-label={`Ir a imagen ${i + 1}`}

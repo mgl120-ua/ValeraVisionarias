@@ -47,7 +47,7 @@ export default function AdminSidebar() {
             <Link href="/admin/dashboard" className="flex items-center gap-3" onClick={() => setIsMobileOpen(false)}>
               <Image src="/images/logo-light.png" alt="" width={36} height={36} className="w-9 h-9" />
               <div>
-                <p className="font-playfair text-lg font-semibold">Admin Panel</p>
+                <p className="font-display text-lg font-semibold">Admin Panel</p>
                 <p className="text-xs text-stone-400">Valera Visionarias</p>
               </div>
             </Link>

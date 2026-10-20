@@ -129,7 +129,7 @@ export default function PropiedadesPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-playfair font-light text-black mb-2">Gestión de Propiedades</h1>
+          <h1 className="text-3xl font-display font-light text-black mb-2">Gestión de Propiedades</h1>
           <p className="text-stone-600">{loading ? "Cargando…" : `${total} propiedades totales`}</p>
         </div>
         <Link href="/admin/dashboard/propiedades/nueva">
