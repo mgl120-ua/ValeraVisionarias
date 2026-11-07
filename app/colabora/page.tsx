@@ -15,15 +15,16 @@ import {
   Users,
 } from "lucide-react"
 import type { Metadata } from "next"
+import { pageMetadata } from "@/lib/seo"
 import CaptadoresForm from "@/components/CaptadoresForm"
 import { contactInfo } from "@/lib/contact-info"
 
-export const metadata: Metadata = {
-  title: "Colabora con nosotros: gana 1.500 € por captación",
+export const metadata: Metadata = pageMetadata({
+  title: "Colabora: 1.500 € por captación",
   description:
     "Únete a nuestro equipo como captador inmobiliario. Gana 1.500€ mínimo por cada inmueble que captes. Flexibilidad total e ingresos ilimitados.",
-  alternates: { canonical: "/colabora" },
-}
+  path: "/colabora",
+})
 
 export default function ColaboraPage() {
   return (

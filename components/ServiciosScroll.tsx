@@ -2,6 +2,7 @@
 
 import { useMemo, useRef, useState } from "react"
 import { ArrowLeft, ArrowRight } from "lucide-react"
+import Image from "next/image"
 import Link from "next/link"
 import { motion } from "framer-motion"
 import { trackSellerEvent } from "@/lib/seller-leads"
@@ -124,11 +125,13 @@ export default function ServiciosShowcase() {
                   className="group flex w-[80vw] flex-shrink-0 flex-col sm:w-[46vw] lg:w-[26rem]"
                 >
                   <div className="relative aspect-[4/5] overflow-hidden rounded-xl bg-stone-200 shadow-subtle">
-                    <div
-                      className="absolute inset-0 bg-cover bg-center transition-transform duration-700 ease-out group-hover:scale-[1.03]"
-                      style={{ backgroundImage: `url(${service.img})` }}
-                      role="img"
-                      aria-label={service.title}
+                    {/* next/image: sirve versiones redimensionadas en AVIF/WebP en lugar de los originales de varios MB */}
+                    <Image
+                      src={service.img}
+                      alt={service.title}
+                      fill
+                      sizes="(max-width: 640px) 80vw, (max-width: 1024px) 46vw, 416px"
+                      className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
                     />
                     <span className="absolute left-4 top-4 rounded-3xl bg-white/90 px-3 py-1 text-xs text-black backdrop-blur-sm">
                       {String(index + 1).padStart(2, "0")}

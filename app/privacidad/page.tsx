@@ -1,12 +1,13 @@
 import type { Metadata } from "next"
+import { pageMetadata } from "@/lib/seo"
 import LegalPage from "@/components/LegalPage"
 import { contactInfo } from "@/lib/contact-info"
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Política de privacidad",
   description: "Cómo trata Valera Visionarias los datos personales que nos facilitas a través de la web.",
-  alternates: { canonical: "/privacidad" },
-}
+  path: "/privacidad",
+})
 
 export default function PrivacidadPage() {
   return (

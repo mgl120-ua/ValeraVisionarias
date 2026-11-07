@@ -6,22 +6,30 @@ import { Award, Heart, Users, Target, Shield, MapPin } from "lucide-react"
 import MobileNav from "@/components/mobile-nav"
 import SkipToContent from "@/components/skip-to-content"
 import type { Metadata } from "next"
+import { breadcrumbJsonLd, pageMetadata } from "@/lib/seo"
 import OfficeGallery from "./OfficeGallery"
 import { officeImages } from "./office-images"
 import { contactInfo } from "@/lib/contact-info"
 
-export const metadata: Metadata = {
-  title: "Quiénes somos: tu inmobiliaria en San Vicente del Raspeig",
+export const metadata: Metadata = pageMetadata({
+  title: "Quiénes somos | Valera Visionarias, San Vicente del Raspeig",
+  absoluteTitle: true,
   description:
     "Conoce al equipo de Valera Visionarias, inmobiliaria en San Vicente del Raspeig. Te acompañamos en la compra, venta y alquiler de tu vivienda.",
-  alternates: { canonical: "/nosotros" },
-}
+  path: "/nosotros",
+})
 const embedSrc = contactInfo.mapsEmbedSrc
 
 
 export default function NosotrosPage() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(breadcrumbJsonLd([{ name: "Quiénes somos", path: "/nosotros" }])),
+        }}
+      />
       <div className="min-h-screen">
         {/* Hero con fondo real de tu oficina */}
         <section className="pt-16 sm:pt-24 pb-16 sm:pb-20 relative overflow-hidden">

@@ -22,8 +22,6 @@ const jakarta = Plus_Jakarta_Sans({
 })
 
 export const metadata: Metadata = {
-  // conservamos tu metadato original
-  generator: "v0.app",
   metadataBase: new URL(SITE_URL),
   title: {
     default: "Valera Visionarias — Inmobiliaria en San Vicente del Raspeig",
@@ -43,6 +41,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
+    images: ["/images/hero-architecture.jpg"],
   },
   robots: { index: true, follow: true },
 }

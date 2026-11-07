@@ -1,23 +1,27 @@
 import type { Metadata } from "next"
+import { breadcrumbJsonLd, pageMetadata } from "@/lib/seo"
 import Link from "next/link"
 import ValoracionesSection from "@/components/valoraciones-section"
 import { Button } from "@/components/ui/button"
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Valoración gratuita de vivienda en San Vicente del Raspeig",
+  absoluteTitle: true,
   description:
     "Solicita una valoración orientativa y gratuita de tu piso o casa en San Vicente del Raspeig. Analizamos el mercado de tu zona y te contactamos sin compromiso.",
-  alternates: { canonical: "/valoraciones" },
-  openGraph: {
-    title: "Valoración gratuita de vivienda en San Vicente del Raspeig",
-    description: "Descubre cuánto puede valer tu vivienda. Valoración orientativa, gratuita y sin compromiso.",
-    url: "/valoraciones",
-  },
-}
+  path: "/valoraciones",
+  ogDescription: "Descubre cuánto puede valer tu vivienda. Valoración orientativa, gratuita y sin compromiso.",
+})
 
 export default function ValoracionesPage() {
   return (
     <div className="min-h-screen">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(breadcrumbJsonLd([{ name: "Valoración gratuita", path: "/valoraciones" }])),
+        }}
+      />
       <ValoracionesSection />
 
       <section className="py-16 sm:py-20 md:py-24 lg:py-32">

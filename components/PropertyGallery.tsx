@@ -45,6 +45,9 @@ export default function PropertyGallery({ images, title }: { images: string[]; t
           alt={`${label} – foto ${idx + 1} de ${images.length}`}
           className={`absolute inset-0 h-full w-full ${portrait[idx] ? "object-contain" : "object-cover"}`}
           loading="eager"
+          // Primera foto = elemento más grande de la ficha (LCP): se pide con prioridad alta
+          // (atributo en minúsculas: React 18 aún no reconoce fetchPriority)
+          {...{ fetchpriority: idx === 0 ? "high" : "auto" }}
           decoding="async"
           onLoad={(e) => {
             const { naturalWidth, naturalHeight } = e.currentTarget;

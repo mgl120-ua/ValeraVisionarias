@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useMemo, useState } from "react";
 import { Search } from "lucide-react";
+import { propertyPath } from "@/lib/seo"
 
 interface Propiedad {
   id: string | number;
@@ -217,7 +218,7 @@ export default function PropiedadesClient({
               return (
                 <article key={p.id} className="group">
                   <Link
-                    href={`/propiedad/${p.id}`}
+                    href={propertyPath(p)}
                     className="block rounded-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-4"
                   >
                     <div className="relative aspect-[4/3] overflow-hidden rounded-xl bg-stone-100 shadow-subtle">

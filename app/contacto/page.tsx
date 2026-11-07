@@ -1,4 +1,5 @@
 import type { Metadata } from "next"
+import { breadcrumbJsonLd, pageMetadata } from "@/lib/seo"
 import Image from "next/image"
 import dynamic from "next/dynamic"
 import { contactInfo } from "@/lib/contact-info"
@@ -6,18 +7,14 @@ import { SITE_URL } from "@/lib/site"
 
 const ContactForm = dynamic(() => import("@/components/ContactForm"), { ssr: false })
 
-export const metadata: Metadata = {
-  title: "Contacto: inmobiliaria en San Vicente del Raspeig",
+export const metadata: Metadata = pageMetadata({
+  title: "Contacto | Valera Visionarias, San Vicente del Raspeig",
+  absoluteTitle: true,
   description:
     "Llama, escribe o visita Valera Visionarias en C/ Villafranqueza 50, San Vicente del Raspeig (Alicante). Te atendemos con cita previa para vender, comprar o valorar tu vivienda.",
-  alternates: { canonical: "/contacto" },
-  openGraph: {
-    title: "Contacto | Valera Visionarias",
-    description:
-      "Oficina en San Vicente del Raspeig. Escríbenos para vender, comprar o valorar tu vivienda.",
-    url: "/contacto",
-  },
-}
+  path: "/contacto",
+  ogDescription: "Oficina en San Vicente del Raspeig. Escríbenos para vender, comprar o valorar tu vivienda.",
+})
 
 export default function ContactoPage() {
   return (
@@ -25,13 +22,16 @@ export default function ContactoPage() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "ContactPage",
-            name: "Contacto | Valera Visionarias",
-            url: `${SITE_URL}/contacto`,
-            mainEntity: { "@id": `${SITE_URL}/#organization` },
-          }),
+          __html: JSON.stringify([
+            {
+              "@context": "https://schema.org",
+              "@type": "ContactPage",
+              name: "Contacto | Valera Visionarias",
+              url: `${SITE_URL}/contacto`,
+              mainEntity: { "@id": `${SITE_URL}/#organization` },
+            },
+            breadcrumbJsonLd([{ name: "Contacto", path: "/contacto" }]),
+          ]),
         }}
       />
 
