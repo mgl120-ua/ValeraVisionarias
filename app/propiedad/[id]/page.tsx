@@ -62,6 +62,12 @@ export async function generateMetadata({ params }: { params: { id: string } }): 
 
   if (!data) return { title: "Propiedad no encontrada", robots: { index: false } };
 
+  // La redirección se hace aquí y no solo en la página: los metadatos se resuelven antes de enviar
+  // la respuesta, así que da un 308 real. En la página, por el loading.tsx, ya se ha empezado a enviar
+  // el HTML y Next.js solo puede usar un meta refresh.
+  const canonicalPath = propertyPath(data);
+  if (`/propiedad/${params.id}` !== canonicalPath) permanentRedirect(canonicalPath);
+
   const cover =
     (data.property_images ?? [])
       .sort((a: any, b: any) => (a.position ?? 0) - (b.position ?? 0))[0]?.url;
@@ -73,7 +79,7 @@ export async function generateMetadata({ params }: { params: { id: string } }): 
     title,
     absoluteTitle: true,
     description: buildDescription(data),
-    path: propertyPath(data),
+    path: canonicalPath,
     images: cover ? [{ url: cover, alt: data.title }] : undefined,
   });
 
