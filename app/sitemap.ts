@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next"
 import { createClient } from "@supabase/supabase-js"
-import { SITE_URL } from "@/lib/site"
+import { SITE_URL, absoluteUrl } from "@/lib/site"
+import { propertyPath } from "@/lib/seo"
 
 export const revalidate = 3600
 
@@ -25,9 +26,9 @@ async function getPropertyEntries(): Promise<MetadataRoute.Sitemap> {
 
   try {
     const supabase = createClient(url, key, { auth: { persistSession: false } })
-    const { data } = await supabase.from("properties").select("id, created_at").eq("status", "activo")
+    const { data } = await supabase.from("properties").select("id, title, created_at").eq("status", "activo")
     return (data ?? []).map((p) => ({
-      url: `${SITE_URL}/propiedad/${p.id}`,
+      url: absoluteUrl(propertyPath(p)),
       lastModified: p.created_at ? new Date(p.created_at) : undefined,
       changeFrequency: "weekly" as const,
       priority: 0.8,

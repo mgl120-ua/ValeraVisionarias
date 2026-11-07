@@ -1,12 +1,13 @@
 import type { Metadata } from "next"
+import { pageMetadata } from "@/lib/seo"
 import Link from "next/link"
 import LegalPage from "@/components/LegalPage"
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Política de cookies",
   description: "Qué cookies y tecnologías de almacenamiento utiliza la web de Valera Visionarias.",
-  alternates: { canonical: "/cookies" },
-}
+  path: "/cookies",
+})
 
 export default function CookiesPage() {
   return (

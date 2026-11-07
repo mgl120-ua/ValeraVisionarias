@@ -1,5 +1,5 @@
 // app/propiedad/[id]/page.tsx
-import { notFound } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 import Link from "next/link";
 import { createSupabaseServer } from "@/lib/supabase/server";
 import PropertyGallery from "@/components/PropertyGallery";
@@ -12,6 +12,7 @@ import {
 import type { Metadata } from "next"
 import VisitForm from "@/components/VisitForm"
 import { SITE_URL, absoluteUrl } from "@/lib/site"
+import { breadcrumbJsonLd, pageMetadata, propertyIdFromParam, propertyPath } from "@/lib/seo"
 
 
 // Opcional: ISR
@@ -50,12 +51,13 @@ function buildDescription(d: { title: string; city: string | null; description: 
   return full.slice(0, 155).replace(/\s+\S*$/, "") + "…";
 }
 
-export async function generateMetadata({ params }: { params: { id: string } }) {
+export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
+  const id = propertyIdFromParam(params.id);
   const supabase = createSupabaseServer();
   const { data } = await supabase
     .from("properties")
-    .select("title, city, description, price, category, size, bedrooms, property_images(url, position)")
-    .eq("id", params.id)
+    .select("id, title, city, description, price, category, size, bedrooms, status, property_images(url, position)")
+    .eq("id", id)
     .single();
 
   if (!data) return { title: "Propiedad no encontrada", robots: { index: false } };
@@ -66,18 +68,19 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
 
   const title = `${data.title} · ${formatEUR(Number(data.price))}${data.category === "alquiler" ? " / mes" : ""} | Valera Visionarias`;
 
-  return {
+  const meta = pageMetadata({
     // absolute: el título ya incluye la marca y no debe repetirse con la plantilla del layout
-    title: { absolute: title },
+    title,
+    absoluteTitle: true,
     description: buildDescription(data),
-    alternates: { canonical: `/propiedad/${params.id}` },
-    openGraph: {
-      title,
-      url: `/propiedad/${params.id}`,
-      images: cover ? [{ url: cover, alt: data.title }] : [],
-    },
-    twitter: { card: "summary_large_image", title, images: cover ? [cover] : [] },
-  };
+    path: propertyPath(data),
+    images: cover ? [{ url: cover, alt: data.title }] : undefined,
+  });
+
+  // Fichas retiradas: siguen accesibles por enlace, pero fuera del índice de Google
+  if (data.status !== "activo") meta.robots = { index: false, follow: true };
+
+  return meta;
 }
 
 export default async function PropertyDetailPage({ params }: { params: { id: string } }) {
@@ -91,11 +94,15 @@ export default async function PropertyDetailPage({ params }: { params: { id: str
       address, city, postal_code, category, status, featured, created_at,
       property_images ( id, url, position )
     `)
-    .eq("id", params.id)
+    .eq("id", propertyIdFromParam(params.id))
     .single();
 
   if (error || !p) notFound();
   const prop = p as Property;
+
+  // Una sola URL por ficha: /propiedad/<titulo>-<id>. Las antiguas (/propiedad/<id>) redirigen con 308.
+  const canonicalPath = propertyPath(prop);
+  if (`/propiedad/${params.id}` !== canonicalPath) permanentRedirect(canonicalPath);
 
   // Galería ordenada
   const images = (prop.property_images ?? []).sort(
@@ -124,7 +131,7 @@ export default async function PropertyDetailPage({ params }: { params: { id: str
   const mapSrc = `https://www.google.com/maps?q=${mapQuery}&output=embed`;
 
   // JSON-LD RealEstateListing + Offer + BreadcrumbList
-  const pageUrl = absoluteUrl(`/propiedad/${prop.id}`)
+  const pageUrl = absoluteUrl(canonicalPath)
   const toAbsolute = (u: string) => (u.startsWith("http") ? u : absoluteUrl(u))
   const jsonLd = [
     {
@@ -161,15 +168,10 @@ export default async function PropertyDetailPage({ params }: { params: { id: str
         },
       },
     },
-    {
-      "@context": "https://schema.org",
-      "@type": "BreadcrumbList",
-      itemListElement: [
-        { "@type": "ListItem", position: 1, name: "Inicio", item: absoluteUrl("/") },
-        { "@type": "ListItem", position: 2, name: "Propiedades", item: absoluteUrl("/propiedades") },
-        { "@type": "ListItem", position: 3, name: prop.title, item: pageUrl },
-      ],
-    },
+    breadcrumbJsonLd([
+      { name: "Propiedades", path: "/propiedades" },
+      { name: prop.title, path: canonicalPath },
+    ]),
   ]
 
   return (
@@ -364,7 +366,7 @@ export default async function PropertyDetailPage({ params }: { params: { id: str
                     </div>
                     <div className="mt-3">
                       <Link
-                        href={`/propiedad/${r.id}`}
+                        href={propertyPath(r)}
                         className="inline-flex items-center text-sm underline underline-offset-2"
                       >
                         Ver detalle
