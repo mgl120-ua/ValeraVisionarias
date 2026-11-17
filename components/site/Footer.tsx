@@ -106,7 +106,7 @@ export default function Footer({ year }: { year: number }) {
         <div className="border-t border-stone-800 pt-8 sm:pt-10">
           <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
             <p className="text-center text-xs text-stone-500 sm:text-left sm:text-sm">
-              &copy; {year} Valera Visionarias - Inmobiliaria en San Vicente del Raspeig. Todos los derechos reservados.
+              &copy; {year} Valera Visionarias - Inmobiliaria en San Vicente del Raspeig. Todos los derechos reservados. Web hecha por <a href="https://www.grimlo.es" target="_blank" rel="noopener" className="underline underline-offset-2 transition-colors hover:text-white">Grimlo</a>.
             </p>
             <nav aria-label="Información legal" className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-sm text-stone-400">
               <Link href="/privacidad" className="transition-colors hover:text-white">
