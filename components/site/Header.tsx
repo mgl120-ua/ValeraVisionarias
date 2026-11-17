@@ -7,9 +7,11 @@ import { usePathname } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { ChevronDown } from "lucide-react"
 import MobileNav from "@/components/mobile-nav"
+import { PROMOCION_LABEL, PROMOCION_PATH } from "@/lib/promocion"
 
 const navLinks = [
   { href: "/propiedades", label: "Propiedades" },
+  { href: PROMOCION_PATH, label: PROMOCION_LABEL, staticPage: true },
   { href: "/valoraciones", label: "Vender" },
   { href: "/nosotros", label: "Nosotros" },
   { href: "/contacto", label: "Contacto" },
@@ -95,8 +97,11 @@ export default function Header() {
 
           {/* Desktop nav */}
           <nav className="hidden lg:flex items-center gap-1 relative" aria-label="Navegación principal">
-            {navLinks.map((link) => (
-              <Link
+            {navLinks.map((link) => {
+              // El dosier es un HTML estático: enlace normal, sin navegación del router
+              const NavLink = link.staticPage ? "a" : Link
+              return (
+              <NavLink
                 key={link.href}
                 href={link.href}
                 aria-current={isActive(link.href) ? "page" : undefined}
@@ -107,8 +112,9 @@ export default function Header() {
                 }`}
               >
                 {link.label}
-              </Link>
-            ))}
+              </NavLink>
+              )
+            })}
 
             {/* Dropdown Calculadoras */}
             <div className="relative" ref={dropdownRef}>
