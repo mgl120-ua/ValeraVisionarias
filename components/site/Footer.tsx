@@ -1,5 +1,6 @@
 import Image from "next/image"
 import Link from "next/link"
+import { PROMOCION_PATH } from "@/lib/promocion"
 import { Button } from "@/components/ui/button"
 import { Phone, Mail, MapPin } from "lucide-react"
 import { contactInfo } from "@/lib/contact-info"
@@ -71,6 +72,7 @@ export default function Footer({ year }: { year: number }) {
             <ul className="space-y-2 text-xs text-stone-400 sm:space-y-3 sm:text-sm">
               <li><Link href="/valoraciones" className="transition-colors hover:text-white">Valoración gratuita</Link></li>
               <li><Link href="/propiedades" className="transition-colors hover:text-white">Comprar piso en San Vicente</Link></li>
+              <li><a href={PROMOCION_PATH} className="transition-colors hover:text-white">Obra nueva: Residencial Reyes Católicos</a></li>
               <li><Link href="/propiedades" className="transition-colors hover:text-white">Alquiler cerca Universidad</Link></li>
               <li><Link href="/simulador-hipoteca" className="transition-colors hover:text-white">Simulador de hipoteca</Link></li>
               <li><Link href="/calculadora-rentabilidad" className="transition-colors hover:text-white">Calculadora de rentabilidad</Link></li>

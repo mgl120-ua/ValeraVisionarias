@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useMemo, useState } from "react";
 import { Search } from "lucide-react";
+import PromocionBanner from "@/components/PromocionBanner";
 
 interface Propiedad {
   id: string | number;
@@ -181,6 +182,7 @@ export default function PropiedadesClient({
       {/* LISTADO */}
       <div className="py-16 md:py-24">
         <div className="mx-auto max-w-page px-4 sm:px-6 lg:px-10">
+          <PromocionBanner className="mb-12 sm:mb-14" />
           {/* Estado vacío elegante */}
           {propiedadesFiltradas.length === 0 && (
             <div className="rounded-2xl border border-black/[0.08] bg-white p-8 sm:p-10 text-center">

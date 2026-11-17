@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button"
 import ContactForm from "@/components/ContactForm"
 import SellerMiniForm from "@/components/SellerMiniForm"
 import SellerStickyBar from "@/components/SellerStickyBar"
+import PromocionBanner from "@/components/PromocionBanner"
 import { contactInfo } from "@/lib/contact-info"
 import { getSellerWhatsAppMessage, sellerExperiment, setupScrollDepthTracking, trackSellerEvent } from "@/lib/seller-leads"
 
@@ -104,6 +105,8 @@ export default function ValeraVisionariasLandingClient({
             </div>
 
             {featuredSlot ?? <div className="text-stone-600">Sin destacadas por ahora.</div>}
+
+            <PromocionBanner className="mt-14 sm:mt-16" />
 
             <div className="mt-14 sm:mt-16">
               <Link

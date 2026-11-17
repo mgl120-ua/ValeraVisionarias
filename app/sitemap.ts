@@ -8,6 +8,7 @@ const staticRoutes: Array<{ path: string; priority: number; changeFrequency: "da
   { path: "/", priority: 1, changeFrequency: "weekly" },
   { path: "/valoraciones", priority: 0.9, changeFrequency: "monthly" },
   { path: "/propiedades", priority: 0.9, changeFrequency: "daily" },
+  { path: "/promocion-reyes-catolicos", priority: 0.8, changeFrequency: "monthly" },
   { path: "/contacto", priority: 0.7, changeFrequency: "yearly" },
   { path: "/nosotros", priority: 0.6, changeFrequency: "yearly" },
   { path: "/simulador-hipoteca", priority: 0.5, changeFrequency: "yearly" },

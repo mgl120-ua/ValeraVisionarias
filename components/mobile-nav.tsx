@@ -6,10 +6,12 @@ import { usePathname } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Menu, X, ChevronDown, Phone, Mail, MessageCircle } from "lucide-react"
 import { contactInfo } from "@/lib/contact-info"
+import { PROMOCION_PATH } from "@/lib/promocion"
 
 const navItems = [
   { href: "/", label: "Inicio" },
   { href: "/propiedades", label: "Propiedades" },
+  { href: PROMOCION_PATH, label: "Obra nueva: Residencial Reyes Católicos", staticPage: true },
   { href: "/valoraciones", label: "Vender mi vivienda" },
   { href: "/nosotros", label: "Nosotros" },
   { href: "/#san-vicente", label: "San Vicente del Raspeig" },
@@ -102,9 +104,11 @@ export default function MobileNav() {
           <ul className="space-y-1">
             {navItems.map((item) => {
               const active = item.href === pathname
+              // El dosier es un HTML estático: enlace normal, sin navegación del router
+              const NavLink = item.staticPage ? "a" : Link
               return (
                 <li key={item.href}>
-                  <Link
+                  <NavLink
                     href={item.href}
                     onClick={closeMenu}
                     aria-current={active ? "page" : undefined}
@@ -113,7 +117,7 @@ export default function MobileNav() {
                     }`}
                   >
                     {item.label}
-                  </Link>
+                  </NavLink>
                 </li>
               )
             })}
