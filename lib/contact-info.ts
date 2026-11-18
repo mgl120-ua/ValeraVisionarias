@@ -1,4 +1,4 @@
-const MAPS_QUERY = "Calle Villafranqueza 50, 03690 San Vicente del Raspeig, Alicante, España"
+const MAPS_QUERY = "Avenida Ancha de Castelar 46, 03690 San Vicente del Raspeig, Alicante, España"
 
 export const contactInfo = {
   phone: "617 31 45 84",
@@ -7,12 +7,12 @@ export const contactInfo = {
   email: "Valeravisionarias@gmail.com",
   emailHref: "mailto:Valeravisionarias@gmail.com",
   whatsappHref: "https://wa.me/34617314584",
-  addressLine1: "C/ Villafranqueza 50, Local 1",
+  addressLine1: "Avenida Ancha de Castelar 46-48",
   addressLine2: "San Vicente del Raspeig, Alicante",
   postalCode: "03690",
-  fullAddress: "C/ Villafranqueza 50, Local 1, 03690 San Vicente del Raspeig, Alicante",
-  // Mapas: una sola consulta para todos los enlaces, con la dirección de la ficha de Google.
-  // Sin "Local 1", que confunde al buscador; con código postal y municipio para no caer en Alicante ciudad.
+  fullAddress: "Avenida Ancha de Castelar 46-48, 03690 San Vicente del Raspeig, Alicante",
+  // Mapas: una sola consulta para todos los enlaces.
+  // Solo el primer número (46) para que el buscador sitúe bien el punto; con código postal y municipio para no caer en Alicante ciudad.
   mapsSearchHref: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(MAPS_QUERY)}`,
   mapsEmbedSrc: `https://maps.google.com/maps?q=${encodeURIComponent(MAPS_QUERY)}&z=17&hl=es&output=embed`,
   mapsDirectionsHref: `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(MAPS_QUERY)}`,
